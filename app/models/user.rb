@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  email           :string
+#  password_digest :string
+#  is_admin        :boolean          default("false")
+#  session_token   :string           not null
+#
+
 class User < ActiveRecord::Base
   attr_reader :password
 
@@ -7,8 +18,6 @@ class User < ActiveRecord::Base
   validates :session_token, presence: true
 
   after_initialize :ensure_session_token
-
-  has_many :businesses, class_name: 'Business', foreign_key: 'creator_id'
 
   def self.find_by_credentials(email, password)
     user = User.find_by_email(email)
