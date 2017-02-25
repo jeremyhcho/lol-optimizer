@@ -14,6 +14,7 @@ import Root from 'components/root'
 
 // Plugins
 import { isEmpty } from 'lodash'
+import './util/pusher'
 
 const sagaMiddleware = createSagaMiddleware()
 

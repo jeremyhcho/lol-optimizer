@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219015824) do
+ActiveRecord::Schema.define(version: 20170222042415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,26 +58,28 @@ ActiveRecord::Schema.define(version: 20170219015824) do
   add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
 
   create_table "players_slates", id: false, force: :cascade do |t|
-    t.integer "player_id", null: false
-    t.integer "slate_id",  null: false
+    t.integer "player_id",   null: false
+    t.integer "slate_id",    null: false
     t.string  "game_info"
+    t.integer "salary"
+    t.string  "team_abbrev"
   end
 
   add_index "players_slates", ["player_id", "slate_id"], name: "index_players_slates_on_player_id_and_slate_id", unique: true, using: :btree
 
   create_table "slates", force: :cascade do |t|
-    t.string   "start_time", null: false
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "start_time"
   end
 
-  add_index "slates", ["start_time"], name: "index_slates_on_start_time", unique: true, using: :btree
-
   create_table "slates_teams", id: false, force: :cascade do |t|
-    t.integer "slate_id",  null: false
-    t.integer "team_id",   null: false
+    t.integer "slate_id",    null: false
+    t.integer "team_id",     null: false
     t.string  "game_info"
+    t.integer "salary"
+    t.string  "team_abbrev"
   end
 
   add_index "slates_teams", ["slate_id", "team_id"], name: "index_slates_teams_on_slate_id_and_team_id", unique: true, using: :btree

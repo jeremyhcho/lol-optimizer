@@ -10,6 +10,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  active     :boolean          default("false")
+#  position   :string           default("TEAM")
 #
 
 class Team < ActiveRecord::Base

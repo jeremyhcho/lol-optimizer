@@ -8,6 +8,8 @@ Rails.application.routes.draw do
           resources :sign, only: [:index]
         end
       end
+
+      resources :slates, only: [:index, :create]
     end
   end
 

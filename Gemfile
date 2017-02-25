@@ -42,6 +42,8 @@ gem 'rocket_pants'
 gem 'sidekiq'
 gem 'foreman'
 gem 'hashie'
+gem 'faker'
+gem 'pusher'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -52,6 +54,7 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'database_cleaner'
 end
 
 group :development do

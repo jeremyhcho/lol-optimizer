@@ -3,10 +3,10 @@
 # Table name: slates
 #
 #  id         :integer          not null, primary key
-#  start_time :string           not null
 #  name       :string           not null
 #  created_at :datetime
 #  updated_at :datetime
+#  start_time :datetime
 #
 
 class Slate < ActiveRecord::Base
