@@ -8,7 +8,10 @@ import App from 'components/app'
 import Hero from 'components/hero/hero'
 import LoginContainer from 'components/session/login_container'
 import SignupContainer from 'components/session/signup_container'
-import AdminContainer from 'components/admin/admin_container'
+
+// Admin Components
+import AdminLayout from 'components/admin/admin_layout'
+import AdminSlatesContainer from 'components/admin/admin_slates_container'
 
 class AppRouter extends React.Component {
   constructor (props) {
@@ -24,10 +27,27 @@ class AppRouter extends React.Component {
         onEnter: this._redirectIfLoggedIn
       },
       childRoutes: [
-        { path: 'admin', component: AdminContainer },
         { path: 'login', component: LoginContainer, onEnter: this._redirectIfLoggedIn },
-        { path: 'signup', component: SignupContainer, onEnter: this._redirectIfLoggedIn }
+        { path: 'signup', component: SignupContainer, onEnter: this._redirectIfLoggedIn },
+        {
+          component: AdminLayout,
+          // onEnter: this._ensureUserIsAdmin,
+          childRoutes: [
+            {
+              path: 'admin/slates',
+              component: AdminSlatesContainer
+              // onEnter: this._ensureUserIsAdmin
+            }
+          ]
+        }
       ]
+    }
+  }
+  
+  _ensureUserIsAdmin (nextState, replace) {
+    if (!this.props.store.getState().session.currentUser ||
+        !this.props.store.getState().session.currentuser.is_admin) {
+      replace('/')
     }
   }
 

@@ -1,5 +1,5 @@
 import { setPusherClient } from 'react-pusher'
-import pusherClient from 'pusher-js'
+import Pusher from 'pusher-js'
  
 const pusherClient = new Pusher('4acf374f2f776dccbe04', {
   encrypted: true
@@ -7,4 +7,4 @@ const pusherClient = new Pusher('4acf374f2f776dccbe04', {
  
 setPusherClient(pusherClient)
 
-export const UserChannel = `lol-optimizer-channel:${window.CurrentUser.id}`
+export const UserChannel = window.currentUser ? `lol-optimizer-channel:${window.currentUser.id}` : ''
