@@ -13,6 +13,9 @@ import SignupContainer from 'components/session/signup_container'
 import AdminLayout from 'components/admin/admin_layout'
 import AdminSlatesContainer from 'components/admin/admin_slates_container'
 
+// 404 Component
+import NotFound from 'components/not_found'
+
 class AppRouter extends React.Component {
   constructor (props) {
     super(props)
@@ -40,7 +43,8 @@ class AppRouter extends React.Component {
               onEnter: this._ensureUserIsAdmin
             }
           ]
-        }
+        },
+        { path: '*', component: NotFound }
       ]
     }
   }
@@ -60,7 +64,7 @@ class AppRouter extends React.Component {
 
   _redirectIfLoggedIn (nextState, replace) {
     if (this.props.store.getState().session.currentUser) {
-      replace('/dashboard')
+      replace('/admin/slates')
     }
   }
 
