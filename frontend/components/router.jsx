@@ -18,6 +18,7 @@ class AppRouter extends React.Component {
     super(props)
     this._ensureLoggedIn = this._ensureLoggedIn.bind(this)
     this._redirectIfLoggedIn = this._redirectIfLoggedIn.bind(this)
+    this._ensureUserIsAdmin = this._ensureUserIsAdmin.bind(this)
     
     this.routes = {
       path: '/',
@@ -31,12 +32,12 @@ class AppRouter extends React.Component {
         { path: 'signup', component: SignupContainer, onEnter: this._redirectIfLoggedIn },
         {
           component: AdminLayout,
-          // onEnter: this._ensureUserIsAdmin,
+          onEnter: this._ensureUserIsAdmin,
           childRoutes: [
             {
               path: 'admin/slates',
-              component: AdminSlatesContainer
-              // onEnter: this._ensureUserIsAdmin
+              component: AdminSlatesContainer,
+              onEnter: this._ensureUserIsAdmin
             }
           ]
         }
@@ -46,7 +47,7 @@ class AppRouter extends React.Component {
   
   _ensureUserIsAdmin (nextState, replace) {
     if (!this.props.store.getState().session.currentUser ||
-        !this.props.store.getState().session.currentuser.is_admin) {
+        !this.props.store.getState().session.currentUser.is_admin) {
       replace('/')
     }
   }
