@@ -19,7 +19,12 @@ module.exports = {
         query: {
           presets: ['babel-preset-es2015', 'babel-preset-react', 'babel-preset-stage-2']
         }
-      }
+      },
+      {
+  test: /\.css$/,
+  loader: 'style!css?modules',
+  include: /flexboxgrid/,
+}
     ]
   },
   plugins: [
