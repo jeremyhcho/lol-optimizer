@@ -7,9 +7,9 @@ Rails.application.routes.draw do
         namespace :s3 do
           resources :sign, only: [:index]
         end
-      end
 
-      resources :slates, only: [:index, :create]
+        resources :slates, only: [:index, :show, :create, :update, :destroy]
+      end
     end
   end
 

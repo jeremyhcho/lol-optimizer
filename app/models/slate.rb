@@ -16,4 +16,7 @@ class Slate < ActiveRecord::Base
 
   has_and_belongs_to_many :players
   has_and_belongs_to_many :teams
+
+  scope :from_date, -> (time) { where('start_time > ?', time) }
+  scope :to_date, -> (time) { where('start_time < ?', time) }
 end
