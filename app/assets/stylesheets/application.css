@@ -13,3 +13,25 @@
  *= require_tree .
  *= require_self
  */
+
+
+ /*================
+ TopNav
+ ================*/
+
+ body{
+   margin: 0;
+   background-color: #F4F3EF;
+ }
+
+ .currentSection{
+   position: relative;
+   top:2px;
+   left:-800px;
+ }
+
+.settingCog{
+  position: relative;
+  top: 25px;
+  height: 15px;
+}
