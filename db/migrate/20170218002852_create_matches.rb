@@ -6,6 +6,7 @@ class CreateMatches < ActiveRecord::Migration
       t.integer :red_team_id, null: false
       t.string :time, null: false
       t.integer :week, null: false
+      t.string :winner, null: false
 
       t.timestamps
     end

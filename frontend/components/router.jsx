@@ -22,7 +22,7 @@ class AppRouter extends React.Component {
     this._ensureLoggedIn = this._ensureLoggedIn.bind(this)
     this._redirectIfLoggedIn = this._redirectIfLoggedIn.bind(this)
     this._ensureUserIsAdmin = this._ensureUserIsAdmin.bind(this)
-    
+
     this.routes = {
       path: '/',
       component: App,
@@ -48,7 +48,7 @@ class AppRouter extends React.Component {
       ]
     }
   }
-  
+
   _ensureUserIsAdmin (nextState, replace) {
     if (!this.props.store.getState().session.currentUser ||
         !this.props.store.getState().session.currentUser.is_admin) {

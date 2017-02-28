@@ -13,5 +13,7 @@
 /tmp
 .env
 node_modules
+
+app/controllers/application_controller.rb
 app/assets/javascripts/bundle.js
 app/assets/javascripts/bundle.js.map

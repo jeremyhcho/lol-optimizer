@@ -7,6 +7,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.integer :team_id, null: false
       t.boolean :active, default: false
 
+
       t.timestamps
     end
 
