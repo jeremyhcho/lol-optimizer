@@ -5,7 +5,7 @@ module Api
         before_action :load_slate, only: [:show, :update, :destroy]
 
         def index
-          expose Slate.from_date(from_date).to_date(to_date),
+          expose ::Slate.from_date(from_date).to_date(to_date),
                  each_serializer: ::Slates::ShowSerializer
         end
 
@@ -54,21 +54,19 @@ module Api
         end
 
         def load_slate
-          @slate ||= Slate.find(params[:id])
+          @slate ||= ::Slate.find(params[:id])
           error! :bad_request unless @slate
         end
 
         def from_date
           @from_date ||=
             Date.parse(params[:from])
-                .in_time_zone('America/Los_Angeles')
                 .beginning_of_day
         end
 
         def to_date
           @to_date ||=
             Date.parse(params[:to])
-                .in_time_zone('America/Los_Angeles')
                 .end_of_day
         end
       end

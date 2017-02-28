@@ -7,7 +7,7 @@ describe Slates::Admin::Import do
     {
       csv_url: 'slate-sample-bucket.amazon.s3.com/slates/slate_file.csv',
       name: 'My First Slate',
-      start_time: 'Tue Feb 21 2017 17:29:11 GMT-0800 (PST)'
+      start_time: '2017-02-22T01:29:11.000Z'
     }
   end
 
@@ -44,7 +44,7 @@ describe Slates::Admin::Import do
       let!(:existing_slate) do
         FactoryGirl.create :slate,
                            name: 'Some Existing Slate',
-                           start_time: '2017-02-21 05:29:11-08:00'
+                           start_time: DateTime.parse('2017-02-22T01:29:11.000Z')
       end
 
       it 'should destroy the existing slate and create a new slate' do

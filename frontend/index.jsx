@@ -15,6 +15,10 @@ import Root from 'components/root'
 // Plugins
 import { isEmpty } from 'lodash'
 import './util/pusher'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
+// Theme
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -32,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root')
   let store
   
+  injectTapEventPlugin()
+  
   if (isEmpty(window.currentUser)) {
     store = configureStore()
   } else {
@@ -41,5 +47,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
   sagaMiddleware.run(rootSaga)
   
-  ReactDOM.render(<Root store={ store } />, root)
+  ReactDOM.render(<MuiThemeProvider><Root store={ store } /></MuiThemeProvider>, root)
 })

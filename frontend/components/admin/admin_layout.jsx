@@ -15,7 +15,7 @@ class AdminLayout extends React.Component {
         <AdminSidebar />
         <AdminTopNav />
 
-        <div className='section-wrapper'>
+        <div className='section'>
           { this.props.children }
         </div>
       </div>

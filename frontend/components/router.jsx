@@ -11,7 +11,7 @@ import SignupContainer from 'components/session/signup_container'
 
 // Admin Components
 import AdminLayout from 'components/admin/admin_layout'
-import AdminSlatesContainer from 'components/admin/admin_slates_container'
+import AdminSlatesContainer from 'components/admin/slates/section_container'
 
 // 404 Component
 import NotFound from 'components/not_found'

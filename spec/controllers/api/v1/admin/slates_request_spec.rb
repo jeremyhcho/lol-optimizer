@@ -28,8 +28,8 @@ describe Api::V1::Admin::SlatesController, type: :controller do
     context 'when from and to span multiple days' do
       let(:params) do
         {
-          from: '2017-02-25',
-          to: '2017-02-26'
+          from: 'Sat Feb 25 2017 00:00:00 GMT-0800 (PST)',
+          to: 'Sun Feb 26 2017 00:00:00 GMT-0800 (PST)'
         }
       end
 
@@ -58,8 +58,8 @@ describe Api::V1::Admin::SlatesController, type: :controller do
     context 'when from and to are the same day' do
       let(:params) do
         {
-          from: '2017-02-25',
-          to: '2017-02-25'
+          from: 'Sat Feb 25 2017 00:00:00 GMT-0800 (PST)',
+          to: 'Sat Feb 25 2017 00:00:00 GMT-0800 (PST)'
         }
       end
 
