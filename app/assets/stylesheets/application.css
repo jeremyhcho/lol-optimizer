@@ -65,24 +65,6 @@ hr{
   top: -50px;
 }
 
-.test{
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10px 17.3px 10px 0;
-  border-color: transparent #007bff transparent transparent;
-}
-
-.testArrow{
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 5px 8.7px 5px 0;
-  border-color: transparent #007bff transparent transparent;
-  left: 50px;
-}
-
-
 .arrows{
   height:40px;
   left:228px;
