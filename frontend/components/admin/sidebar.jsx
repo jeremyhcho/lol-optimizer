@@ -17,28 +17,29 @@ class AdminSidebar extends React.Component {
     }
   }
 //This is the code for trying to get the arrow to show onClick of a menuItem
-  // showArrowSignIn(){
-  //   this.setState({ showArrowSignIn:!this.state.showArrowSignIn });
-  // }
-  //
-  // showArrowSignUp(){
-  //   this.setState({ showArrowSignUp:!this.state.showArrowSignUp })
-  // }
-  //
-  // renderArrow(){
-  //   if(this.state.showArrowSignIn){
-  //     this.setState({showArrowSignUp: false})
-  //     return(
-  //       <img className="arrows"  src="http://c3filedepot.s3.amazonaws.com/lightinmotion/files/icons_triangle.svg"/>
-  //     )
-  //   }
-  //   if(this.state.showArrowSignUp){
-  //     this.setState({ showArrowSignIn: false })
-  //     return(
-  //         <img className="arrows"  src="http://c3filedepot.s3.amazonaws.com/lightinmotion/files/icons_triangle.svg"/>
-  //     )
-  //   }
-  // }
+//you're going to run into a error when you click on a MenuItem, just take out this.showArrowSignIn
+  showArrowSignIn(){
+    this.setState({ showArrowSignIn:!this.state.showArrowSignIn });
+  }
+
+  showArrowSignUp(){
+    this.setState({ showArrowSignUp:!this.state.showArrowSignUp })
+  }
+
+  renderArrow(){
+    if(this.state.showArrowSignIn){
+      this.setState({showArrowSignUp: false})
+      return(
+        <img className="arrows"  src="http://c3filedepot.s3.amazonaws.com/lightinmotion/files/icons_triangle.svg"/>
+      )
+    }
+    if(this.state.showArrowSignUp){
+      this.setState({ showArrowSignIn: false })
+      return(
+          <img className="arrows"  src="http://c3filedepot.s3.amazonaws.com/lightinmotion/files/icons_triangle.svg"/>
+      )
+    }
+  }
 
   render () {
     return (
@@ -50,10 +51,10 @@ class AdminSidebar extends React.Component {
               <hr></hr>
             </div>
             <div className="menuList">
-              <MenuItem onClick={()=>{ this.showArrowSignIn(); this.props.sectionSelector("Sign In")}} leftIcon={ <ActionFlightTakeoff color={ "#ABA8A5" }/> } rightIcon={this.renderArrow()}  style={{color:"#ABA8A5"}}>
+              <MenuItem onClick={()=>{  this.props.sectionSelector("Sign In")}} leftIcon={ <ActionFlightTakeoff color={ "#ABA8A5" }/> } rightIcon={<div>"Arrow function goes here"</div>}  style={{color:"#ABA8A5"}}>
                 Sign In
               </MenuItem>
-              <MenuItem  onClick={()=>{ this.showArrowSignUp(); this.props.sectionSelector("Sign Up")}} leftIcon={ <ActionFlightLand color={ "#ABA8A5" }/> } rightIcon={this.renderArrow()}  style={{color:"#ABA8A5"}}>
+              <MenuItem  onClick={()=>{  this.props.sectionSelector("Sign Up")}} leftIcon={ <ActionFlightLand color={ "#ABA8A5" }/> } rightIcont={<div>"Arrow function goes here"</div>} style={{color:"#ABA8A5"}}>
                  Sign Up
               </MenuItem>
             </div>

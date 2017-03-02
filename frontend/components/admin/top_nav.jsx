@@ -24,7 +24,6 @@ class AdminTopNav extends React.Component {
 }
 
 function mapStateToProps(state){
-  console.log("this is the state from the top nave", state)
   return {
     currentSection: state.section
   }
