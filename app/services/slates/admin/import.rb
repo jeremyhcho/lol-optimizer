@@ -1,3 +1,5 @@
+require 'csv'
+
 module Slates
   module Admin
     class Import
@@ -56,7 +58,10 @@ module Slates
       end
 
       def _create_slates_team!(row)
-        team = Team.where('lower(name) = ?', row['Name'].downcase).first
+        team = Team.where(
+          "lower(replace(short_name, ' ', '')) = ?",
+          row['teamAbbrev'].gsub(' ', '').downcase
+        ).first
 
         raise "Team with name: #{row['Name']} not found! Aborting.." unless team
         SlatesTeam.create!(
@@ -69,7 +74,10 @@ module Slates
       end
 
       def _create_players_slate!(row)
-        player = Player.where('lower(name) = ?', row['Name'].downcase).first
+        player = Player.where(
+          "lower(replace(name, ' ', '')) = ?",
+          row['Name'].gsub(' ', '').downcase
+        ).first
 
         raise "Player with name: #{row['Name']} not found! Aborting.." unless player
         # Update position of the player in case it's changed since the last
