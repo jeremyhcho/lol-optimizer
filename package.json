@@ -9,7 +9,8 @@
   "scripts": {
     "webpack:deploy": "webpack --config=webpack.config.js -p",
     "heroku-postbuild": "npm run webpack:deploy",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack:watch": "webpack --config=webpack.config.js --watch"
   },
   "keywords": [],
   "author": "",
