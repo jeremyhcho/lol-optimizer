@@ -16,7 +16,7 @@ module Api
 
         def create
           resp = {
-            jid: ::Slates::Admin::ImportWorker.perform_async(params[:slate])
+            jid: ::Slates::Admin::ImportWorker.perform_async(_create_opts)
           }
 
           expose resp
@@ -48,8 +48,8 @@ module Api
 
         def _show_options
           {
-            with_players: true,
-            with_teams: true
+            with_players: params[:with_players],
+            with_teams: params[:with_teams]
           }
         end
 
@@ -60,14 +60,29 @@ module Api
 
         def from_date
           @from_date ||=
-            Date.parse(params[:from])
+            DateTime.parse(params[:from])
                 .beginning_of_day
+                .utc
         end
 
         def to_date
           @to_date ||=
-            Date.parse(params[:to])
+            DateTime.parse(params[:to])
                 .end_of_day
+                .utc
+        end
+
+        def csv_url
+          "#{ENV['AWS_S3_BUCKET_NAME']}.s3.amazonaws.com/" \
+          "slates/#{params[:file][:name]}"
+        end
+
+        def _create_opts
+          {
+            csv_url: csv_url,
+            name: params[:name],
+            start_time: params[:start_time]
+          }
         end
       end
     end
