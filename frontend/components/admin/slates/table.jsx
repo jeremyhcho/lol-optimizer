@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 // Material UI
 import {
@@ -6,40 +7,100 @@ import {
   TableBody,
   TableHeader,
   TableHeaderColumn,
-  TableRow,
-  TableRowColumn
+  TableRow
 } from 'material-ui/Table'
+import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
+import Dialog from 'material-ui/Dialog'
 
 // Grid
 import { Grid, Row, Col } from 'react-flexbox-grid'
 
+// Components
+import SlatesRow from 'components/admin/slates/row'
+
+// Actions
+import { deleteSlate } from 'actions/admin/slate_actions'
+
 class SlatesTable extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      dropdownToggleId: 0,
+      deleteConfirmationOpen: false,
+      deleteConfirmationId: 0
+    }
+
+    this.toggleRowDropdown = this.toggleRowDropdown.bind(this)
+    this.openConfirmation = this.openConfirmation.bind(this)
+    this.closeConfirmation = this.closeConfirmation.bind(this)
+    this.deleteSlate = this.deleteSlate.bind(this)
   }
   
-  formattedStartTime (startTime) {
-    return startTime
+  toggleRowDropdown (slateId) {
+    if (this.state.dropdownToggleId == slateId) {
+      this.setState({ dropdownToggleId: 0 })
+    } else {
+      this.setState({ dropdownToggleId: slateId })
+    }
   }
   
   renderSlateRows () {
     return (
       this.props.slates.map((slate, index) => (
-        <TableRow key={ index }>
-          <TableRowColumn>{ slate.id }</TableRowColumn>
-          <TableRowColumn>{ slate.name }</TableRowColumn>
-          <TableRowColumn>{ this.formattedStartTime(slate.start_time) }</TableRowColumn>
-          <TableRowColumn>
-            <IconButton iconClassName="fa fa-cog" onClick={ this.toggleDropdown } />
-          </TableRowColumn>
-        </TableRow>
+        <SlatesRow
+          key={ index }
+          slate={ slate }
+          toggleRowDropdown={ this.toggleRowDropdown }
+          isToggled={ this.state.dropdownToggleId == slate.id }
+          openDeleteModal={ this.openConfirmation(slate.id) }
+        />
       ))
     )
   }
   
-  render () {
+  openConfirmation (slateId) {
     return (
-      <Row>
+      (e) => {
+        this.setState({
+          deleteConfirmationOpen: true,
+          deleteConfirmationId: slateId,
+          dropdownToggleId: 0
+        })
+      }  
+    )
+  }
+  
+  closeConfirmation () {
+    this.setState({
+      deleteConfirmationOpen: false,
+      deleteConfirmationId: 0
+    })
+  }
+  
+  deleteSlate (e) {
+    e.preventDefault()
+    this.setState({ deleteConfirmationOpen: false, deleteConfirmationId: 0 })
+    this.props.deleteSlate(this.state.deleteConfirmationId)
+  }
+  
+  render () {
+    const confirmActions = [
+      <FlatButton
+        label="Cancel"
+        primary={ true }
+        onTouchTap={ this.closeConfirmation }
+      />,
+      <RaisedButton
+        label="Submit"
+        primary={ true }
+        keyboardFocused={ true }
+        onTouchTap={ this.deleteSlate }
+      />
+    ]
+
+    return (
+      <Row style={{ paddingTop: '40px' }}>
         <Col xs={ 10 } xsOffset={ 1 }>
           <Table selectable={ false } className='slates-list'>
             <TableHeader
@@ -57,13 +118,32 @@ class SlatesTable extends React.Component {
               displayRowCheckbox={ false }
               adjustForCheckbox={ false }
               showRowHover={ true }>
-              { this.renderSlateRows() }
+              { this.renderSlateRows() }>
             </TableBody>
           </Table>
+
+          <Dialog
+            title="Are you sure?"
+            actions={ confirmActions }
+            modal={ false }
+            open={ this.state.deleteConfirmationOpen }
+            onRequestClose={ this.closeConfirmation }
+          >
+            Deleting this slate will delete all the players and teams playing in this slate.
+          </Dialog>
         </Col>
       </Row>
     )
   }
 }
 
-export default SlatesTable
+const mapStateToProps = (state, ownProps) => ({})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  deleteSlate: (slateId) => dispatch(deleteSlate(slateId))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SlatesTable)

@@ -1,4 +1,6 @@
 import React from 'react'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 
 // Grid
 import { Grid, Row, Col } from 'react-flexbox-grid'
@@ -10,9 +12,10 @@ import SlatesTable from './table'
 // Plugins
 import ReactS3Uploader from 'react-s3-uploader'
 
-class AdminSlates extends React.Component {
+class SlatesIndex extends React.Component {
   constructor (props) {
     super(props)
+    
     this.state = {
       from: new Date(),
       to: new Date()
@@ -25,8 +28,8 @@ class AdminSlates extends React.Component {
   
   componentDidMount () {
     this.props.fetchSlates({
-      from: this.state.from.toISOString(),
-      to: this.state.to.toISOString()
+      from: this.state.from.toString(),
+      to: this.state.to.toString()
     })
   }
   
@@ -36,12 +39,20 @@ class AdminSlates extends React.Component {
   
   handleChangeToDate (e, date) {
     this.setState({ to: date })
-    this.props.fetchSlates({ from: this.state.from.toString(), to: date.toString() })
+
+    this.props.fetchSlates({
+      from: this.state.from.toString(),
+      to: date.toString()
+    })
   }
   
   handleChangeFromDate (e, date) {
     this.setState({ from: date })
-    this.props.fetchSlates({ from: date.toString(), to: this.state.to.toString() })
+
+    this.props.fetchSlates({
+      from: date.toString(),
+      to: this.state.to.toString()
+    })
   }
 
   render () {
@@ -70,4 +81,18 @@ class AdminSlates extends React.Component {
 //     onFinish={ this.onUploadFinish } />
 // </div>
 
-export default AdminSlates
+import { uploadSlateCsv, fetchSlates } from 'actions/admin/slate_actions'
+
+const mapStateToProps = (state, ownProps) => ({
+  slates: state.admin.slates.slatesList
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  uploadSlateCsv: (file) => dispatch(uploadSlateCsv(file)),
+  fetchSlates: (dateParams) => dispatch(fetchSlates(dateParams))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SlatesIndex)

@@ -38,12 +38,12 @@ describe Api::V1::Admin::SlatesController, type: :controller do
           {
             'id' => slate_1.id,
             'name' => slate_1.name,
-            'start_time' => '2017-02-25T17:41:36.000-08:00'
+            'start_time' => '02-25-17 05:41 PST'
           },
           {
             'id' => slate_2.id,
             'name' => slate_2.name,
-            'start_time' => '2017-02-26T17:41:36.000-08:00'
+            'start_time' => '02-26-17 05:41 PST'
           }
         ]
       end
@@ -67,7 +67,7 @@ describe Api::V1::Admin::SlatesController, type: :controller do
         [{
           'id' => slate_1.id,
           'name' => slate_1.name,
-          'start_time' => '2017-02-25T17:41:36.000-08:00'
+          'start_time' => '02-25-17 05:41 PST'
         }]
       end
 
@@ -81,7 +81,7 @@ describe Api::V1::Admin::SlatesController, type: :controller do
 
   context '#show' do
     let(:api_call) do
-      get :show, id: slate.id
+      get :show, { id: slate.id, with_players: true, with_teams: true }
     end
 
     let(:slate) do

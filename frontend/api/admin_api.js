@@ -8,6 +8,12 @@ const AdminApi = {
   ),
   fetchSlates: (dateParams) => (
     () => Axios.get(`${basePath}/slates`, { params: dateParams })
+  ),
+  fetchSlate: (slateId, params) => (
+    () => Axios.get(`${basePath}/slates/${slateId}`, { params: params })
+  ),
+  deleteSlate: (slateId) => (
+    () => Axios.delete(`${basePath}/slates/${slateId}`)
   )
 }
 
