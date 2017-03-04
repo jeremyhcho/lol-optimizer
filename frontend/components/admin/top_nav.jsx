@@ -18,7 +18,7 @@ class AdminTopNav extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentSection: state.section.admin.currentSection
+  currentSection: state.admin.section.currentSection
 })
 
 export default connect(mapStateToProps)(AdminTopNav);
