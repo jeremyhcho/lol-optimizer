@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20170225074132) do
     t.integer  "red_team_id",  null: false
     t.string   "time",         null: false
     t.integer  "week",         null: false
-    t.integer  "winner",       null: false
+    t.string   "winner",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
