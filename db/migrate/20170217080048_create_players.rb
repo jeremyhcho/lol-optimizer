@@ -4,6 +4,8 @@ class CreatePlayers < ActiveRecord::Migration
       t.integer :remote_id, null: false
       t.string :name, null: false
       t.string :position, null: false
+      t.integer :team_id, null: false
+      t.boolean :active, default: false
 
       t.timestamps
     end

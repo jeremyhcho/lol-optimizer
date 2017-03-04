@@ -1,11 +1,15 @@
-const currentSectionReducer = ( state={ currentSection:"Home" }, action) => {
-  switch(action.type){
+const nullCurrentSection = {
+  currentSection: 'Home'
+}
+
+const currentSectionReducer = (state = nullCurrentSection, action) => {
+  switch (action.type) {
     case 'SECTION_SELECTED':
-     return Object.assign({}, state, {
-       currentSection:action.sectionName
-     })
+      return { ...state, currentSection: action.sectionName }
+
+    default:
+      return state;
   }
-  return state;
 }
 
 export default currentSectionReducer;
