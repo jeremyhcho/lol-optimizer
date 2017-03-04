@@ -24,13 +24,13 @@ Admin topNav
    background-color: #F4F3EF;
  }
 
- .currentSection{
+ .current-section{
    position: relative;
    top: 2px;
    left: -1000px;
  }
 
-.settingCog{
+.setting-cog{
   position: relative;
   top: 25px;
   height: 15px;
@@ -39,7 +39,7 @@ Admin topNav
 /*==============
 Admin sideNav
 ===============*/
-.titleLogo{
+.title-logo{
   position: relative;
   right: -30px;
   height: 35px;
@@ -60,7 +60,7 @@ hr{
   border: 1px solid #E5E4E3;
 }
 
-.menuList{
+.menu-list{
   position: relative;
   top: -50px;
 }
