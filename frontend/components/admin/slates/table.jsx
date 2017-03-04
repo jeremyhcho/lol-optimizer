@@ -110,7 +110,7 @@ class SlatesTable extends React.Component {
                 <TableHeaderColumn>ID</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
                 <TableHeaderColumn>Start Time</TableHeaderColumn>
-                <TableHeaderColumn>Actions</TableHeaderColumn>
+                <TableHeaderColumn></TableHeaderColumn>
               </TableRow>
             </TableHeader>
             
