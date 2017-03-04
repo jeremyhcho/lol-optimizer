@@ -19,7 +19,7 @@ const SessionReducer = (state = _nullUser, action) => {
     case SessionConstants.LOGIN_FAILED:
       let loginError = action.response
       return { ...state, loginError }
-      
+
     case SessionConstants.SIGNUP_FAILED:
       let signupError = action.response
       return { ...state, signupError }
