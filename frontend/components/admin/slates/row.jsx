@@ -9,15 +9,16 @@ import {
   TableRowColumn
 } from 'material-ui/Table'
 import Popover from 'material-ui/Popover'
-import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
+import IconButton from 'material-ui/IconButton'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import IconMenu from 'material-ui/IconMenu'
 
 class SlatesRow extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {}
 
     this.openDropdown = this.openDropdown.bind(this)
     this.closeDropdown = this.closeDropdown.bind(this)
@@ -26,8 +27,6 @@ class SlatesRow extends React.Component {
   
   openDropdown (e) {
     e.preventDefault()
-
-    this.setState({ anchorEl: e.currentTarget })
     this.props.toggleRowDropdown(this.props.slate.id)
   }
   
@@ -47,27 +46,29 @@ class SlatesRow extends React.Component {
 
   render () {
     return (
-      <TableRow>
+      <TableRow hoverable={ true }>
         <TableRowColumn>{ this.props.slate.id }</TableRowColumn>
         <TableRowColumn>{ this.props.slate.name }</TableRowColumn>
         <TableRowColumn>{ this.props.slate.start_time }</TableRowColumn>
         <TableRowColumn>
-          <FlatButton
-            onTouchTap={ this.openDropdown }
-            icon={ <FontIcon className='material-icons'>expand_more</FontIcon> }
-          />
-          <Popover
-            open={ this.props.isToggled }
-            anchorEl={ this.state.anchorEl }
+          <IconMenu
+            iconButtonElement={ <IconButton><MoreVertIcon /></IconButton> }
             anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
             targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-            onRequestClose={ this.closeDropdown }
           >
-            <Menu desktop={ true }>
-              <MenuItem primaryText='Edit' onTouchTap={ this.editSlate } />
-              <MenuItem primaryText='Delete' onTouchTap={ this.props.openDeleteModal } />
-            </Menu>
-          </Popover>
+            <MenuItem
+              primaryText='Edit'
+              leftIcon={ <FontIcon className='material-icons'>mode_edit</FontIcon> }
+              onTouchTap={ this.editSlate }
+              innerDivStyle={{ padding: '0px 24px 0px 74px' }}
+            />
+            <MenuItem
+              primaryText='Delete'
+              leftIcon={ <FontIcon className='material-icons'>delete_forever</FontIcon> }
+              onTouchTap={ this.props.openDeleteModal }
+              innerDivStyle={{ padding: '0px 24px 0px 74px' }}
+            />
+          </IconMenu>
         </TableRowColumn>
       </TableRow>
     )
