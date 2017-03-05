@@ -16,7 +16,7 @@ module Api
 
         def create
           resp = {
-            jid: ::Slates::Admin::ImportWorker.perform_async(_create_opts)
+            jid: ::Admin::Slates::ImportWorker.perform_async(_create_opts)
           }
 
           expose resp
@@ -72,17 +72,24 @@ module Api
                 .utc
         end
 
-        def csv_url
-          "#{ENV['AWS_S3_BUCKET_NAME']}.s3.amazonaws.com/" \
-          "slates/#{params[:file][:name]}"
-        end
-
         def _create_opts
           {
-            csv_url: csv_url,
+            csv_url: params[:csv_url],
             name: params[:name],
-            start_time: params[:start_time]
+            start_time: converted_start_time,
+            user_id: current_user.id
           }
+        end
+
+        def converted_start_time
+          start_date = DateTime.parse(params[:start_date])
+          start_time = DateTime.parse(params[:start_time])
+
+          start_date.change(
+            hour: start_time.hour,
+            min: start_time.minute,
+            sec: 0
+          ).utc
         end
       end
     end

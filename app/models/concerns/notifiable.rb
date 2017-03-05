@@ -3,7 +3,7 @@ module Notifiable
 
   def notify(opts)
     Pusher.trigger(
-      "lol-optimizer-channel:#{opts[:user_id]}",
+      "lol-optimizer-channel-#{opts[:user_id]}",
       opts[:event],
       opts[:payload]
     )

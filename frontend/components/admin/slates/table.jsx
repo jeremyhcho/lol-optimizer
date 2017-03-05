@@ -93,15 +93,14 @@ class SlatesTable extends React.Component {
       />,
       <RaisedButton
         label="Submit"
-        primary={ true }
         keyboardFocused={ true }
         onTouchTap={ this.deleteSlate }
       />
     ]
 
     return (
-      <Row style={{ paddingTop: '40px' }}>
-        <Col xs={ 10 } xsOffset={ 1 }>
+      <Row>
+        <Col xs={ 12 }>
           <Table selectable={ false } className='slates-list'>
             <TableHeader
               displaySelectAll={ false }

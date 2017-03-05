@@ -1,0 +1,72 @@
+#admin-wrapper {
+  margin: 0;
+  width: 100%;
+  
+  .top-nav {
+    > h1 {
+      letter-spacing: 2px !important;
+    }
+  }
+  
+  .main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+
+    .drawer {
+      width: 75px;
+      height: calc(100vh - 114px);
+      background-color: $primary_1_color;
+      padding-top: 50px;
+      
+      .menu-icon {
+        text-align: center;
+      }
+
+      > div:not(:first-child) {
+        padding-top: 20px;
+      }
+    }
+
+    .section {
+      width: calc(100% - 75px);
+      max-height: calc(100vh - 65px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      
+      .slates-wrapper {
+        padding: 45px 0 30px;
+        min-width: 667px;
+
+        .slates-list, .player-slates-list {
+          td, th {
+            text-align: center !important;
+          }
+        }
+
+        .from-date, .to-date {
+          input {
+            z-index: 1000 !important;
+          }
+        }
+      }
+      
+      .players-slates-wrapper {
+        min-width: 800px;
+        padding-top: 45px;
+
+        div[value='players'], div[value='teams'] {
+          div {
+            &:nth-child(2) {
+              > div {
+                background-color: #2196F3 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

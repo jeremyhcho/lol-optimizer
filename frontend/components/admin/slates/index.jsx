@@ -2,15 +2,24 @@ import React from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
+// Actions
+import { fetchSlates } from 'actions/admin/slate_actions'
+import { openModal } from 'actions/modal_actions'
+
 // Grid
 import { Grid, Row, Col } from 'react-flexbox-grid'
 
 // Components
 import SlatesToolbar from './toolbar'
 import SlatesTable from './table'
+import CreateSlateModal from './modals/create_slate'
 
-// Plugins
-import ReactS3Uploader from 'react-s3-uploader'
+// Material UI
+import Paper from 'material-ui/Paper'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import RaisedButton from 'material-ui/RaisedButton'
+import FontIcon from 'material-ui/FontIcon'
 
 class SlatesIndex extends React.Component {
   constructor (props) {
@@ -21,7 +30,6 @@ class SlatesIndex extends React.Component {
       to: new Date()
     }
 
-    this.onUploadFinish = this.onUploadFinish.bind(this)
     this.handleChangeToDate = this.handleChangeToDate.bind(this)
     this.handleChangeFromDate = this.handleChangeFromDate.bind(this)
   }
@@ -31,10 +39,6 @@ class SlatesIndex extends React.Component {
       from: this.state.from.toString(),
       to: this.state.to.toString()
     })
-  }
-  
-  onUploadFinish (signedUrl, file) {
-    this.props.uploadSlateCsv(file)
   }
   
   handleChangeToDate (e, date) {
@@ -57,39 +61,42 @@ class SlatesIndex extends React.Component {
 
   render () {
     return (
-      <Grid>
-        <SlatesToolbar
-          to={ this.state.to }
-          from={ this.state.from }
-          handleChangeToDate={ this.handleChangeToDate }
-          handleChangeFromDate={ this.handleChangeFromDate }
-        />
-      
-        <SlatesTable
-          slates={ this.props.slates }
-        />
-      </Grid>
+      <Row className='slates-wrapper'>
+        <Col xs={ 12 } style={{ position: 'relative', padding: '50px 45px 0 45px' }}>
+          <RaisedButton
+            label="Add Slate"
+            icon={ <FontIcon className='fa fa-plus' style={{ fontSize: '12px' }}/> }
+            style={{ position: 'absolute', top: 0, right: '45px' }}
+            onTouchTap={ this.props.openModal }
+          />
+
+          <Paper rounded={ false } style={{ paddingBottom: '10px' }}>
+            <SlatesToolbar
+              to={ this.state.to }
+              from={ this.state.from }
+              handleChangeToDate={ this.handleChangeToDate }
+              handleChangeFromDate={ this.handleChangeFromDate }
+            />
+          </Paper>
+
+          <Paper rounded={ false } style={{ padding: '20px', marginTop: '35px' }}>
+            <SlatesTable slates={ this.props.slates }/>
+          </Paper>
+        </Col>
+        
+        <CreateSlateModal />
+      </Row>
     )
   }
 }
-
-// <div className='admin'>
-//   <ReactS3Uploader
-//     signingUrl="/api/v1/admin/s3/sign"
-//     signingUrlMethod="GET"
-//     accept="text/csv"
-//     onFinish={ this.onUploadFinish } />
-// </div>
-
-import { uploadSlateCsv, fetchSlates } from 'actions/admin/slate_actions'
 
 const mapStateToProps = (state, ownProps) => ({
   slates: state.admin.slates.slatesList
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  uploadSlateCsv: (file) => dispatch(uploadSlateCsv(file)),
-  fetchSlates: (dateParams) => dispatch(fetchSlates(dateParams))
+  fetchSlates: (dateParams) => dispatch(fetchSlates(dateParams)),
+  openModal: () => dispatch(openModal())
 })
 
 export default connect(

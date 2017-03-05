@@ -3,8 +3,8 @@ import Axios from 'axios'
 const basePath = '/api/v1/admin'
 
 const AdminApi = {
-  uploadSlateCsv: (file) => (
-    () => Axios.post(`${basePath}/`, file)
+  createSlate: (params) => (
+    () => Axios.post(`${basePath}/slates`, params)
   ),
   fetchSlates: (dateParams) => (
     () => Axios.get(`${basePath}/slates`, { params: dateParams })
