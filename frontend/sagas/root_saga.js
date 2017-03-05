@@ -4,7 +4,8 @@ import {
   watchUploadSlateCsvAsync,
   watchFetchSlates,
   watchFetchSlate,
-  watchDeleteSlate
+  watchDeleteSlate,
+  watchCreateSlate
 } from 'sagas/admin/admin_saga'
 
 export default function* rootSaga () {
@@ -14,6 +15,7 @@ export default function* rootSaga () {
     watchFetchSlates(),
     watchUploadSlateCsvAsync(),
     watchFetchSlate(),
-    watchDeleteSlate()
+    watchDeleteSlate(),
+    watchCreateSlate()
   ]
 }

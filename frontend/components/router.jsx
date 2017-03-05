@@ -13,6 +13,7 @@ import SignupContainer from 'components/session/signup_container'
 import AdminLayout from 'components/admin/admin_layout'
 import SlatesIndex from 'components/admin/slates'
 import SlateShow from 'components/admin/slates/show'
+import ArticlesIndex from 'components/admin/articles'
 
 // 404 Component
 import NotFound from 'components/not_found'
@@ -47,6 +48,11 @@ class AppRouter extends React.Component {
               path: 'admin/slates/:id',
               component: SlateShow,
               onEnter: this._ensureUserIsAdmin
+            },
+            {
+              path: 'admin/articles',
+              component: ArticlesIndex,
+              onenter: this._ensureUserIsAdmin
             }
           ]
         },

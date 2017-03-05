@@ -58,15 +58,27 @@ class SlatesRow extends React.Component {
           >
             <MenuItem
               primaryText='Edit'
-              leftIcon={ <FontIcon className='material-icons'>mode_edit</FontIcon> }
+              leftIcon={
+                <FontIcon
+                  style={{ color: '#EEEEEE', fontSize: '16px', height: '16px', width: '16px' }}
+                  className='material-icons'>mode_edit
+                </FontIcon>
+              }
               onTouchTap={ this.editSlate }
               innerDivStyle={{ padding: '0px 24px 0px 74px' }}
+              style={{ color: '#EEEEEE', fontSize: '14px', minHeight: '40px', lineHeight: '40px' }}
             />
             <MenuItem
               primaryText='Delete'
-              leftIcon={ <FontIcon className='material-icons'>delete_forever</FontIcon> }
+              leftIcon={
+                <FontIcon
+                  style={{ color: '#EEEEEE', fontSize: '16px', height: '16px', width: '16px' }}
+                  className='material-icons'>delete_forever
+                </FontIcon>
+              }
               onTouchTap={ this.props.openDeleteModal }
               innerDivStyle={{ padding: '0px 24px 0px 74px' }}
+              style={{ color: '#EEEEEE', fontSize: '14px', minHeight: '40px', lineHeight: '40px' }}
             />
           </IconMenu>
         </TableRowColumn>

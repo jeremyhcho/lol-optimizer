@@ -5,6 +5,35 @@ describe Api::V1::Admin::SlatesController, type: :controller do
     DateTime.parse(date_str)
   end
 
+  context '#create' do
+    let(:api_call) do
+      post :create, params
+    end
+
+    let(:params) do
+      {
+        start_date: parse_date('Sat Mar 04 2017 18:51:07 GMT-0800 (PST)'),
+        start_time: parse_date('Sat Mar 07 2017 22:00:45 GMT-0800 (PST)'),
+        csv_url: 'some-csv-file-url.com',
+        name: 'Some Slate Name'
+      }
+    end
+
+    let(:expected_options) do
+      {
+        start_time: parse_date('Sat Mar 04 2017 22:00:00 GMT-0800 (PST)'),
+        csv_url: 'some-csv-file-url.com',
+        name: 'Some Slate Name'
+      }
+    end
+
+    it 'should call the import worker with the correct params' do
+      allow(::Admin::Slates::ImportWorker)
+        .to receive(:perform_async)
+        .with(expected_options)
+    end
+  end
+
   context '#index' do
     let(:api_call) do
       get :index, params
@@ -38,12 +67,12 @@ describe Api::V1::Admin::SlatesController, type: :controller do
           {
             'id' => slate_1.id,
             'name' => slate_1.name,
-            'start_time' => '02-25-17 05:41 PST'
+            'start_time' => '02-25-17 05:41 PM PST'
           },
           {
             'id' => slate_2.id,
             'name' => slate_2.name,
-            'start_time' => '02-26-17 05:41 PST'
+            'start_time' => '02-26-17 05:41 PM PST'
           }
         ]
       end
@@ -67,7 +96,7 @@ describe Api::V1::Admin::SlatesController, type: :controller do
         [{
           'id' => slate_1.id,
           'name' => slate_1.name,
-          'start_time' => '02-25-17 05:41 PST'
+          'start_time' => '02-25-17 05:41 PM PST'
         }]
       end
 

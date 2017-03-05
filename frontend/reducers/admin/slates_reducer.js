@@ -14,7 +14,7 @@ const SlatesReducer = (state = _nullSlates, action) => {
       return { ...state, slatesList: action.slates }
       
     case SlateConstants.RECEIVE_SLATE:
-      return { ...state, slate: action.slate }
+      return { ...state, slatesList: [...state.slatesList, action.slate] }
     
     case SlateConstants.RECEIVE_DELETE_SLATE:
       slatesList = [...state.slatesList]
@@ -23,6 +23,9 @@ const SlatesReducer = (state = _nullSlates, action) => {
 
       return { ...state, slatesList: slatesList }
       
+    case SlateConstants.SET_SLATE:
+      return { ...state, slate: action.slate }
+
     default:
       return state
   }

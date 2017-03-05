@@ -1,67 +1,83 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+
+// Actions
+import { sectionSelector }  from 'actions/current_section/current_section_actions'
+
+// Material UI
 import Drawer from 'material-ui/Drawer'
 import ActionFlightTakeoff from 'material-ui/svg-icons/action/flight-takeoff';
 import ActionFlightLand from 'material-ui/svg-icons/action/flight-land'
 import MenuItem from 'material-ui/MenuItem'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import  { sectionSelector }  from '../../actions/current_section/current_section_actions'
+import Divider from 'material-ui/Divider'
+import IconButton from 'material-ui/IconButton'
+import FontIcon from 'material-ui/FontIcon'
+
+// Grid
+import { Row, Col } from 'react-flexbox-grid'
+
+const sideBarOptions = [
+  { name: 'Slates', icon: 'fa fa-server', route: '/admin/slates' },
+  { name: 'Articles', icon: 'fa fa-newspaper-o', route: '/admin/articles' }
+]
 
 class AdminSidebar extends React.Component {
   constructor (props) {
     super(props)
-    this.state={
-      selectedMenuItem:""
-    }
-  }
-  handleClick (menuItemName) {
-    this.setState({ selectedMenuItem : menuItemName });
-    this.props.selectSection(menuItemName);
+    
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleSignInArrow(){
-    if(this.state.selectedMenuItem == "Sign Up" || this.state.selectedMenuItem == ""){
-      return(<div></div>)
-     }else{
-      return(<img className="arrows"  src="http://c3filedepot.s3.amazonaws.com/lightinmotion/files/icons_triangle.svg"/>)
+  handleClick (option) {
+    return (e) => {
+      e.preventDefault()
+      this.props.selectSection(option.name)
+      this.props.router.push({ pathname: option.route })
     }
   }
-
-  handleSignUpArrow(){
-    if(this.state.selectedMenuItem == "Sign In" || this.state.selectedMenuItem == ""){
-      return(<div></div>)
-     }else{
-      return(<img className="arrows"  src="http://c3filedepot.s3.amazonaws.com/lightinmotion/files/icons_triangle.svg"/>)
-    }
+  
+  renderSidebarOptions () {
+    return (
+      sideBarOptions.map((option, index) => (
+        <Row key={ index }>
+          <Col xs={ 12 } className='menu-icon'>
+            <IconButton
+              tooltip={ option.name }
+              tooltipPosition='top-center'
+              tooltipStyles={{ top: -5 }}
+              onTouchTap={ this.handleClick(option) }>
+              <FontIcon
+                className={ option.icon }
+                color={ this.props.location.pathname.match(option.route) ? 'white' : '#505464' }
+              />
+            </IconButton>
+          </Col>
+        </Row>
+      ))
+    )
   }
-
 
   render () {
     return (
-      <Drawer className="drawer">
-        <div className="title-container">
-          <img className="title-logo" src="http://i.imgur.com/llRSLi6.png"/>
-          <h4 className="title">League Optimizer</h4>
-          <hr></hr>
-        <div className="menu-list">
-          <MenuItem onClick={()=>{ this.handleClick("Sign In") } } leftIcon={ <ActionFlightTakeoff color={ "#ABA8A5" }/> } rightIcon={ this.handleSignInArrow() }  style={ { color:"#ABA8A5" } }>
-            Sign In
-          </MenuItem>
-          <MenuItem  onClick={()=>{ this.handleClick("Sign Up") } } leftIcon={ <ActionFlightLand color={ "#ABA8A5" }/> } rightIcon={ this.handleSignUpArrow() } style={ { color:"#ABA8A5" } }>
-             Sign Up
-          </MenuItem>
-        </div>
-      </div>
-      </Drawer>
+      <Col className='drawer'>
+        { this.renderSidebarOptions() }
+      </Col>
     )
   }
 }
 
-
+const mapStateToProps = (state, ownProps) => ({
+  currentSection: state.admin.section.currentSection,
+  ownProps: ownProps
+})
 
 const mapDispatchToProps = (dispatch) => ({
   selectSection: (sectionName) => dispatch({ type: 'SECTION_SELECTED', sectionName })
 })
 
 
-export default connect (null, mapDispatchToProps)(AdminSidebar)
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminSidebar))

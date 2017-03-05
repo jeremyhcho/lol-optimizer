@@ -25,9 +25,9 @@ class SlateShow extends React.Component {
   
   render () {
     return (
-      <Grid>
-        <PlayersSlateTable slate={ this.props.slate } />
-      </Grid>
+      <Row className='players-slates-wrapper'>
+        <PlayersSlateTable slate={ this.props.slate } router={ this.props.router } />
+      </Row>
     )
   }
 }

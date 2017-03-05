@@ -1,0 +1,39 @@
+.create-slate-modal {
+  .slate-uploader-wrapper {
+    line-height: 48px;
+
+    input {
+      visibility: hidden;
+      width: 0;
+    }
+
+    label {
+      font-size: 14px;
+      width: 150px;
+      height: 22px;
+      line-height: 22px;
+      background-color: #4CAF50;
+      display: inline-block;
+      padding: 5px 15px;
+      color: #EEEEEE;
+      border-radius: 2px;
+      cursor: pointer;
+      text-align: center;
+      margin-left: 16px;
+
+      p {
+        display: inline-block;
+        margin: 0 0 0 15px;
+      }
+      
+      &.disabled {
+        opacity: 0.6;
+      }
+    }
+  }
+  
+  .form-field {
+    width: 100%;
+    padding: 0;
+  }
+}

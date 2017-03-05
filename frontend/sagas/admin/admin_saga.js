@@ -5,7 +5,7 @@ import { call, put, takeLatest, takeEvery } from 'redux-saga/effects'
 import {
   SlateConstants,
   receiveSlates,
-  receiveSlate,
+  setSlate,
   deleteSlate,
   receiveDeleteSlate
 } from 'actions/admin/slate_actions'
@@ -45,7 +45,7 @@ export function* watchFetchSlate () {
 export function* fetchSlate (action) {
   try {
     let response = yield call(Api.Admin.fetchSlate(action.slateId, action.params))
-    yield put(receiveSlate(response.data.response))
+    yield put(setSlate(response.data.response))
   } catch (error) {
     console.log('Unable to fetch slate')
   }
@@ -61,5 +61,17 @@ export function* callDeleteSlate (action) {
     yield put(receiveDeleteSlate(action.slateId))
   } catch (error) {
     console.log('Unable to delete slate')
+  }
+}
+
+export function* watchCreateSlate () {
+  yield takeLatest(SlateConstants.CREATE_SLATE, callCreateSlate)
+}
+
+export function* callCreateSlate (action) {
+  try {
+    let response = yield call(Api.Admin.createSlate(action.params))
+  } catch (error) {
+    console.log('Unable to create slate')
   }
 }

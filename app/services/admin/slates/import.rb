@@ -1,7 +1,7 @@
 require 'csv'
 
-module Slates
-  module Admin
+module Admin
+  module Slates
     class Import
       attr_reader :csv_url, :name, :start_time
 
@@ -30,7 +30,7 @@ module Slates
           end
         end
 
-        true
+        ::Slates::ShowSerializer.new(@slate).serializable_hash
       rescue => e
         Rails.logger.fatal "Error occurred while uploading slate: #{e.message}"
         false

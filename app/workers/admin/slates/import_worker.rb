@@ -3,10 +3,11 @@ module Admin
     class ImportWorker < BaseWorker
       include Notifiable
 
-      sidekiq_options queue: :upload_slate_csv
+      sidekiq_options queue: :upload_slate_csv, retry: false
 
       def perform(opts)
-        payload = { success: Slates::Admin::Import.new(opts).perform }
+        opts = HashWithIndifferentAccess.new(opts)
+        payload = Admin::Slates::Import.new(opts).perform
 
         notify_user!(opts, payload)
       end

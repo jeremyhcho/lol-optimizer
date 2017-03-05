@@ -17,9 +17,9 @@ class PlayersSlateRow extends React.Component {
         <TableRowColumn>{ this.props.row.remote_id }</TableRowColumn>
         <TableRowColumn>{ this.props.row.name }</TableRowColumn>
         <TableRowColumn>{ this.props.row.position }</TableRowColumn>
-        <TableRowColumn>{ this.props.row.salary }</TableRowColumn>
-        <TableRowColumn>{ this.props.row.game_info }</TableRowColumn>
+        <TableRowColumn>${ this.props.row.salary }</TableRowColumn>
         <TableRowColumn>{ this.props.row.team_abbreviation }</TableRowColumn>
+        <TableRowColumn>{ this.props.row.game_info }</TableRowColumn>
       </TableRow>
     )
   }
