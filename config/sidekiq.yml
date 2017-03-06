@@ -1,5 +1,5 @@
 ---
 development:
-  :concurrency: 10
+  :concurrency: 3
   :queues:
     - upload_slate_csv
