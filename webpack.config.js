@@ -40,6 +40,10 @@ module.exports = {
     extensions: ["", ".js", ".jsx", ".scss"],
     root: [
       path.resolve('./frontend')
+    ],
+    modulesDirectories: [
+      'node_modules',
+      path.resolve(__dirname, './node_modules')
     ]
   }
 };
