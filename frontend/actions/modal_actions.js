@@ -3,10 +3,12 @@ export const SlateConstants = {
   CLOSE_MODAL: 'CLOSE_MODAL'
 }
 
-export const openModal = () => ({
-  type: SlateConstants.OPEN_MODAL
+export const openModal = (modalName) => ({
+  type: SlateConstants.OPEN_MODAL,
+  modalName
 })
 
-export const closeModal = () => ({
-  type: SlateConstants.CLOSE_MODAL
+export const closeModal = (modalName) => ({
+  type: SlateConstants.CLOSE_MODAL,
+  modalName
 })

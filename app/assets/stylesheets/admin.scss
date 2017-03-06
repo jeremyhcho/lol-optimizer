@@ -58,6 +58,7 @@
         padding-top: 45px;
 
         div[value='players'], div[value='teams'] {
+          overflow-x: hidden;
           div {
             &:nth-child(2) {
               > div {

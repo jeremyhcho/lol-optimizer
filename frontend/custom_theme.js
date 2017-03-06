@@ -60,5 +60,13 @@ export const CustomTheme = {
     backgroundColor: '#393E52',
     textColor: '#EEEEEE',
     selectedTextColor: '#EEEEEE'
+  },
+  refreshIndicator: {
+    loadingStrokeColor: '#F44346'
+  },
+  snackbar: {
+    textColor: '#EEEEEE',
+    backgroundColor: '#505464',
+    actionColor: '#2196F3'
   }
 }
