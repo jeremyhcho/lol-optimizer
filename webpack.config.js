@@ -21,7 +21,7 @@ module.exports = {
         }
       },
       {
-        test: /(\.scss|\.css)$/,
+        test: /\.css$/,
         loader: 'style!css?modules',
         include: /flexboxgrid/,
       }
@@ -36,7 +36,7 @@ module.exports = {
   ],
   devtool: 'source-maps',
   resolve: {
-    extensions: ["", ".js", ".jsx" ],
+    extensions: ["", ".js", ".jsx", ".scss"],
     root: [
       path.resolve('./frontend')
     ]
