@@ -14,7 +14,7 @@ module.exports = {
     filename: "bundle.js"
   },
   resolve: {
-    extensions: ["", ".js", ".jsx", ".scss"],
+    extensions: ["", ".js", ".jsx", ".css", ".scss"],
     root: [
       path.resolve('./frontend')
     ],
