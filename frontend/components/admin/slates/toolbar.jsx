@@ -4,7 +4,7 @@ import React from 'react'
 import DatePicker from 'material-ui/DatePicker'
 
 // Grid
-import { Grid, Row, Col } from 'react-flexbox-grid'
+import { Grid, Row, Col } from 'react-styled-flexboxgrid'
 
 class SlatesToolbar extends React.Component {
   constructor (props) {

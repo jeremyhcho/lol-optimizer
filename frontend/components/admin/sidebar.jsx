@@ -15,7 +15,7 @@ import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 
 // Grid
-import { Row, Col } from 'react-flexbox-grid'
+import { Row, Col } from 'react-styled-flexboxgrid'
 
 const sideBarOptions = [
   { name: 'Slates', icon: 'fa fa-server', route: '/admin/slates' },

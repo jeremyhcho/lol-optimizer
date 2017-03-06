@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import PlayersSlateTable from 'components/admin/players_slates/table'
 
 // Grid
-import { Grid, Row, Col } from 'react-flexbox-grid'
+import { Grid, Row, Col } from 'react-styled-flexboxgrid'
 
 // Actions
 import { fetchSlate } from 'actions/admin/slate_actions'

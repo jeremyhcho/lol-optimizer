@@ -7,7 +7,7 @@ import { fetchSlates } from 'actions/admin/slate_actions'
 import { openModal } from 'actions/modal_actions'
 
 // Grid
-import { Grid, Row, Col } from 'react-flexbox-grid'
+import { Grid, Row, Col } from 'react-styled-flexboxgrid'
 
 // Components
 import SlatesToolbar from './toolbar'

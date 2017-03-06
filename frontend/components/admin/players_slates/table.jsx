@@ -2,7 +2,7 @@ import React from 'react'
 import withRouter from 'react-router'
 
 // Grid
-import { Row, Col } from 'react-flexbox-grid'
+import { Row, Col } from 'react-styled-flexboxgrid'
 
 // Material UI
 import {

@@ -5,7 +5,7 @@ import AdminSidebar from 'components/admin/sidebar'
 import AdminTopNav from 'components/admin/top_nav'
 
 // Grid
-import { Grid, Row, Col } from 'react-flexbox-grid'
+import { Grid, Row, Col } from 'react-styled-flexboxgrid'
 
 class AdminLayout extends React.Component {
   constructor (props) {
