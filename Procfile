@@ -1,1 +1,1 @@
-worker: bundle exec sidekiq -q upload_slate_csv
+worker: bundle exec sidekiq -c 5 -v
