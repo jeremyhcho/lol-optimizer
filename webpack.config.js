@@ -1,5 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
+var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -7,9 +8,20 @@ module.exports = {
   entry: {
     js: ['babel-polyfill', './frontend/index.jsx']
   },
+  devtool: 'inline-source-maps',
   output: {
     path: path.join(__dirname, 'app', 'assets', 'javascripts'),
     filename: "bundle.js"
+  },
+  resolve: {
+    extensions: ["", ".js", ".jsx", ".scss"],
+    root: [
+      path.resolve('./frontend')
+    ],
+    modulesDirectories: [
+      'node_modules',
+      path.resolve(__dirname, './node_modules')
+    ]
   },
   module: {
     loaders: [
@@ -27,6 +39,7 @@ module.exports = {
       }
     ]
   },
+  postcss: [autoprefixer],
   plugins: [
     new webpack.DefinePlugin({
       'process.env':{
@@ -34,16 +47,5 @@ module.exports = {
       }
     }),
     new ExtractTextPlugin('example.css', { allChunks: true })
-  ],
-  devtool: 'source-maps',
-  resolve: {
-    extensions: ["", ".js", ".jsx", ".scss"],
-    root: [
-      path.resolve('./frontend')
-    ],
-    modulesDirectories: [
-      'node_modules',
-      path.resolve(__dirname, './node_modules')
-    ]
-  }
+  ]
 };
