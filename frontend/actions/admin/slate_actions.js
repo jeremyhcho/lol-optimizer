@@ -7,8 +7,13 @@ export const SlateConstants = {
   DELETE_SLATE: 'DELETE_SLATE',
   RECEIVE_DELETE_SLATE: 'RECEIVE_DELETE_SLATE',
   CREATE_SLATE: 'CREATE_SLATE',
-  SET_SLATE: 'SET_SLATE'
+  SET_SLATE: 'SET_SLATE',
+  SLATES_FETCHING: 'SLATES_FETCHING'
 }
+
+export const slatesFetching = () => ({
+  type: SlateConstants.SLATES_FETCHING
+})
 
 export const fetchSlates = (dateParams) => ({
   type: SlateConstants.FETCH_SLATES,

@@ -12,7 +12,8 @@ import { Grid, Row, Col } from 'react-flexbox-grid'
 // Components
 import SlatesToolbar from './toolbar'
 import SlatesTable from './table'
-import CreateSlateModal from './modals/create_slate'
+import CreateSlateModal from 'components/modals/admin/create_slate'
+import Loading from 'components/shared/loading'
 
 // Material UI
 import Paper from 'material-ui/Paper'
@@ -58,6 +59,14 @@ class SlatesIndex extends React.Component {
       to: this.state.to.toString()
     })
   }
+  
+  renderSlatesTable () {
+    if (this.props.slatesFetching) {
+      return <Loading />
+    } else {
+      return <SlatesTable slates={ this.props.slates } />
+    }
+  }
 
   render () {
     return (
@@ -79,8 +88,10 @@ class SlatesIndex extends React.Component {
             />
           </Paper>
 
-          <Paper rounded={ false } style={{ padding: '20px', marginTop: '35px' }}>
-            <SlatesTable slates={ this.props.slates }/>
+          <Paper
+            rounded={ false }
+            style={{ minHeight: '80px', position: 'relative', padding: '20px', marginTop: '35px' }}>
+            { this.renderSlatesTable() }
           </Paper>
         </Col>
         
@@ -91,12 +102,13 @@ class SlatesIndex extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  slates: state.admin.slates.slatesList
+  slates: state.admin.slates.slatesList,
+  slatesFetching: state.admin.slates.slatesFetching
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchSlates: (dateParams) => dispatch(fetchSlates(dateParams)),
-  openModal: () => dispatch(openModal())
+  openModal: () => dispatch(openModal('createSlate'))
 })
 
 export default connect(

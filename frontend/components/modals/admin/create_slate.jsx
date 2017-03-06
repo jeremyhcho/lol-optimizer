@@ -21,11 +21,18 @@ import { Grid, Row, Col } from 'react-flexbox-grid'
 import ReactS3Uploader from 'react-s3-uploader'
 
 // Services
-import PusherNotification from 'util/pusher'
+import PusherNotification from 'utils/pusher'
+import isEmpty from 'lodash/isEmpty'
+
+// Validations
+import { runValidators } from 'utils/form/validation'
+import slateValidations from 'validations/admin/slate_validations'
 
 const initialState = {
   fileUploading: false,
   isSubmitting: false,
+  validationErrors: {},
+  showErrors: false,
   name: '',
   date: '',
   time: '',
@@ -37,12 +44,14 @@ class CreateSlateModal extends React.Component {
     super(props)
     
     this.state = initialState
+    this.state.validationErrors = runValidators(this.state, slateValidations)
 
     this.onUploadFinish = this.onUploadFinish.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.createSlate = this.createSlate.bind(this)
     this.slateUploaded = this.slateUploaded.bind(this)
     this.handleUploaderClick = this.handleUploaderClick.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
   
   handleUploaderClick (e) {
@@ -54,39 +63,77 @@ class CreateSlateModal extends React.Component {
   onUploadFinish (signedUrl, file) {
     this.setState({
       fileUploading: false,
-      csvUrl: `${signedUrl.signedUrl.split('?')[0]}`
+      csvUrl: `${signedUrl.signedUrl.split('?')[0]}`,
+      validationErrors: runValidators({
+        ...this.state,
+        csvUrl: `${signedUrl.signedUrl.split('?')[0]}`
+      }, slateValidations)
     })
   }
   
   handleChange (field) {
-    return (e) => this.setState({ [field]: e.currentTarget.value })
+    return (e) => (
+      this.setState({
+        ...this.state,
+        [field]: e.currentTarget.value,
+        validationErrors: runValidators({
+          ...this.state,
+          [field]: e.currentTarget.value
+        }, slateValidations)
+      })
+    )
   }
   
   handleDateTimeChange (field) {
-    return (e, dateTime) => this.setState({ [field]: dateTime })
+    return (e, dateTime) => (
+      this.setState({
+        ...this.state,
+        [field]: dateTime,
+        validationErrors: runValidators({
+          ...this.state,
+          [field]: dateTime
+        }, slateValidations)
+      })
+    )
   }
   
   createSlate () {
-    this.setState({ isSubmitting: true })
-    this.props.createSlate({
-      csv_url: this.state.csvUrl,
-      name: this.state.name,
-      start_date: this.state.date,
-      start_time: this.state.time
-    })
+    if (isEmpty(this.state.validationErrors)) {
+      this.setState({ isSubmitting: true })
+      this.props.createSlate({
+        csv_url: this.state.csvUrl,
+        name: this.state.name,
+        start_date: this.state.date,
+        start_time: this.state.time
+      })
+    } else {
+      this.setState({ showErrors: true })
+    }
   }
   
   slateUploaded (payload) {
-    this.props.closeModal()
-    this.setState(initialState)
+    this.closeModal()
     this.props.receiveSlate(payload)
+  }
+  
+  closeModal () {
+    this.setState(initialState)
+    this.props.closeModal()
+  }
+  
+  formError (field) {
+    if (this.state.showErrors) {
+      return this.state.validationErrors[field]
+    } else {
+      return ''
+    }
   }
 
   render () {
     const createSlateActions = [
       <FlatButton
         label="Cancel"
-        onTouchTap={ this.props.closeModal }
+        onTouchTap={ this.closeModal }
       />,
       <RaisedButton
         label={ this.state.isSubmitting ? 'Creating...' : 'Create' }
@@ -103,7 +150,7 @@ class CreateSlateModal extends React.Component {
         actions={ createSlateActions }
         modal={ true }
         open={ this.props.isOpen }
-        onRequestClose={ this.props.closeModal }
+        onRequestClose={ this.closeModal }
         autoScrollBodyContent={ true }
         bodyStyle={{ padding: '60px 0' }}
         className='create-slate-modal'
@@ -115,6 +162,7 @@ class CreateSlateModal extends React.Component {
               hintText='Name'
               onChange={ this.handleChange('name') }
               value={ this.state.name }
+              errorText={ this.formError('name') }
             />
           </Col>
         </Row>
@@ -124,6 +172,7 @@ class CreateSlateModal extends React.Component {
             <DatePicker
               hintText='Start date'
               onChange={ this.handleDateTimeChange('date') }
+              errorText={ this.formError('date') }
             />
           </Col>
 
@@ -131,6 +180,7 @@ class CreateSlateModal extends React.Component {
             <TimePicker
               hintText='Start time'
               onChange={ this.handleDateTimeChange('time') }
+              errorText={ this.formError('time') }
             />
           </Col>
         </Row>
@@ -142,6 +192,7 @@ class CreateSlateModal extends React.Component {
               onChange={ this.handleChange('csvUrl') }
               value={ this.state.csvUrl }
               style={{ width: '350px' }}
+              errorText={ this.formError('csvUrl') }
             />
           </Col>
 
@@ -172,11 +223,11 @@ class CreateSlateModal extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  isOpen: state.modal.isOpen
+  isOpen: state.modal.createSlate
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  closeModal: () => dispatch(closeModal()),
+  closeModal: () => dispatch(closeModal('createSlate')),
   createSlate: (params) => dispatch(createSlate(params)),
   receiveSlate: (slate) => dispatch(receiveSlate(slate))
 })

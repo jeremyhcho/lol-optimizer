@@ -1,7 +1,6 @@
 // Sagas
 import { watchLoginAsync, watchSignupAsync } from 'sagas/session/sessions_saga'
 import {
-  watchUploadSlateCsvAsync,
   watchFetchSlates,
   watchFetchSlate,
   watchDeleteSlate,
@@ -13,7 +12,6 @@ export default function* rootSaga () {
     watchLoginAsync(),
     watchSignupAsync(),
     watchFetchSlates(),
-    watchUploadSlateCsvAsync(),
     watchFetchSlate(),
     watchDeleteSlate(),
     watchCreateSlate()

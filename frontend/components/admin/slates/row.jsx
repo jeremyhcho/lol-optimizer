@@ -22,7 +22,7 @@ class SlatesRow extends React.Component {
 
     this.openDropdown = this.openDropdown.bind(this)
     this.closeDropdown = this.closeDropdown.bind(this)
-    this.editSlate = this.editSlate.bind(this)
+    this.viewSlate = this.viewSlate.bind(this)
   }
   
   openDropdown (e) {
@@ -34,7 +34,7 @@ class SlatesRow extends React.Component {
     this.props.toggleRowDropdown(0)
   }
   
-  editSlate (e) {
+  viewSlate (e) {
     e.preventDefault()
     this.props.router.push({ pathname: `/admin/slates/${this.props.slate.id}` })
   }
@@ -57,14 +57,14 @@ class SlatesRow extends React.Component {
             targetOrigin={{ horizontal: 'left', vertical: 'top' }}
           >
             <MenuItem
-              primaryText='Edit'
+              primaryText='View'
               leftIcon={
                 <FontIcon
                   style={{ color: '#EEEEEE', fontSize: '16px', height: '16px', width: '16px' }}
-                  className='material-icons'>mode_edit
+                  className='material-icons'>visibility
                 </FontIcon>
               }
-              onTouchTap={ this.editSlate }
+              onTouchTap={ this.viewSlate }
               innerDivStyle={{ padding: '0px 24px 0px 74px' }}
               style={{ color: '#EEEEEE', fontSize: '14px', minHeight: '40px', lineHeight: '40px' }}
             />

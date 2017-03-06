@@ -3,7 +3,8 @@ import { SlateConstants } from 'actions/admin/slate_actions'
 
 const _nullSlates = Object.freeze({
   slatesList: [],
-  slate: null
+  slate: null,
+  slatesFetching: false
 })
 
 let slatesList
@@ -11,7 +12,7 @@ let slatesList
 const SlatesReducer = (state = _nullSlates, action) => {
   switch (action.type) {
     case SlateConstants.RECEIVE_SLATES:
-      return { ...state, slatesList: action.slates }
+      return { ...state, slatesList: action.slates, slatesFetching: false }
       
     case SlateConstants.RECEIVE_SLATE:
       return { ...state, slatesList: [...state.slatesList, action.slate] }
@@ -25,6 +26,9 @@ const SlatesReducer = (state = _nullSlates, action) => {
       
     case SlateConstants.SET_SLATE:
       return { ...state, slate: action.slate }
+      
+    case SlateConstants.SLATES_FETCHING:
+      return { ...state, slatesFetching: true }
 
     default:
       return state

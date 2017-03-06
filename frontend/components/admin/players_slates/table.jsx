@@ -12,13 +12,12 @@ import {
   TableHeaderColumn,
   TableRow
 } from 'material-ui/Table'
-import CircularProgress from 'material-ui/CircularProgress'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import RaisedButton from 'material-ui/RaisedButton'
 import FontIcon from 'material-ui/FontIcon'
 
 // Components
 import PlayersSlateRow from './row'
+import Loading from 'components/shared/loading'
 
 class PlayersSlateTable extends React.Component {
   constructor (props) {
@@ -29,7 +28,6 @@ class PlayersSlateTable extends React.Component {
     }
     
     this.changeTab = this.changeTab.bind(this)
-    this.navigateToSlates = this.navigateToSlates.bind(this)
   }
 
   renderPlayerOrTeamRows () {
@@ -80,7 +78,7 @@ class PlayersSlateTable extends React.Component {
         </Table>
       )
     } else {
-      return <CircularProgress />
+      return <Loading />
     }
   }
   
@@ -92,40 +90,26 @@ class PlayersSlateTable extends React.Component {
     }
   }
 
-  navigateToSlates () {
-    this.props.router.push('/admin/slates')
-  }
-
   render () {
     const paddingTop = this.props.slate ? '0px' : '100px'
 
     return (
-      <Col xs={ 12 } style={{ position: 'relative', padding: '50px 45px 30px 45px' }}>
-        <RaisedButton
-          label="Slates"
-          icon={
-            <FontIcon
-              className='material-icons'
-              style={{ fontSize: '12px' }}>keyboard_arrow_left
-            </FontIcon>
-          }
-          style={{ position: 'absolute', top: 0, left: '45px' }}
-          onTouchTap={ this.navigateToSlates }
-        />
+      <Row style={{ marginTop: '20px' }}>
+        <Col xs={ 12 }>
+          <Tabs
+            value={ this.state.show }
+            onChange={ this.changeTab }
+            tabTemplateStyle={{ textAlign: 'center', paddingTop: paddingTop }}>
+            <Tab label='Players' value='players' className='players'>
+              { this.renderTable() }
+            </Tab>
 
-        <Tabs
-          value={ this.state.show }
-          onChange={ this.changeTab }
-          tabTemplateStyle={{ textAlign: 'center', paddingTop: paddingTop }}>
-          <Tab label='Players' value='players' className='players'>
-            { this.renderTable() }
-          </Tab>
-
-          <Tab label='Teams' value='teams' className='teams'>
-            { this.renderTable() }
-          </Tab>
-        </Tabs>
-      </Col>
+            <Tab label='Teams' value='teams' className='teams'>
+              { this.renderTable() }
+            </Tab>
+          </Tabs>
+        </Col>
+      </Row>
     )
   }
 }
