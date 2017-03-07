@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 
 // Grid
-import { Row, Col } from 'react-flexbox-grid'
+import { Row, Col } from 'react-styled-flexboxgrid'
 
 // Actions
 import { closeModal } from 'actions/modal_actions'
