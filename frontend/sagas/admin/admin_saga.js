@@ -7,23 +7,13 @@ import {
   receiveSlates,
   setSlate,
   deleteSlate,
-  receiveDeleteSlate
+  receiveDeleteSlate,
+  slatesFetching
 } from 'actions/admin/slate_actions'
+import { openSnackbar } from 'actions/snackbar_actions'
 
 // Api
 import Api from 'api/root_api'
-
-export function* watchUploadSlateCsvAsync () {
-  yield takeLatest(SlateConstants.UPLOAD_SLATE_CSV, uploadSlateCsv)
-}
-
-export function* uploadSlateCsv (action) {
-  try {
-    let response = yield call(Api.Admin.uploadSlateCsv(action.file))
-  } catch (error) {
-    console.log('Error occured while uploading slate CSV.')
-  }
-}
 
 export function* watchFetchSlates () {
   yield takeEvery(SlateConstants.FETCH_SLATES, fetchSlates)
@@ -31,10 +21,11 @@ export function* watchFetchSlates () {
 
 export function* fetchSlates (action) {
   try {
+    yield put(slatesFetching())
     let response = yield call(Api.Admin.fetchSlates(action.dateParams))
     yield put(receiveSlates(response.data.response))
   } catch (error) {
-    console.log('Unable to fetch slates')
+    yield put(openSnackbar('Uh oh! Something went wrong.'))
   }
 }
 
@@ -47,7 +38,10 @@ export function* fetchSlate (action) {
     let response = yield call(Api.Admin.fetchSlate(action.slateId, action.params))
     yield put(setSlate(response.data.response))
   } catch (error) {
-    console.log('Unable to fetch slate')
+    yield put(openSnackbar(
+      'Uh oh! Something went wrong.',
+      { more: error.message }
+    ))
   }
 }
 
@@ -58,9 +52,13 @@ export function* watchDeleteSlate () {
 export function* callDeleteSlate (action) {
   try {
     let response = yield call(Api.Admin.deleteSlate(action.slateId))
+    yield put(openSnackbar('The slate was successfully deleted'))
     yield put(receiveDeleteSlate(action.slateId))
   } catch (error) {
-    console.log('Unable to delete slate')
+    yield put(openSnackbar(
+      'Uh oh! Something went wrong.',
+      { more: error.message }
+    ))
   }
 }
 
@@ -72,6 +70,9 @@ export function* callCreateSlate (action) {
   try {
     let response = yield call(Api.Admin.createSlate(action.params))
   } catch (error) {
-    console.log('Unable to create slate')
+    yield put(openSnackbar(
+      'Uh oh! Something went wrong.',
+      { more: error.message }
+    ))
   }
 }
