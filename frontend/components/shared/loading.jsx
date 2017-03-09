@@ -11,9 +11,12 @@ class Loading extends React.Component {
       <div style={{
           width: '40px',
           height: '40px',
-          margin: '0 auto',
-          position: 'relative' }}>
-        <RefreshIndicator 
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          position: 'absolute' }}>
+        <RefreshIndicator
+          className='loading'
           size={ 40 }
           top={ 0 }
           left={ 0 }

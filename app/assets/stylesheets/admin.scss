@@ -59,11 +59,20 @@
 
         div[value='players'], div[value='teams'] {
           overflow-x: hidden;
-          div {
-            &:nth-child(2) {
-              > div {
-                background-color: #2196F3 !important;
-              }
+          > div:nth-child(2) {
+            > div {
+              background-color: #2196F3 !important;
+            }
+          }
+        }
+      }
+      
+      .stats-wrapper {
+        div[value='players'], div[value='teams'] {
+          overflow-x: hidden;
+          > div:nth-child(2) {
+            > div {
+              background-color: #2196F3 !important;
             }
           }
         }

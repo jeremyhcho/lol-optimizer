@@ -19,6 +19,7 @@ import { Row, Col } from 'react-styled-flexboxgrid'
 
 const sideBarOptions = [
   { name: 'Slates', icon: 'fa fa-server', route: '/admin/slates' },
+  { name: 'Stats', icon: 'fa fa-line-chart', route: '/admin/stats' },
   { name: 'Articles', icon: 'fa fa-newspaper-o', route: '/admin/articles' }
 ]
 

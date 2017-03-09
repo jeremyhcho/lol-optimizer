@@ -78,7 +78,11 @@ class PlayersSlateTable extends React.Component {
         </Table>
       )
     } else {
-      return <Loading />
+      return (
+        <Row style={{ minHeight: '300px', position: 'relative' }}>
+          <Loading />
+        </Row>  
+      )
     }
   }
   
@@ -100,11 +104,11 @@ class PlayersSlateTable extends React.Component {
             value={ this.state.show }
             onChange={ this.changeTab }
             tabTemplateStyle={{ textAlign: 'center', paddingTop: paddingTop }}>
-            <Tab label='Players' value='players' className='players'>
+            <Tab label='Players' value='players'>
               { this.renderTable() }
             </Tab>
 
-            <Tab label='Teams' value='teams' className='teams'>
+            <Tab label='Teams' value='teams'>
               { this.renderTable() }
             </Tab>
           </Tabs>
