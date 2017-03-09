@@ -9,7 +9,7 @@ import PlayersSlateTable from 'components/admin/players_slates/table'
 import { Grid, Row, Col } from 'react-styled-flexboxgrid'
 
 // Actions
-import { fetchSlate } from 'actions/admin/slate_actions'
+import { fetchSlate, setSlate } from 'actions/admin/slate_actions'
 import { openModal } from 'actions/modal_actions'
 
 // Material UI
@@ -21,6 +21,10 @@ class SlateShow extends React.Component {
     super(props)
 
     this.navigateToSlates = this.navigateToSlates.bind(this)
+  }
+  
+  componentWillUnmount () {
+    this.props.setSlate(null)
   }
   
   componentDidMount () {
@@ -79,7 +83,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchSlate: (slateId, params) => dispatch(fetchSlate(slateId, params))
+  fetchSlate: (slateId, params) => dispatch(fetchSlate(slateId, params)),
+  setSlate: (slate) => dispatch(setSlate(slate))
 })
 
 export default connect(

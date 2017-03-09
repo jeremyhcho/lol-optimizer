@@ -68,5 +68,11 @@ export const CustomTheme = {
     textColor: '#EEEEEE',
     backgroundColor: '#505464',
     actionColor: '#2196F3'
+  },
+  menu: {
+    containerBackgroundColor: '#9EA3B4'
+  },
+  menuItem: {
+    selectedTextColor: '#EEEEEE'
   }
 }
