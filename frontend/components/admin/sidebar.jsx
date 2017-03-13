@@ -2,9 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-// Actions
 import { selectSection }  from 'actions/current_section/current_section_actions'
-
 // Material UI
 import Drawer from 'material-ui/Drawer'
 import ActionFlightTakeoff from 'material-ui/svg-icons/action/flight-takeoff';
@@ -26,7 +24,7 @@ const sideBarOptions = [
 class AdminSidebar extends React.Component {
   constructor (props) {
     super(props)
-    
+
     this.handleClick = this.handleClick.bind(this)
   }
 
@@ -37,7 +35,7 @@ class AdminSidebar extends React.Component {
       this.props.router.push({ pathname: option.route })
     }
   }
-  
+
   renderSidebarOptions () {
     return (
       sideBarOptions.map((option, index) => (

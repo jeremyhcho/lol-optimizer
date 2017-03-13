@@ -15,7 +15,7 @@ export const email = (text) => {
                         'name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}',
                         '\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$'
                       ].join(''), 'i')
-                      
+
   if (text.search(regex) > -1) {
     return
   } else {
@@ -29,4 +29,12 @@ export const minLength = (min) => {
 
 export const csvUrlFormat = (text) => {
   return text.match(/.(.csv)$/g) ? null : ErrorMessages.csvUrlFormat
+}
+
+export const confirmPassword = (confirmpassword, password) => {
+  if(password != confirmpassword){
+    return ErrorMessages.confirmPassword
+  } else {
+    return
+  }
 }
