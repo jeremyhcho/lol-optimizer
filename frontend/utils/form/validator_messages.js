@@ -16,3 +16,7 @@ export const minLength = (length) => {
 export const csvUrlFormat = () => {
   return 'Enter a valid CSV url'
 }
+
+export const confirmPassword = (test) => {
+  return 'Please make sure your password and confirmpassword are identical'
+}
