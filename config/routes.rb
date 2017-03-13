@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
         resources :slates, only: [:index, :show, :create, :update, :destroy]
       end
+
+      resources :users, only: [:create, :update, :destroy]
+      resource :session, only: [:create, :destroy]
+      resources :stats, only: [:index]
     end
   end
 
