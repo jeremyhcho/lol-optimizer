@@ -22,6 +22,7 @@ class SignupForm extends React.Component {
       showErrors: false,
       isSubmitting: false,
       user:{
+        full_name:'',
         email:'',
         password:''
       }
@@ -29,26 +30,28 @@ class SignupForm extends React.Component {
   }
 
   handleChange (field) {
-  return (e) => this.setState({
+  return (e) =>
+  this.setState({
     ...this.state, [field]: e.currentTarget.value,
-  error:runValidators({ ...this.state },signupValidation) })
+  error:runValidators({ ...this.state },signupValidation) });
+
   }
 
 createUser(){
+  this.setState({error:runValidators({ ...this.state },confirmpasswordValidation)})
   if(isEmpty(this.state.error)){
-    this.setState({ user:{ email:this.state.email, password:this.state.password },isSubmitting: true })
+    this.setState({ user:{user:{ email:this.state.email, password:this.state.password }},isSubmitting: true })
   }else{
     this.setState({ showErrors:true })
   }
 }
 
   handleClick(e){
-    this.setState({ error: runValidators({ ...this.state }, confirmpasswordValidation) })
-    this.setState({ error: runValidators({ ...this.state }, signupValidation) })
+    console.log("these are the eerror", this.state.error)
     if(this.state.isSubmitting==false){
       e.preventDefault();
     } else {
-      receiveCurrentUser(this.state.user);
+      this.props.signup(this.state.user)
    }
  }
 
@@ -71,7 +74,6 @@ createUser(){
          placeholder="email"
          onChange={ this.handleChange('email') }
          value={ this.state.email }
-         required
          />
        <ul>{ this.formError("email") }</ul>
 
@@ -82,6 +84,7 @@ createUser(){
          placeholder="password"
          onChange={this.handleChange('password')}
          value={ this.state.password }
+
          />
        <ul>{ this.formError("password") }</ul>
 

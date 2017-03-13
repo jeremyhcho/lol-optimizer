@@ -50,7 +50,7 @@ class LoginForm extends React.Component {
 
 	login(){
     if(isEmpty(this.state.error)){
-      this.setState({ user:{ email:this.state.email, password:this.state.password },isSubmitting: true })
+      this.setState({ user:{user:{ email:this.state.email, password:this.state.password }},isSubmitting: true })
     } else {
       this.setState({ showErrors:true })
     }
