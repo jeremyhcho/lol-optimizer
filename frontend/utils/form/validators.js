@@ -32,9 +32,11 @@ export const csvUrlFormat = (text) => {
 }
 
 export const confirmPassword = (confirmpassword, password) => {
-  if(password != confirmpassword){
-    return ErrorMessages.confirmPassword
-  } else {
+  console.log("this one is confirmPassowrd", confirmpassword)
+  console.log("this one is the password", password)
+  if(password == confirmpassword ){
     return
+  } else {
+    return ErrorMessages.confirmPassword
   }
 }
