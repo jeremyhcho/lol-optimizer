@@ -32,8 +32,6 @@ export const csvUrlFormat = (text) => {
 }
 
 export const confirmPassword = (confirmpassword, password) => {
-  console.log("this one is confirmPassowrd", confirmpassword)
-  console.log("this one is the password", password)
   if(password == confirmpassword ){
     return
   } else {
