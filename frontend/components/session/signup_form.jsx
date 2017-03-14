@@ -3,10 +3,13 @@ import React from 'react'
 //validation
 import { runValidators } from 'utils/form/validation'
 import signupValidation from 'validations/sessions/signup/signup_validations'
-import confirmpasswordValidation from 'validations/sessions/confirmpassword/confirmpassword_validation'
 
 //actions
-import { signup, receiveCurrentUser } from 'actions/session/session_actions'
+import { signup } from 'actions/session/session_actions'
+
+//Material-ui
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton';
 
 //Services
 import isEmpty from 'lodash/isEmpty'
@@ -21,39 +24,27 @@ class SignupForm extends React.Component {
       error:{},
       showErrors: false,
       isSubmitting: false,
-      user:{
-        full_name:'',
-        email:'',
-        password:''
-      }
     }
   }
 
   handleChange (field) {
-  return (e) =>
-  this.setState({
+   return (e) =>
+    this.setState({
     ...this.state, [field]: e.currentTarget.value,
-  error:runValidators({ ...this.state },signupValidation) });
-
+    error:runValidators({ ...this.state },signupValidation) });
   }
 
-createUser(){
-  this.setState({error:runValidators({ ...this.state },confirmpasswordValidation)})
+createUser(e){
   if(isEmpty(this.state.error)){
-    this.setState({ user:{user:{ email:this.state.email, password:this.state.password }},isSubmitting: true })
+    this.props.signup({ user:{
+      email:this.state.email,
+      password:this.state.password
+    } })
   }else{
     this.setState({ showErrors:true })
+    e.preventDefault()
   }
 }
-
-  handleClick(e){
-    console.log("these are the eerror", this.state.error)
-    if(this.state.isSubmitting==false){
-      e.preventDefault();
-    } else {
-      this.props.signup(this.state.user)
-   }
- }
 
   formError(field){
     if(this.state.showErrors){
@@ -63,42 +54,28 @@ createUser(){
     }
   }
 
+
   render () {
     return(
-    <form className="signup-form" onSubmit={ this.handleClick.bind(this) }>
+    <form className="signup-form">
       <h1>Register</h1>
-        <input
-         className="signup-email"
-         name="email"
-         type="text"
-         placeholder="email"
-         onChange={ this.handleChange('email') }
-         value={ this.state.email }
-         />
-       <ul>{ this.formError("email") }</ul>
+      <TextField
+        hintText="email"
+        value={ this.state.email }
+        onChange={ this.handleChange("email") }
+        />
+      <TextField
+        hintText="password"
+        value={this.state.password}
+        onChange={ this.handleChange("password") }
+        />
 
-        <input
-         className="signup-password"
-         name="password"
-         type="password"
-         placeholder="password"
-         onChange={this.handleChange('password')}
-         value={ this.state.password }
-
-         />
-       <ul>{ this.formError("password") }</ul>
-
-       <input
-         className="signup-confirmpassword"
-         name="confirmpassword"
-         type="password"
-         placeholder="Confirm password"
-         onChange={this.handleChange('confirmpassword')}
-         value={ this.state.confirmpassword }
-         />
-        <ul>{ this.formError("confirmpassword") }</ul>
-
-     <button className="signup-button" type="submit" onClick={this.createUser.bind(this)}>Sign Up</button>
+      <TextField
+        hintText="confirmPassword"
+        value={this.state.confirmpassword}
+        onChange={ this.handleChange("confirmpassword") }
+        />
+      <RaisedButton label="Sign Up" primary={ true } onTouchTap={ this.createUser.bind(this) } />
     </form>
   )}
 }

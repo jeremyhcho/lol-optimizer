@@ -1,9 +1,11 @@
-import { validatorForConfirmPassword } from 'utils/form/validation'
-import { confirmPassword } from 'utils/form/validators'
+import { validate } from 'utils/form/validation'
+import { confirmPassword, required } from 'utils/form/validators'
 
 
-const confirmpasswordValidation = [
-  validatorForConfirmPassword('confirmpassword', 'password', 'confirmationPassword', confirmPassword)
+  const confirmPasswordValidation = [
+  validate('password', 'password', required),
+  validate('confirmPassword', 'password confirmation', required, confirmPassword)
 ]
+
 
 export default confirmpasswordValidation
