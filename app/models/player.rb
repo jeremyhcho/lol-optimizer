@@ -19,9 +19,23 @@ class Player < ActiveRecord::Base
 
   belongs_to :team, primary_key: :remote_id
   has_many :stats, class_name: 'PlayerStat', primary_key: :remote_id
+  has_many :red_team_matches,
+           through: :team,
+           primary_key: 'team_id',
+           foreign_key: 'red_team_id',
+           class_name: 'Match'
+
+  has_many :blue_team_matches,
+           through: :team,
+           primary_key: 'team_id',
+           foreign_key: 'blue_team_id',
+           class_name: 'Match'
+
   has_and_belongs_to_many :slates, primary_key: :remote_id
 
+  scope :active, -> { where(active: true) }
+
   def matches
-    team.matches
+    red_team_matches | blue_team_matches
   end
 end

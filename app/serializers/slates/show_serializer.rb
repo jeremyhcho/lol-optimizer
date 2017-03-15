@@ -3,14 +3,18 @@ module Slates
     attributes :id, :name, :start_time, :players, :teams
 
     def players
-      PlayersSlate.includes(:player).where(slate_id: object.id).map do |players_slate|
-        ::PlayersSlates::ShowSerializer.new(players_slate).serializable_hash
+      PlayersSlate.includes(:player, :prediction)
+                  .where(slate_id: object.id)
+                  .map do |players_slate|
+        ::PlayersSlates::ShowSerializer.new(players_slate, options).serializable_hash
       end
     end
 
     def teams
-      SlatesTeam.includes(:team).where(slate_id: object.id).map do |players_slate|
-        ::SlatesTeams::ShowSerializer.new(players_slate).serializable_hash
+      SlatesTeam.includes(:team, :prediction)
+                .where(slate_id: object.id)
+                .map do |players_slate|
+        ::SlatesTeams::ShowSerializer.new(players_slate, options).serializable_hash
       end
     end
 

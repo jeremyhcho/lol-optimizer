@@ -4,14 +4,13 @@ module Season
       def perform
         Team.transaction do
           data['proTeams'].each do |team|
-            next if Team.find_by(remote_id: team['id'])
-            Team.create!(
-              remote_id: team['id'],
-              name: team['name'],
-              league: team['league'],
-              short_name: team['shortName'],
-              active: true
-            )
+            raise "Failed finding or creating team: #{team['id']}" unless
+              Team.create_with(remote_id: team['id']).find_or_create_by(
+                name: team['name'],
+                league: team['league'],
+                short_name: team['shortName'],
+                active: true
+              )
           end
         end
       rescue => e

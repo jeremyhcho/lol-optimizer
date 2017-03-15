@@ -5,7 +5,8 @@ module SlatesTeams
                :position,
                :game_info,
                :salary,
-               :team_abbreviation
+               :team_abbreviation,
+               :prediction
 
     def remote_id
       object.team.remote_id
@@ -21,6 +22,14 @@ module SlatesTeams
 
     def team_abbreviation
       object.team_abbrev
+    end
+
+    def prediction
+      Predictions::Teams::ShowSerializer.new(object).serializable_hash
+    end
+
+    def include_prediction?
+      options[:with_predictions].present?
     end
   end
 end

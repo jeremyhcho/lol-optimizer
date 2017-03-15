@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 // Material UI
 import {
@@ -6,12 +7,25 @@ import {
   TableBody,
   TableHeader,
   TableHeaderColumn,
-  TableRow
+  TableRow,
+  TableRowColumn
 } from 'material-ui/Table'
 
 class TeamStatsTable extends React.Component {
    constructor (props) {
      super(props)
+   }
+   
+   renderTable () {
+     return (
+       this.props.teams.map(team => (
+         <TableRow hoverable={ true } key={ team.remote_id }>
+           <TableRowColumn>{ team.remote_id }</TableRowColumn>
+           <TableRowColumn>{ team.name }</TableRowColumn>
+           <TableRowColumn>{ team.position }</TableRowColumn>
+         </TableRow>
+       ))
+     )
    }
    
    render () {
@@ -24,9 +38,6 @@ class TeamStatsTable extends React.Component {
              <TableHeaderColumn>ID</TableHeaderColumn>
              <TableHeaderColumn>Name</TableHeaderColumn>
              <TableHeaderColumn>Position</TableHeaderColumn>
-             <TableHeaderColumn>Salary</TableHeaderColumn>
-             <TableHeaderColumn>Team</TableHeaderColumn>
-             <TableHeaderColumn>Game Info</TableHeaderColumn>
            </TableRow>
          </TableHeader>
    
@@ -34,10 +45,15 @@ class TeamStatsTable extends React.Component {
            displayRowCheckbox={ false }
            adjustForCheckbox={ false }
            showRowHover={ true }>
+           { this.renderTable() }
          </TableBody>
        </Table>
      )
    }
 }
 
-export default TeamStatsTable
+const mapStateToProps = (state) => ({
+  teams: state.admin.stats.teams
+})
+
+export default connect(mapStateToProps)(TeamStatsTable)

@@ -4,15 +4,14 @@ module Season
       def perform
         Match.transaction do
           data['proMatches'].each do |match|
-            next if Match.find_by(remote_id: match['id'])
-            Match.create!(
-              remote_id: match['id'],
-              blue_team_id: match['blueTeamId'],
-              red_team_id: match['redTeamId'],
-              time: match['time'],
-              week: match['week'],
-              winner: match['winner']
-            )
+            raise "Failed finding or creating match: #{match['id']}" unless
+              Match.create_with(remote_id: match['id']).find_or_create_by(
+                blue_team_id: match['blueTeamId'],
+                red_team_id: match['redTeamId'],
+                time: match['time'],
+                week: match['week'],
+                winner: match['winner']
+              )
           end
         end
       rescue => e
