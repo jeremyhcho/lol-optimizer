@@ -1,5 +1,4 @@
 export const SlateConstants = {
-  UPLOAD_SLATE_CSV: 'UPLOAD_CSV',
   FETCH_SLATES: 'FETCH_SLATES',
   RECEIVE_SLATES: 'RECEIVE_SLATES',
   FETCH_SLATE: 'FETCH_SLATE',
@@ -8,7 +7,8 @@ export const SlateConstants = {
   RECEIVE_DELETE_SLATE: 'RECEIVE_DELETE_SLATE',
   CREATE_SLATE: 'CREATE_SLATE',
   SET_SLATE: 'SET_SLATE',
-  SLATES_FETCHING: 'SLATES_FETCHING'
+  SLATES_FETCHING: 'SLATES_FETCHING',
+  RESET_SLATES: 'RESET_SLATES'
 }
 
 export const slatesFetching = () => ({
@@ -54,4 +54,8 @@ export const receiveDeleteSlate = (slateId) => ({
 export const createSlate = (params) => ({
   type: SlateConstants.CREATE_SLATE,
   params
+})
+
+export const resetSlates = () => ({
+  type: SlateConstants.RESET_SLATE
 })

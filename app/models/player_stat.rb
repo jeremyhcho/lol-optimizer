@@ -14,7 +14,6 @@
 
 class PlayerStat < ActiveRecord::Base
   validates :player_id, presence: true
-  validates :team_id, presence: true
   validates :match_id, presence: true
   validates :game_number, presence: true
   validates :stats, presence: true

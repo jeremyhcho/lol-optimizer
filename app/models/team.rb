@@ -19,12 +19,14 @@ class Team < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :players, primary_key: :remote_id
-  has_many :red_team_matches, class_name: 'Match', foreign_key: :red_team_id
-  has_many :blue_team_matches, class_name: 'Match', foreign_key: :blue_team_id
+  has_many :red_team_matches, class_name: 'Match', foreign_key: :red_team_id, primary_key: :remote_id
+  has_many :blue_team_matches, class_name: 'Match', foreign_key: :blue_team_id, primary_key: :remote_id
   has_many :stats, class_name: 'TeamStat', primary_key: :remote_id
   has_and_belongs_to_many :slates, primary_key: :remote_id
 
+  scope :active, -> { where(active: true) }
+
   def matches
-    Match.where('red_team_id = ? OR blue_team_id = ?', remote_id, remote_id)
+    red_team_matches | blue_team_matches
   end
 end

@@ -8,7 +8,7 @@ module.exports = {
   entry: {
     js: ['babel-polyfill', './frontend/index.jsx']
   },
-  devtool: 'eval-source-map',
+  devtool: 'cheap-module-source-map',
   output: {
     path: path.join(__dirname, 'app', 'assets', 'javascripts'),
     filename: "bundle.js"
@@ -17,6 +17,10 @@ module.exports = {
     extensions: ["", ".js", ".jsx", ".css", ".scss"],
     root: [
       path.resolve('./frontend')
+    ],
+    modulesDirectories: [
+      'node_modules',
+      path.resolve(__dirname, './node_modules')
     ]
   },
   module: {
@@ -28,6 +32,10 @@ module.exports = {
         query: {
           presets: ['babel-preset-es2015', 'babel-preset-react', 'babel-preset-stage-2']
         }
+      },
+      {
+        test: /(\.scss|\.css)$/,
+        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')
       }
     ]
   },
@@ -35,7 +43,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env':{
-        'NODE_ENV': JSON.stringify('development')
+        'NODE_ENV': JSON.stringify('production')
       }
     })
   ]

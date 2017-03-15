@@ -29,6 +29,9 @@ const SlatesReducer = (state = _nullSlates, action) => {
       
     case SlateConstants.SLATES_FETCHING:
       return { ...state, slatesFetching: true }
+      
+    case SlateConstants.RESET_SLATES:
+      return _nullSlates
 
     default:
       return state

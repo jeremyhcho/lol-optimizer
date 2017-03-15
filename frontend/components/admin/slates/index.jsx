@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 // Actions
-import { fetchSlates } from 'actions/admin/slate_actions'
+import { fetchSlates, resetSlates } from 'actions/admin/slate_actions'
 import { openModal } from 'actions/modal_actions'
 
 // Grid
@@ -40,6 +40,10 @@ class SlatesIndex extends React.Component {
       from: this.state.from.toString(),
       to: this.state.to.toString()
     })
+  }
+  
+  componentWillUnmount () {
+    this.props.resetSlates()
   }
   
   handleChangeToDate (e, date) {
@@ -108,7 +112,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchSlates: (dateParams) => dispatch(fetchSlates(dateParams)),
-  openModal: () => dispatch(openModal('createSlate'))
+  openModal: () => dispatch(openModal('createSlate')),
+  resetSlates: () => dispatch(resetSlates())
 })
 
 export default connect(

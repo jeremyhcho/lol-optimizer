@@ -20,6 +20,8 @@ class Match < ActiveRecord::Base
   validates :time, presence: true
   validates :week, presence: true
 
-  belongs_to :red_team, class_name: 'Team', primary_key: :red_team_id
-  belongs_to :blue_team, class_name: 'Team', primary_key: :blue_team_id
+  belongs_to :red_team, class_name: 'Team', foreign_key: :red_team_id, primary_key: :remote_id
+  belongs_to :blue_team, class_name: 'Team', foreign_key: :blue_team_id, primary_key: :remote_id
+
+  default_scope { where(winner: 1..Float::INFINITY) }
 end

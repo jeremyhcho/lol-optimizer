@@ -5,13 +5,12 @@ module Season
         Player.transaction do
           reset_active_players!
           data['proPlayers'].each do |player|
-            next if Player.find_by(remote_id: player['id'])
-            Player.create!(
-              remote_id: player['id'],
-              name: player['name'],
-              team_id: player['proTeamId'],
-              active: true
-            )
+            raise "Failed finding or creating player: #{player['id']}" unless
+              Player.create_with(remote_id: player['id']).find_or_create_by(
+                name: player['name'],
+                team_id: player['proTeamId'],
+                active: true
+              )
           end
         end
       rescue => e

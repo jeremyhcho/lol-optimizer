@@ -14,6 +14,9 @@ class Slate < ActiveRecord::Base
   validates :start_time, presence: true
   validates :start_time, uniqueness: true
 
+  has_many :players_slates, class_name: 'PlayersSlate'
+  has_many :slates_teams, class_name: 'SlatesTeam'
+
   has_and_belongs_to_many :players
   has_and_belongs_to_many :teams
 

@@ -5,6 +5,18 @@ describe Api::V1::Admin::SlatesController, type: :controller do
     DateTime.parse(date_str)
   end
 
+  before do
+    positions = ['ADC', 'MID', 'JNG', 'TOP', 'SUP']
+
+    2.times do
+      team = FactoryGirl.create :team
+
+      5.times do |i|
+        FactoryGirl.create :player, position: positions[i], team: team
+      end
+    end
+  end
+
   context '#create' do
     let(:api_call) do
       post :create, params
@@ -114,17 +126,10 @@ describe Api::V1::Admin::SlatesController, type: :controller do
     end
 
     let(:slate) do
-      FactoryGirl.create :slate, start_time: parse_date('Sat Feb 25 2017 17:41:36 GMT-0800 (PST)')
-    end
-
-    before do
-      3.times do |i|
-        FactoryGirl.create :players_slate, slate: slate, player_id: i + 1
-      end
-
-      2.times do |i|
-        FactoryGirl.create :slates_team, slate: slate, team_id: i + 1
-      end
+      FactoryGirl.create :slate,
+                         start_time: parse_date('Sat Feb 25 2017 17:41:36 GMT-0800 (PST)'),
+                         players: Player.all[0...3],
+                         teams: Team.all[0...2]
     end
 
     it 'should expose the slate info and all of the players and teams in the slate' do
