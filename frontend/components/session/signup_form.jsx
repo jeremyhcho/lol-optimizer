@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 //validation
 import { runValidators } from 'utils/form/validation'
@@ -9,7 +10,8 @@ import { signup } from 'actions/session/session_actions'
 
 //Material-ui
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton'
+import Paper from 'material-ui/Paper'
 
 //Services
 import isEmpty from 'lodash/isEmpty'
@@ -54,32 +56,46 @@ createUser(e){
     }
   }
 
-
   render () {
     return(
-    <form className="signup-form">
-      <h1>Register</h1>
-      <TextField
-        hintText="email"
-        value={ this.state.email }
-        onChange={ this.handleChange("email") }
-        />
-      <TextField
-        hintText="password"
-        value={this.state.password}
-        onChange={ this.handleChange("password") }
-        />
-
-      <TextField
-        hintText="confirmPassword"
-        value={this.state.confirmpassword}
-        onChange={ this.handleChange("confirmpassword") }
-        />
-      <RaisedButton label="Sign Up" primary={ true } onTouchTap={ this.createUser.bind(this) } />
-    </form>
+    <div>
+        <form className="signup-form">
+          <Paper className="paper-signup-form" zDepth={5}>
+            <h1>Register</h1>
+            <TextField
+              floatingLabelText="email"
+              value={ this.state.email }
+              onChange={ this.handleChange("email") }
+              errorText={ this.formError("email"),this.props.emailSignupError }
+              />
+            <TextField
+              floatingLabelText="password"
+              value={this.state.password}
+              onChange={ this.handleChange("password") }
+              errorText={ this.formError("password"),this.props.passwordSignupError }
+              />
+            <TextField
+              floatingLabelText="confirmPassword"
+              value={this.state.confirmpassword}
+              onChange={ this.handleChange("confirmpassword") }
+              errorText={ this.formError("confirmPassword") }
+              />
+            <RaisedButton label="Sign Up" onTouchTap={ this.createUser.bind(this) } />
+          </Paper>
+        </form>
+    </div>
   )}
 }
 
+const mapStateToProps = (state) => {
+  if(state.session.signupError){
+    return{
+      emailSignupError: state.session.signupError.messages.email,
+      passwordSignupError: state.session.signupError.messages.password[0]
+    }
+  }else{
+    return {}
+  }
+}
 
-
-export default SignupForm
+export default connect(mapStateToProps)(SignupForm)
