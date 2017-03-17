@@ -1,11 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 //actions
 import { login } from 'actions/session/session_actions'
 
 //material-ui
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton'
+import Paper from 'material-ui/Paper'
 
 //validation
 import { runValidators } from 'utils/form/validation'
@@ -61,31 +63,45 @@ class LoginForm extends React.Component {
 		return(
 			<div>
 				<form className="login-form">
+					<Paper className="paper-login-form" zDepth={5}>
 					<h1>Login</h1>
+
 					 <div>
 						<TextField
-							hintText="email"
+							floatingLabelText="email"
 							value={ this.state.email }
 							onChange={ this.handleChange("email") }
-							errorText={ this.formError("email") }
+							errorText={ this.formError("email"), this.props.loginErrorFromServer }
 							/>
 					</div>
 					 <div>
 						 <TextField
-							 hintText="password"
+							 floatingLabelText="password"
 							 value={ this.state.password }
 							 onChange={ this.handleChange("password") }
 							 errorText={ this.formError("password") }
 							 />
 						 </div>
 						 <div>
-							<RaisedButton label="login" primary={true} onTouchTap={this.login.bind(this)} />
+							<RaisedButton label="login" onTouchTap={this.login.bind(this)} />
 						</div>
+						<a className="login-forgot" href="#">Forgot Password?</a>
+					</Paper>
 				</form >
-				<a className="login-forgot" href="#">Forgot Password?</a>
+
 			</div>
 		)
 	}
 }
 
-export default LoginForm
+const mapStateToProps = (state) => {
+   if(state.session.loginError){
+	  return {
+	    loginErrorFromServer: state.session.loginError.error_description
+      }
+	  }else{
+		 return {}
+    }
+ }
+
+export default connect(mapStateToProps)(LoginForm)
