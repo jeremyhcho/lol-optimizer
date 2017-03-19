@@ -5,7 +5,13 @@ module Teams
                :name,
                :position,
                :stats
+
     def stats
+      return {} if relevant_stats.empty?
+      ::Admin::Stats::AverageParser.new(relevant_stats).perform
+    end
+
+    def relevant_stats
       object.stats.each_with_object([]) do |stat, arr|
         arr << stat.stats if match_ids.include?(stat.match_id)
         arr

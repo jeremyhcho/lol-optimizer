@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312014624) do
+ActiveRecord::Schema.define(version: 20170317030042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,13 +32,21 @@ ActiveRecord::Schema.define(version: 20170312014624) do
   add_index "matches", ["winner"], name: "index_matches_on_winner", using: :btree
 
   create_table "player_stats", force: :cascade do |t|
-    t.integer  "player_id",   null: false
+    t.integer  "player_id",    null: false
     t.integer  "team_id"
-    t.integer  "match_id",    null: false
-    t.integer  "game_number", null: false
-    t.text     "stats",       null: false
+    t.integer  "match_id",     null: false
+    t.integer  "game_number",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "kills"
+    t.integer  "deaths"
+    t.integer  "assists"
+    t.integer  "cs"
+    t.integer  "ten_ka"
+    t.integer  "double_kills"
+    t.integer  "triple_kills"
+    t.integer  "quad_kills"
+    t.integer  "penta_kills"
   end
 
   add_index "player_stats", ["player_id", "match_id", "game_number"], name: "index_player_stats_on_player_id_and_match_id_and_game_number", unique: true, using: :btree
@@ -85,12 +93,18 @@ ActiveRecord::Schema.define(version: 20170312014624) do
   add_index "slates_teams", ["slate_id", "team_id"], name: "index_slates_teams_on_slate_id_and_team_id", unique: true, using: :btree
 
   create_table "team_stats", force: :cascade do |t|
-    t.integer  "team_id",     null: false
-    t.integer  "match_id",    null: false
-    t.integer  "game_number", null: false
-    t.text     "stats",       null: false
+    t.integer  "team_id",          null: false
+    t.integer  "match_id",         null: false
+    t.integer  "game_number",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "wins"
+    t.integer  "losses"
+    t.integer  "first_bloods"
+    t.integer  "dragon_kills"
+    t.integer  "baron_kills"
+    t.integer  "towers_destroyed"
+    t.integer  "win_in_30_mins"
   end
 
   add_index "team_stats", ["team_id", "match_id", "game_number"], name: "index_team_stats_on_team_id_and_match_id_and_game_number", unique: true, using: :btree

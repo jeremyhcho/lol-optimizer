@@ -5,6 +5,7 @@ const _nullStats = Object.freeze({
   players: [],
   teams: [],
   slates: [],
+  isFetching: false,
   params: {
     statType: 'actual',
     gamesBack: -1,
@@ -21,9 +22,17 @@ const StatsReducer = (state = _nullStats, action) => {
       newParams = { ...state.params, [action.key]: action.value }
 
       return { ...state, params: newParams }
+
+    case StatConstants.FETCH_STATS:
+      return { ...state, isFetching: true }
       
     case StatConstants.STATS_RECEIVED:
-      return {...state, players: action.stats.players, teams: action.stats.teams }
+      return {
+        ...state,
+        players: action.stats.players,
+        teams: action.stats.teams,
+        isFetching: false
+      }
       
     case StatConstants.RESET_STATS:
       return _nullStats

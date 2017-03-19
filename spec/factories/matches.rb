@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: matches
+#
+#  id           :integer          not null, primary key
+#  remote_id    :integer          not null
+#  blue_team_id :integer          not null
+#  red_team_id  :integer          not null
+#  time         :string           not null
+#  week         :integer          not null
+#  winner       :integer          not null
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
 FactoryGirl.define do
   factory :match, class: 'Match' do
     remote_id { rand(111..999) }

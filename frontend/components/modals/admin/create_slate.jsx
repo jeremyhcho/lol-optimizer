@@ -103,12 +103,20 @@ class CreateSlateModal extends React.Component {
       this.props.createSlate({
         csv_url: this.state.csvUrl,
         name: this.state.name,
-        start_date: this.state.date,
-        start_time: this.state.time
+        start_time: this.convertStartTime()
       })
     } else {
       this.setState({ showErrors: true })
     }
+  }
+  
+  convertStartTime () {
+    const workingDate = this.state.date
+    const workingTime = this.state.time
+    workingDate.setHours(workingTime.getHours())
+    workingDate.setMinutes(workingTime.getMinutes())
+    workingDate.setSeconds(0)
+    return workingDate
   }
   
   slateUploaded (payload) {

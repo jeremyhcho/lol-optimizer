@@ -14,7 +14,13 @@ module Season
               team_id: stat[0],
               match_id: stat[1],
               game_number: stat[2],
-              stats: stat[3..-1]
+              wins: stat[7],
+              losses: stat[8],
+              first_bloods: stat[3],
+              dragon_kills: stat[6],
+              baron_kills: stat[5],
+              towers_destroyed: stat[4],
+              win_in_30_mins: stat[9]
             )
           end
         end

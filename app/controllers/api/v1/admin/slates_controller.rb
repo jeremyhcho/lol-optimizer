@@ -76,20 +76,9 @@ module Api
           {
             csv_url: params[:csv_url],
             name: params[:name],
-            start_time: converted_start_time,
+            start_time: DateTime.parse(params[:start_time]),
             user_id: current_user.id
           }
-        end
-
-        def converted_start_time
-          start_date = DateTime.parse(params[:start_date])
-          start_time = DateTime.parse(params[:start_time])
-
-          start_date.change(
-            hour: start_time.hour,
-            min: start_time.minute,
-            sec: 0
-          ).utc
         end
       end
     end
