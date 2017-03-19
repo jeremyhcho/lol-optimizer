@@ -41,11 +41,44 @@ const teamCols = [
 class TeamStatsTable extends React.Component {
    constructor (props) {
      super(props)
+     
+     this.state = {
+       teams: []
+     }
+   }
+   
+   componentDidMount () {
+     setTimeout(() => {
+       this.interval = setInterval(this.addItems.bind(this), 200)
+       this.setState({ teams: this.props.teams.slice(0, 10) })
+     }, 900)
+   }
+   
+   componentWillUnmount () {
+     if (this.interval) {
+       clearInterval(this.interval)
+     }
+   }
+
+   addItems () {
+     if ((this.state.teams.length + 10) > this.props.teams.length) {
+       clearInterval(this.interval)
+       this.interval = null
+     }
+
+     this.setState({
+       teams: this.state.teams.concat(
+         this.props.teams.slice(
+           this.state.teams.length,
+           this.state.teams.length + 10
+         )
+       )
+     })
    }
    
    renderTable () {
      return (
-       this.props.teams.map(team => (
+       this.state.teams.map(team => (
          <ScrollableRow
            cols={ teamCols }
            defaultColWidth={ 75 }
