@@ -52,20 +52,16 @@ class PlayerStatsTable extends React.Component {
    }
 
    componentDidMount () {
-     setTimeout(() => {
-       this.interval = setInterval(this.addItems.bind(this), 100)
-       this.setState({ players: this.props.players.slice(0, 40) })
-     }, 900)
+     this.interval = setInterval(this.addItems.bind(this), 1000)
    }
    
    componentWillUnmount () {
-     if (this.interval) {
-       clearInterval(this.interval)
-     }
+     this.interval && clearInterval(this.interval)
+     this.interval = null
    }
    
    addItems () {
-     if ((this.state.players.length + 40) >= this.props.players.length) {
+     if ((this.state.players.length + 60) >= this.props.players.length) {
        clearInterval(this.interval)
        this.interval = null
      }
@@ -74,7 +70,7 @@ class PlayerStatsTable extends React.Component {
        players: this.state.players.concat(
          this.props.players.slice(
            this.state.players.length,
-           this.state.players.length + 40
+           this.state.players.length + 60
          )
        )
      })

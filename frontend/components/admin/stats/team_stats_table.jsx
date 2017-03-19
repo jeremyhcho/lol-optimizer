@@ -48,16 +48,12 @@ class TeamStatsTable extends React.Component {
    }
    
    componentDidMount () {
-     setTimeout(() => {
-       this.interval = setInterval(this.addItems.bind(this), 200)
-       this.setState({ teams: this.props.teams.slice(0, 10) })
-     }, 900)
+     this.interval = setInterval(this.addItems.bind(this), 1000)
    }
    
    componentWillUnmount () {
-     if (this.interval) {
-       clearInterval(this.interval)
-     }
+     this.interval && clearInterval(this.interval)
+     this.interval = null
    }
 
    addItems () {
