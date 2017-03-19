@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: players_slates
+#
+#  player_id   :integer          not null
+#  slate_id    :integer          not null
+#  game_info   :string
+#  salary      :integer
+#  team_abbrev :string
+#
+
 FactoryGirl.define do
   factory :players_slate, class: 'PlayersSlate' do
     player_id { rand(111..999) }

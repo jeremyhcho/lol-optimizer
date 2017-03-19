@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: slates
+#
+#  id         :integer          not null, primary key
+#  name       :string           not null
+#  created_at :datetime
+#  updated_at :datetime
+#  start_time :datetime
+#
+
 FactoryGirl.define do
   factory :slate, class: 'Slate' do
     name { Faker::Pokemon.name }

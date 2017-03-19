@@ -11,10 +11,6 @@ export const SlateConstants = {
   RESET_SLATES: 'RESET_SLATES'
 }
 
-export const slatesFetching = () => ({
-  type: SlateConstants.SLATES_FETCHING
-})
-
 export const fetchSlates = (dateParams) => ({
   type: SlateConstants.FETCH_SLATES,
   dateParams
@@ -57,5 +53,5 @@ export const createSlate = (params) => ({
 })
 
 export const resetSlates = () => ({
-  type: SlateConstants.RESET_SLATE
+  type: SlateConstants.RESET_SLATES
 })

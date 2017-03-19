@@ -93,21 +93,21 @@ class StatsIndex extends React.Component {
   }
   
   renderTable () {
-    // if (this.props.stats) {
-    if (this.state.show == 'players') {
-      return <PlayerStatsTable />
+    if (this.props.isFetching) {
+      return <Loading />
     } else {
-      return <TeamStatsTable />
+      if (this.state.show == 'players') {
+        return <PlayerStatsTable />
+      } else {
+        return <TeamStatsTable />
+      }
     }
-    // } else {
-    //   return <Loading />
-    // }
   }
   
   render () {
     return (
-      <Row style={{ padding: '45px 45px 0' }} className='stats-wrapper'>
-        <Col xs={ 12 }>
+      <Row style={{ padding: '45px 45px 30px' }} className='stats-wrapper'>
+        <Col xs={ 12 } style={{ minWidth: '850px' }}>
           <Tabs
             value={ this.state.show }
             onChange={ this.changeTab }
@@ -127,7 +127,8 @@ class StatsIndex extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  params: state.admin.stats.params
+  params: state.admin.stats.params,
+  isFetching: state.admin.stats.isFetching
 })
 
 const mapDispatchToProps = (dispatch) => ({

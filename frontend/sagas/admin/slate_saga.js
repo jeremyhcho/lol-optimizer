@@ -30,7 +30,6 @@ function* watchFetchSlates () {
 
 function* fetchSlates (action) {
   try {
-    yield put(slatesFetching())
     let response = yield call(Api.Admin.Slates.fetchSlates(action.dateParams))
     yield put(receiveSlates(response.data.response))
   } catch (error) {
