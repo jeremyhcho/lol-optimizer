@@ -8,13 +8,16 @@ module Admin
       end
 
       def perform
-        {
-          players: players,
-          teams: teams
-        }
+        Rails.cache.fetch(_actual_stats_cache_key, expires_in: 2.hours) do
+          { players: players, teams: teams }
+        end
       end
 
       private
+
+      def _actual_stats_cache_key
+        "stats_for:stat_type=actual,games_back=#{games_back}"
+      end
 
       def players
         scoped_players.map do |player|
