@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 //validation
 import { runValidators } from 'utils/form/validation'
 import signupValidation from 'validations/sessions/signup/signup_validations'
+import confirmPasswordValidation from 'validations/sessions/confirmpassword/confirmpassword_validation'
 
 //actions
 import { signup } from 'actions/session/session_actions'
@@ -30,10 +31,11 @@ class SignupForm extends React.Component {
   }
 
   handleChange (field) {
-   return (e) =>
-    this.setState({
-    ...this.state, [field]: e.currentTarget.value,
-    error:runValidators({ ...this.state },signupValidation) });
+     return (e) => {
+       const newState = { ...this.state, [field]: e.currentTarget.value }
+       this.setState({ ...newState, error: runValidators(newState, signupValidation)
+          || runValidators(newState ,confirmPasswordValidation) })
+     }
   }
 
 createUser(e){
@@ -44,7 +46,7 @@ createUser(e){
     } })
   }else{
     this.setState({ showErrors:true })
-    e.preventDefault()
+    e.preventDefault();
   }
 }
 
@@ -66,21 +68,21 @@ createUser(e){
               floatingLabelText="email"
               value={ this.state.email }
               onChange={ this.handleChange("email") }
-              errorText={ this.formError("email"),this.props.emailSignupError }
+              errorText={ this.formError("email") || this.props.emailSignupError }
               />
             <TextField
               floatingLabelText="password"
               value={this.state.password}
               onChange={ this.handleChange("password") }
-              errorText={ this.formError("password"),this.props.passwordSignupError }
+              errorText={ this.formError("password") || this.props.passwordSignupError }
               />
             <TextField
               floatingLabelText="confirmPassword"
               value={this.state.confirmpassword}
               onChange={ this.handleChange("confirmpassword") }
-              errorText={ this.formError("confirmPassword") }
+              errorText={ this.formError("confirmpassword") }
               />
-            <RaisedButton label="Sign Up" onTouchTap={ this.createUser.bind(this) } />
+            <RaisedButton type="button" label="Sign Up" onTouchTap={ this.createUser.bind(this) } />
           </Paper>
         </form>
     </div>
@@ -90,8 +92,8 @@ createUser(e){
 const mapStateToProps = (state) => {
   if(state.session.signupError){
     return{
-      emailSignupError: state.session.signupError.messages.email,
-      passwordSignupError: state.session.signupError.messages.password[0]
+      emailSignupError: state.session.signupError.messages.email || "",
+      passwordSignupError: state.session.signupError.messages.password || ""
     }
   }else{
     return {}
