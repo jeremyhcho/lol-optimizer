@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
 		}
 	}
 
-	handleChange (field) {
+  handleChange (field) {
 		return (e) =>
 		this.setState({
 	  ...this.state,
@@ -71,7 +71,7 @@ class LoginForm extends React.Component {
 							floatingLabelText="email"
 							value={ this.state.email }
 							onChange={ this.handleChange("email") }
-							errorText={ this.formError("email"), this.props.loginErrorFromServer }
+							errorText={ this.formError("email") || this.props.loginErrorFromServer }
 							/>
 					</div>
 					 <div>
@@ -88,7 +88,6 @@ class LoginForm extends React.Component {
 						<a className="login-forgot" href="#">Forgot Password?</a>
 					</Paper>
 				</form >
-
 			</div>
 		)
 	}
