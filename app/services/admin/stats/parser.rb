@@ -19,8 +19,8 @@ module Admin
           Admin::Stats::ActualParser
         when 'predicted'
           Admin::Stats::PredictedParser
-        when 'compared'
-          Admin::Stats::ComparedParser
+        when 'compare'
+          Admin::Stats::CompareParser
         end
       end
     end

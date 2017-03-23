@@ -18,9 +18,10 @@ import { Grid, Row, Col } from 'react-styled-flexboxgrid'
 
 // Components
 import SlatesRow from 'components/admin/slates/row'
+import PusherNotification from 'utils/pusher'
 
 // Actions
-import { deleteSlate } from 'actions/admin/slate_actions'
+import { deleteSlate, slateStatusUpdated } from 'actions/admin/slate_actions'
 
 class SlatesTable extends React.Component {
   constructor (props) {
@@ -109,6 +110,7 @@ class SlatesTable extends React.Component {
                 <TableHeaderColumn>ID</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
                 <TableHeaderColumn>Start Time</TableHeaderColumn>
+                <TableHeaderColumn>Status</TableHeaderColumn>
                 <TableHeaderColumn></TableHeaderColumn>
               </TableRow>
             </TableHeader>
@@ -130,6 +132,11 @@ class SlatesTable extends React.Component {
           >
             Deleting this slate will delete all the players and teams playing in this slate.
           </Dialog>
+
+          <PusherNotification
+            event='predictions_created'
+            callback={ this.props.slateStatusUpdated }
+          />
         </Col>
       </Row>
     )
@@ -139,7 +146,8 @@ class SlatesTable extends React.Component {
 const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  deleteSlate: (slateId) => dispatch(deleteSlate(slateId))
+  deleteSlate: (slateId) => dispatch(deleteSlate(slateId)),
+  slateStatusUpdated: (payload) => dispatch(slateStatusUpdated(payload))
 })
 
 export default connect(

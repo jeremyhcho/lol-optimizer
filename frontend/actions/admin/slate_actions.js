@@ -8,7 +8,8 @@ export const SlateConstants = {
   CREATE_SLATE: 'CREATE_SLATE',
   SET_SLATE: 'SET_SLATE',
   SLATES_FETCHING: 'SLATES_FETCHING',
-  RESET_SLATES: 'RESET_SLATES'
+  RESET_SLATES: 'RESET_SLATES',
+  SLATE_STATUS_UPDATED: 'SLATE_STATUS_UPDATED'
 }
 
 export const fetchSlates = (dateParams) => ({
@@ -54,4 +55,9 @@ export const createSlate = (params) => ({
 
 export const resetSlates = () => ({
   type: SlateConstants.RESET_SLATES
+})
+
+export const slateStatusUpdated = (payload) => ({
+  type: SlateConstants.SLATE_STATUS_UPDATED,
+  payload
 })

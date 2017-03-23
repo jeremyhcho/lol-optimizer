@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 // Actions
-import { sectionSelector }  from 'actions/current_section/current_section_actions'
+import { selectSection }  from 'actions/current_section/current_section_actions'
 
 // Material UI
 import Drawer from 'material-ui/Drawer'
@@ -74,7 +74,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  selectSection: (sectionName) => dispatch({ type: 'SECTION_SELECTED', sectionName })
+  selectSection: (sectionName) => dispatch(selectSection(sectionName))
 })
 
 

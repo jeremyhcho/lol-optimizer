@@ -32,7 +32,14 @@ const SlatesReducer = (state = _nullSlates, action) => {
       
     case SlateConstants.RESET_SLATES:
       return _nullSlates
-
+    
+    case SlateConstants.SLATE_STATUS_UPDATED:
+      slatesList = [...state.slatesList]
+      let updateIndex = slatesList.findIndex((slate) => slate.id == action.payload.slate_id)
+      slatesList[updateIndex].status = action.payload.status
+      
+      return { ...state, slatesList: slatesList }
+      
     default:
       return state
   }

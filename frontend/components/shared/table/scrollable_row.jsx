@@ -14,20 +14,39 @@ class ScrollableRow extends React.Component {
   
   renderCols () {
     let currentKeyVal
+    let vals
+    let formattedVal
 
     return (
       this.props.cols.map((col, index) => {
         currentKeyVal = this.props.object
+        vals = {}
+        
+        for (const key of col.key.split('|')) {
+          for (const key2 of key.split('.')) {
+            currentKeyVal = currentKeyVal[key2]
+          }
+          
+          vals[key] = currentKeyVal || col.defaultVal
+          currentKeyVal = this.props.object
+        }
 
-        for (const key of col.key.split('.')) {
-          currentKeyVal = currentKeyVal[key]
+        formattedVal = col.innerHTML
+
+        for (let [key, val] of Object.entries(vals)) {
+          if (formattedVal) {
+            formattedVal = formattedVal.replace(key, val)
+          } else {
+            formattedVal = val.toString()
+          }
         }
 
         return (
           <TableRowColumn
             style={ this.buildColStyles(col, index) }
             key={ index }>
-            { currentKeyVal || col.defaultVal }
+            <div dangerouslySetInnerHTML={{ __html: formattedVal }}>
+            </div>
           </TableRowColumn>
         )
       })
@@ -60,11 +79,16 @@ class ScrollableRow extends React.Component {
   }
   
   render () {
+    const styles = {
+      ...this.props.style,
+      position: 'relative'
+    }
+
     return (
       <TableRow
         onMouseOver={ this.handleMouseOver(true) }
         onMouseOut={ this.handleMouseOver(false) }
-        style={{ position: 'relative' }}>
+        style={ styles }>
         { this.renderCols() }
       </TableRow>)
   }

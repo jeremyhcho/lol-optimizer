@@ -4,25 +4,18 @@ import { StatConstants } from 'actions/admin/stat_actions'
 const _nullStats = Object.freeze({
   players: [],
   teams: [],
-  slates: [],
+  statType: 'actual',
   isFetching: false,
-  params: {
-    statType: 'actual',
-    gamesBack: -1,
-    date: new Date(),
-    slateId: 0
-  }
+  gamesBack: -1,
+  date: new Date(),
+  slateId: 0,
+  searchText: ''
 })
 
 let newParams
 
 const StatsReducer = (state = _nullStats, action) => {
   switch (action.type) {
-    case StatConstants.CHANGE_PARAMS:
-      newParams = { ...state.params, [action.key]: action.value }
-
-      return { ...state, params: newParams }
-
     case StatConstants.FETCH_STATS:
       return { ...state, isFetching: true }
       
@@ -33,6 +26,9 @@ const StatsReducer = (state = _nullStats, action) => {
         teams: action.stats.teams,
         isFetching: false
       }
+    
+    case StatConstants.CHANGE_PARAMS:
+      return { ...state, [action.key]: action.value }
       
     case StatConstants.RESET_STATS:
       return _nullStats

@@ -3,12 +3,13 @@ require 'csv'
 module Admin
   module Slates
     class Import
-      attr_reader :csv_url, :name, :start_time
+      attr_reader :csv_url, :name, :start_time, :user_id
 
       def initialize(opts)
         @csv_url = opts[:csv_url]
         @name = opts[:name]
         @start_time = DateTime.parse(opts[:start_time])
+        @user_id = opts[:user_id]
       end
 
       def perform
@@ -30,6 +31,7 @@ module Admin
           end
         end
 
+        Admin::Slates::CreatePredictionsWorker.perform_async(@slate.id, user_id)
         ::Slates::ShowSerializer.new(@slate).serializable_hash
       rescue => e
         Rails.logger.fatal "Error occurred while uploading slate: #{e.message}"

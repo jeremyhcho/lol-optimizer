@@ -43,6 +43,22 @@ class SlatesRow extends React.Component {
     e.preventDefault()
     this.props.openDeleteModal()
   }
+  
+  parseStatus () {
+    switch (this.props.slate.status) {
+      case 1:
+        return 'Processing'
+
+      case 2:
+        return 'Ready'
+        
+      case 3:
+        return 'Failed'
+
+      default:
+        return 'Processing'
+    }
+  }
 
   render () {
     return (
@@ -50,6 +66,7 @@ class SlatesRow extends React.Component {
         <TableRowColumn>{ this.props.slate.id }</TableRowColumn>
         <TableRowColumn>{ this.props.slate.name }</TableRowColumn>
         <TableRowColumn>{ this.props.slate.start_time }</TableRowColumn>
+        <TableRowColumn>{ this.parseStatus() }</TableRowColumn>
         <TableRowColumn>
           <IconMenu
             iconButtonElement={ <IconButton><MoreVertIcon /></IconButton> }

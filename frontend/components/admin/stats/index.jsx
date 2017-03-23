@@ -17,7 +17,7 @@ import PredictedToolbar from 'components/admin/stats/toolbars/predicted'
 import CompareToolbar from 'components/admin/stats/toolbars/compare'
 
 // Actions
-import { fetchStats, resetStats } from 'actions/admin/stat_actions'
+import { resetStats, changeParams } from 'actions/admin/stat_actions'
 
 // Plugins
 import isEqual from 'lodash/isEqual'
@@ -26,36 +26,17 @@ class StatsIndex extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      show: 'players'
+      show: 'players',
+      searchText: ''
     }
     
+    this.changeStatType = this.changeStatType.bind(this)
     this.changeTab = this.changeTab.bind(this)
-  }
-  
-  componentDidMount () {
-    this.props.fetchStats({
-      stat_type: this.props.params.statType,
-      games_back: this.props.params.gamesBack,
-      date: this.props.params.date,
-      slate_id: this.props.params.slateId
-    })
+    this.triggerSearch = this.triggerSearch.bind(this)
   }
   
   componentWillUnmount () {
     this.props.resetStats()
-  }
-  
-  componentWillReceiveProps (newProps) {
-    if (isEqual(this.props.params, newProps.params)) {
-      return
-    }
-
-    this.props.fetchStats({
-      stat_type: newProps.params.statType,
-      games_back: newProps.params.gamesBack,
-      date: newProps.params.date,
-      slate_id: newProps.params.slateId
-    })
   }
   
   changeTab () {
@@ -66,13 +47,37 @@ class StatsIndex extends React.Component {
     }
   }
   
+  changeStatType (e, key, statType) {
+    this.props.resetStats()
+    this.props.changeParams('statType', statType)
+  }
+  
+  triggerSearch (searchText) {
+    this.setState({ searchText })
+  }
+  
   renderStatsToolbar () {
-    if (this.props.params.statType == 'actual') {
-      return <ActualToolbar />
-    } else if (this.props.params.statType == 'predicted') {
-      return <PredictedToolbar />
+    if (this.props.statType == 'actual') {
+      return (
+        <ActualToolbar
+          changeStatType={ this.changeStatType }
+          triggerSearch={ this.triggerSearch }
+        />
+      )
+    } else if (this.props.statType == 'predicted') {
+      return (
+        <PredictedToolbar
+          changeStatType={ this.changeStatType }
+          triggerSearch={ this.triggerSearch }
+        />
+      )
     } else {
-      return <CompareToolbar />
+      return (
+        <CompareToolbar
+          changeStatType={ this.changeStatType }
+          triggerSearch={ this.triggerSearch }
+        />
+      )
     }
   }
 
@@ -97,9 +102,19 @@ class StatsIndex extends React.Component {
       return <Loading />
     } else {
       if (this.state.show == 'players') {
-        return <PlayerStatsTable />
+        return (
+          <PlayerStatsTable
+            statType={ this.props.statType }
+            searchText={ this.state.searchText }
+          />
+        )
       } else {
-        return <TeamStatsTable />
+        return (
+          <TeamStatsTable
+            statType={ this.props.statType }
+            searchText={ this.state.searchText }
+          />
+        )
       }
     }
   }
@@ -107,17 +122,17 @@ class StatsIndex extends React.Component {
   render () {
     return (
       <Row style={{ padding: '45px 45px 30px' }} className='stats-wrapper'>
-        <Col xs={ 12 } style={{ minWidth: '850px' }}>
+        <Col xs={ 12 } style={{ minWidth: '1045px' }}>
           <Tabs
             value={ this.state.show }
             onChange={ this.changeTab }
             tabTemplateStyle={{ textAlign: 'center' }}>
             <Tab label='Players' value='players'>
-              { this.renderTab() }
+              { this.state.show == 'players' && this.renderTab() }
             </Tab>
     
             <Tab label='Teams' value='teams'>
-              { this.renderTab() }
+              { this.state.show == 'teams' && this.renderTab() }
             </Tab>
           </Tabs>
         </Col>
@@ -127,13 +142,13 @@ class StatsIndex extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  params: state.admin.stats.params,
-  isFetching: state.admin.stats.isFetching
+  isFetching: state.admin.stats.isFetching,
+  statType: state.admin.stats.statType
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchStats: (params) => dispatch(fetchStats(params)),
-  resetStats: () => dispatch(resetStats())
+  resetStats: () => dispatch(resetStats()),
+  changeParams: (key, value) => dispatch(changeParams(key, value))
 })
 
 export default connect(
