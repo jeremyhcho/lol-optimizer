@@ -79,7 +79,7 @@ class ActualToolbar extends React.Component {
           labelStyle={{
             color: '#9EA3B4',
             border: '1px solid #9EA3B4',
-            height: '40px'
+            height: '40px',
             lineHeight: '40px',
             borderRadius: '200px'
           }}
