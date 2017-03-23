@@ -117,7 +117,13 @@ class PredictedToolbar extends React.Component {
           onChange={ this.props.changeStatType }
           value='predicted'
           underlineStyle={{ display: 'none' }}
-          labelStyle={{ color: '#9EA3B4', border: '1px solid #9EA3B4', lineHeight: '40px', borderRadius: '200px' }}
+          labelStyle={{
+            color: '#9EA3B4',
+            border: '1px solid #9EA3B4',
+            lineHeight: '40px',
+            borderRadius: '200px',
+            height: '40px'
+          }}
           iconStyle={{ fill: '#9EA3B4', right: '5px', top: '1px', padding: 0, width: '40px', height: '40px' }}
           style={{ margin: '25px 0 0 25px' }}>
           {
@@ -145,7 +151,13 @@ class PredictedToolbar extends React.Component {
           onChange={ this.changeSlateId }
           value={ this.props.slateId }
           underlineStyle={{ display: 'none' }}
-          labelStyle={{ color: '#9EA3B4', border: '1px solid #9EA3B4', lineHeight: '40px', borderRadius: '200px' }}
+          labelStyle={{
+            color: '#9EA3B4',
+            border: '1px solid #9EA3B4',
+            lineHeight: '40px',
+            borderRadius: '200px',
+            height: '40px'
+          }}
           iconStyle={{ fill: '#9EA3B4', right: '5px', top: '1px', padding: 0, width: '40px', height: '40px' }}
           style={{ margin: '25px 0 0 25px' }}
           disabled={ this.props.slates.length ? false : true }>

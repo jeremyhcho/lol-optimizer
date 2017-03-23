@@ -76,7 +76,13 @@ class ActualToolbar extends React.Component {
           onChange={ this.props.changeStatType }
           value='actual'
           underlineStyle={{ display: 'none' }}
-          labelStyle={{ color: '#9EA3B4', border: '1px solid #9EA3B4', lineHeight: '40px', borderRadius: '200px' }}
+          labelStyle={{
+            color: '#9EA3B4',
+            border: '1px solid #9EA3B4',
+            height: '40px'
+            lineHeight: '40px',
+            borderRadius: '200px'
+          }}
           iconStyle={{ fill: '#9EA3B4', right: '5px', top: '1px', padding: 0, width: '40px', height: '40px' }}
           style={{ margin: '25px 0 0 25px' }}>
           {
@@ -95,7 +101,13 @@ class ActualToolbar extends React.Component {
           onChange={ this.changeGamesBack }
           value={ this.props.gamesBack }
           underlineStyle={{ display: 'none' }}
-          labelStyle={{ color: '#9EA3B4', border: '1px solid #9EA3B4', lineHeight: '40px', borderRadius: '200px' }}
+          labelStyle={{
+            color: '#9EA3B4',
+            border: '1px solid #9EA3B4',
+            lineHeight: '40px',
+            borderRadius: '200px',
+            height: '40px'
+          }}
           iconStyle={{ fill: '#9EA3B4', right: '5px', top: '1px', padding: 0, width: '40px', height: '40px' }}
           style={{ margin: '25px 0 0 25px' }}>
           {
