@@ -12,31 +12,18 @@ import {
 import ScrollableHeader from 'components/shared/table/scrollable_header'
 import ScrollableRow from 'components/shared/table/scrollable_row'
 
-const teamHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true, width: 115 },
-  { name: 'Position', fixedPos: true },
-  { name: 'Wins', padding: true },
-  { name: 'Losses' },
-  { name: 'First Bloods', width: 100 },
-  { name: 'Dragons' },
-  { name: 'Barons' },
-  { name: 'Towers' },
-  { name: '< 30 Min' }
-]
+// Constants
+import {
+  ActualTeamHeaders,
+  ActualTeamCols,
+  PredictedTeamHeaders,
+  PredictedTeamCols,
+  CompareTeamHeaders,
+  CompareTeamCols
+} from 'constants/admin_constants'
 
-const teamCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
-  { key: 'name', fixedPos: true, width: 115 },
-  { key: 'position', fixedPos: true, defaultVal: 'N/A' },
-  { key: 'stats.wins', defaultVal: 0, padding: true },
-  { key: 'stats.losses', defaultVal: 0 },
-  { key: 'stats.first_bloods', defaultVal: 0, width: 100 },
-  { key: 'stats.dragon_kills', defaultVal: 0 },
-  { key: 'stats.baron_kills', defaultVal: 0 },
-  { key: 'stats.towers_destroyed', defaultVal: 0 },
-  { key: 'stats.win_in_30_mins', defaultVal: 0 }
-]
+// Plugins
+import isEqual from 'lodash/isEqual'
 
 class TeamStatsTable extends React.Component {
    constructor (props) {
@@ -46,9 +33,18 @@ class TeamStatsTable extends React.Component {
        teams: []
      }
    }
+
+   componentWillReceiveProps (newProps) {
+     if (isEqual(this.props.teams, newProps.teams)) {
+       return
+     }
+
+     this.setState({ teams: [] })
+     this.interval = setInterval(this.addItems.bind(this), 700)
+   }
    
    componentDidMount () {
-     this.interval = setInterval(this.addItems.bind(this), 1000)
+     this.interval = setInterval(this.addItems.bind(this), 700)
    }
    
    componentWillUnmount () {
@@ -74,15 +70,46 @@ class TeamStatsTable extends React.Component {
    
    renderTable () {
      return (
-       this.state.teams.map(team => (
-         <ScrollableRow
-           cols={ teamCols }
-           defaultColWidth={ 75 }
-           object={ team }
-           key={ team.remote_id }
-          />
-       ))
+       this.state.teams.map(team => {
+         let visible = team.name.toLowerCase().includes(this.props.searchText.toLowerCase())
+
+         return (
+           <ScrollableRow
+             cols={ this.parseCols() }
+             defaultColWidth={ 75 }
+             object={ team }
+             key={ team.remote_id }
+             style={{ display: visible ? 'table-row' : 'none' }}
+           />
+         )
+       })
      )
+   }
+   
+   parseHeader () {
+     switch (this.props.statType) {
+       case 'actual':
+         return ActualTeamHeaders
+
+       case 'predicted':
+         return PredictedTeamHeaders
+
+       case 'compare':
+         return CompareTeamHeaders
+     }
+   }
+   
+   parseCols () {
+     switch (this.props.statType) {
+       case 'actual':
+         return ActualTeamCols
+
+       case 'predicted':
+         return PredictedTeamCols
+
+       case 'compare':
+         return CompareTeamCols
+     }
    }
    
    render () {
@@ -95,7 +122,7 @@ class TeamStatsTable extends React.Component {
          <TableHeader
            displaySelectAll={ false }
            adjustForCheckbox={ false }>
-           <ScrollableHeader cols={ teamHeaders } defaultColWidth={ 75 } />
+           <ScrollableHeader cols={ this.parseHeader() } defaultColWidth={ 75 } />
          </TableHeader>
    
          <TableBody

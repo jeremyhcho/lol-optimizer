@@ -5,7 +5,7 @@ export const StatConstants = {
   RESET_STATS: 'RESET_STATS'
 }
 
-export const changeStatParams = (key, value) => ({
+export const changeParams = (key, value) => ({
   type: StatConstants.CHANGE_PARAMS,
   key,
   value

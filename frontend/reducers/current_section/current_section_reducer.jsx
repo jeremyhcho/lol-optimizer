@@ -4,7 +4,7 @@ const nullCurrentSection = {
 
 const CurrentSectionReducer = (state = nullCurrentSection, action) => {
   switch (action.type) {
-    case 'SECTION_SELECTED':
+    case 'SELECT_SECTION':
       return { ...state, currentSection: action.sectionName.toUpperCase() }
 
     default:
@@ -12,4 +12,4 @@ const CurrentSectionReducer = (state = nullCurrentSection, action) => {
   }
 }
 
-export default CurrentSectionReducer;
+export default CurrentSectionReducer

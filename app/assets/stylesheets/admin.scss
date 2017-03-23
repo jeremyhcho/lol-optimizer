@@ -75,6 +75,35 @@
               background-color: #2196F3 !important;
             }
           }
+          
+          .labels {
+            margin: 20px 25px 0 0;
+            margin-right: 25px;
+
+            .indicator {
+              border-radius: 100%;
+              width: 7px;
+              height: 7px;
+              display: inline-block;
+              margin: 0 7px 1px;
+
+              &.orange {
+                border: 1px solid #F19F4D;
+                background-color: #F19F4D;
+              }
+            }
+            
+            span:not(.indicator) {
+              color: #9EA3B4;
+              font-size: 14px;
+            }
+          }
+
+          .player-stats-table, .team-stats-table {
+            .predicted {
+              color: #F19F4D !important;
+            }
+          }
         }
       }
     }

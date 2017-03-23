@@ -12,35 +12,18 @@ import {
 import ScrollableHeader from 'components/shared/table/scrollable_header'
 import ScrollableRow from 'components/shared/table/scrollable_row'
 
-const playerHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true },
-  { name: 'Position', fixedPos: true, width: 75 },
-  { name: 'Team', fixedPos: true, width: 50 },
-  { name: 'Kills', padding: true, width: 75 },
-  { name: 'Deaths', width: 75 },
-  { name: 'Assists', width: 75 },
-  { name: 'Creep Score', width: 75 },
-  { name: '10+ K/A', width: 75 },
-  { name: '3K', width: 75 },
-  { name: '4K', width: 75 },
-  { name: '5K', width: 75 }
-]
+// Constants
+import {
+  ActualPlayerHeaders,
+  ActualPlayerCols,
+  PredictedPlayerHeaders,
+  PredictedPlayerCols,
+  ComparePlayerHeaders,
+  ComparePlayerCols
+} from 'constants/admin_constants'
 
-const playerCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
-  { key: 'name', fixedPos: true },
-  { key: 'position', fixedPos: true, defaultVal: 'N/A', width: 75 },
-  { key: 'team', fixedPos: true, width: 50 },
-  { key: 'stats.kills', defaultVal: 0, padding: true, width: 75 },
-  { key: 'stats.deaths', defaultVal: 0, width: 75 },
-  { key: 'stats.assists', defaultVal: 0, width: 75 },
-  { key: 'stats.cs', defaultVal: 0, width: 75 },
-  { key: 'stats.ten_ka', defaultVal: 0, width: 75 },
-  { key: 'stats.triple_kills', defaultVal: 0, width: 75 },
-  { key: 'stats.quad_kills', defaultVal: 0, width: 75 },
-  { key: 'stats.penta_kills', defaultVal: 0, width: 75 }
-]
+// Plugins
+import isEqual from 'lodash/isEqual'
 
 class PlayerStatsTable extends React.Component {
    constructor (props) {
@@ -50,9 +33,18 @@ class PlayerStatsTable extends React.Component {
        players: []
      }
    }
+   
+   componentWillReceiveProps (newProps) {
+     if (isEqual(this.props.players, newProps.players)) {
+       return
+     }
+
+     this.setState({ players: [] })
+     this.interval = setInterval(this.addItems.bind(this), 700)
+   }
 
    componentDidMount () {
-     this.interval = setInterval(this.addItems.bind(this), 1000)
+     this.interval = setInterval(this.addItems.bind(this), 700)
    }
    
    componentWillUnmount () {
@@ -78,15 +70,46 @@ class PlayerStatsTable extends React.Component {
    
    renderTable () {
      return (
-       this.state.players.map((player) => (
-         <ScrollableRow
-           cols={ playerCols }
-           defaultColWidth={ 75 }
-           object={ player }
-           key={ player.remote_id }
-          />
-       ))
+       this.state.players.map((player) => {
+         let visible = player.name.toLowerCase().includes(this.props.searchText.toLowerCase())
+
+         return (
+           <ScrollableRow
+             cols={ this.parseCols() }
+             defaultColWidth={ 75 }
+             object={ player }
+             key={ player.remote_id }
+             style={{ display: visible ? 'table-row' : 'none' }}
+            />
+         )
+       })
      )
+   }
+   
+   parseHeader () {
+     switch (this.props.statType) {
+       case 'actual':
+         return ActualPlayerHeaders
+
+       case 'predicted':
+         return PredictedPlayerHeaders
+
+       case 'compare':
+         return ComparePlayerHeaders
+     }
+   }
+   
+   parseCols () {
+     switch (this.props.statType) {
+       case 'actual':
+         return ActualPlayerCols
+
+       case 'predicted':
+         return PredictedPlayerCols
+
+       case 'compare':
+         return ComparePlayerCols
+     }
    }
    
    render () {
@@ -94,13 +117,13 @@ class PlayerStatsTable extends React.Component {
        <Table
          selectable={ false }
          className='player-stats-table'
-         style={{ width: '100.1%' }}
+         style={{ width: '100.1%', display: 'block' }}
          bodyStyle={{ overflow: 'visible' }}
          >
          <TableHeader
            displaySelectAll={ false }
            adjustForCheckbox={ false }>
-           <ScrollableHeader cols={ playerHeaders } defaultColWidth={ 75 } />
+           <ScrollableHeader cols={ this.parseHeader() } defaultColWidth={ 75 } />
          </TableHeader>
    
          <TableBody

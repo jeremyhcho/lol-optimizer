@@ -1,20 +1,20 @@
 module Slates
   class ShowSerializer < BaseSerializer
-    attributes :id, :name, :start_time, :players, :teams
+    attributes :id, :name, :start_time, :status, :players, :teams
 
     def players
-      PlayersSlate.includes(:player, :prediction)
+      PlayersSlate.includes({ player: [:team, :red_team_matches, :blue_team_matches] }, :prediction)
                   .where(slate_id: object.id)
                   .map do |players_slate|
-        ::PlayersSlates::ShowSerializer.new(players_slate, options).serializable_hash
+        ::PlayersSlates::ShowSerializer.new(players_slate, options.merge(slate: object)).serializable_hash
       end
     end
 
     def teams
-      SlatesTeam.includes(:team, :prediction)
+      SlatesTeam.includes({ team: [:red_team_matches, :blue_team_matches] }, :prediction)
                 .where(slate_id: object.id)
                 .map do |players_slate|
-        ::SlatesTeams::ShowSerializer.new(players_slate, options).serializable_hash
+        ::SlatesTeams::ShowSerializer.new(players_slate, options.merge(slate: object)).serializable_hash
       end
     end
 

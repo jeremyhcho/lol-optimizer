@@ -7,6 +7,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  start_time :datetime
+#  status     :integer          default("1")
 #
 
 FactoryGirl.define do

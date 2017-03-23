@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317030042) do
+ActiveRecord::Schema.define(version: 20170319083601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,21 @@ ActiveRecord::Schema.define(version: 20170317030042) do
   add_index "matches", ["remote_id"], name: "index_matches_on_remote_id", using: :btree
   add_index "matches", ["week"], name: "index_matches_on_week", using: :btree
   add_index "matches", ["winner"], name: "index_matches_on_winner", using: :btree
+
+  create_table "player_predictions", force: :cascade do |t|
+    t.integer "players_slate_id", null: false
+    t.integer "kills"
+    t.integer "deaths"
+    t.integer "assists"
+    t.integer "cs"
+    t.integer "ten_ka"
+    t.integer "double_kills"
+    t.integer "triple_kills"
+    t.integer "quad_kills"
+    t.integer "penta_kills"
+  end
+
+  add_index "player_predictions", ["players_slate_id"], name: "index_player_predictions_on_players_slate_id", using: :btree
 
   create_table "player_stats", force: :cascade do |t|
     t.integer  "player_id",    null: false
@@ -65,7 +80,7 @@ ActiveRecord::Schema.define(version: 20170317030042) do
   add_index "players", ["remote_id"], name: "index_players_on_remote_id", using: :btree
   add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
 
-  create_table "players_slates", id: false, force: :cascade do |t|
+  create_table "players_slates", force: :cascade do |t|
     t.integer "player_id",   null: false
     t.integer "slate_id",    null: false
     t.string  "game_info"
@@ -76,13 +91,14 @@ ActiveRecord::Schema.define(version: 20170317030042) do
   add_index "players_slates", ["player_id", "slate_id"], name: "index_players_slates_on_player_id_and_slate_id", unique: true, using: :btree
 
   create_table "slates", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "name",                   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "start_time"
+    t.integer  "status",     default: 1
   end
 
-  create_table "slates_teams", id: false, force: :cascade do |t|
+  create_table "slates_teams", force: :cascade do |t|
     t.integer "slate_id",    null: false
     t.integer "team_id",     null: false
     t.string  "game_info"
@@ -91,6 +107,19 @@ ActiveRecord::Schema.define(version: 20170317030042) do
   end
 
   add_index "slates_teams", ["slate_id", "team_id"], name: "index_slates_teams_on_slate_id_and_team_id", unique: true, using: :btree
+
+  create_table "team_predictions", force: :cascade do |t|
+    t.integer "slates_team_id",   null: false
+    t.integer "wins"
+    t.integer "losses"
+    t.integer "first_bloods"
+    t.integer "dragon_kills"
+    t.integer "baron_kills"
+    t.integer "towers_destroyed"
+    t.integer "win_in_30_mins"
+  end
+
+  add_index "team_predictions", ["slates_team_id"], name: "index_team_predictions_on_slates_team_id", using: :btree
 
   create_table "team_stats", force: :cascade do |t|
     t.integer  "team_id",          null: false

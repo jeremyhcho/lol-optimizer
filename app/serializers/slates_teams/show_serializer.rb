@@ -6,7 +6,8 @@ module SlatesTeams
                :game_info,
                :salary,
                :team_abbreviation,
-               :prediction
+               :prediction,
+               :stats
 
     def remote_id
       object.team.remote_id
@@ -25,11 +26,28 @@ module SlatesTeams
     end
 
     def prediction
-      Predictions::Teams::ShowSerializer.new(object).serializable_hash
+      Predictions::Teams::ShowSerializer.new(object.prediction).serializable_hash
+    end
+
+    def stats
+      return {} unless _match
+      ::Admin::Stats::TotalParser
+        .new(object.team.stats.where(match_id: _match.remote_id).map(&:stats)).perform
+    end
+
+    def _match
+      @_match ||= object.team.matches.find do |match|
+        DateTime.parse(match.time).to_date ==
+          options[:slate].start_time.in_time_zone('America/New_York').to_date
+      end
     end
 
     def include_prediction?
-      options[:with_predictions].present?
+      options[:with_prediction].present?
+    end
+
+    def include_stats?
+      options[:with_stats].present?
     end
   end
 end

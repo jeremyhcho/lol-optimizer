@@ -7,6 +7,7 @@
 #  game_info   :string
 #  salary      :integer
 #  team_abbrev :string
+#  id          :integer          not null, primary key
 #
 
 FactoryGirl.define do

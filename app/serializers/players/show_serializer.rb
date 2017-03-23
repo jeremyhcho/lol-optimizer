@@ -9,7 +9,7 @@ module Players
 
     def stats
       return {} if relevant_stats.empty?
-      ::Admin::Stats::AverageParser.new(relevant_stats).perform
+      ::Admin::Stats::AverageParser.new(relevant_stats, match_ids.length).perform
     end
 
     def relevant_stats
