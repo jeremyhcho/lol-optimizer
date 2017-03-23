@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import {
   Table,
   TableBody,
-  TableHeader
+  TableHeader,
+  TableRow,
+  TableRowColumn
 } from 'material-ui/Table'
 
 // Components
@@ -69,21 +71,31 @@ class TeamStatsTable extends React.Component {
    }
    
    renderTable () {
-     return (
-       this.state.teams.map(team => {
-         let visible = team.name.toLowerCase().includes(this.props.searchText.toLowerCase())
+     if (this.props.teams.length) {
+       return (
+         this.state.teams.map(team => {
+           let visible = team.name.toLowerCase().includes(this.props.searchText.toLowerCase())
 
-         return (
-           <ScrollableRow
-             cols={ this.parseCols() }
-             defaultColWidth={ 75 }
-             object={ team }
-             key={ team.remote_id }
-             style={{ display: visible ? 'table-row' : 'none' }}
-           />
-         )
-       })
-     )
+           return (
+             <ScrollableRow
+               cols={ this.parseCols() }
+               defaultColWidth={ 75 }
+               object={ team }
+               key={ team.remote_id }
+               style={{ display: visible ? 'table-row' : 'none' }}
+             />
+           )
+         })
+       )
+     } else {
+       return (
+         <TableRow>
+           <TableRowColumn style={{ textAlign: 'center' }}>
+             There are no stats available with these parameters
+           </TableRowColumn>
+         </TableRow>
+       )
+     }
    }
    
    parseHeader () {
@@ -117,7 +129,7 @@ class TeamStatsTable extends React.Component {
        <Table
          selectable={ false }
          className='team-stats-table'
-         style={{ width: '100.1%' }}
+         style={{ width: '100.1%', display: this.state.teams.length ? 'block' : '' }}
          bodyStyle={{ overflow: 'visible' }}>
          <TableHeader
            displaySelectAll={ false }
@@ -128,7 +140,7 @@ class TeamStatsTable extends React.Component {
          <TableBody
            displayRowCheckbox={ false }
            adjustForCheckbox={ false }
-           showRowHover={ true }>
+           showRowHover={ this.state.teams.length ? true : false }>
            { this.renderTable() }
          </TableBody>
        </Table>

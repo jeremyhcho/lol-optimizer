@@ -7,7 +7,8 @@ import {
   TableBody,
   TableHeader,
   TableHeaderColumn,
-  TableRow
+  TableRow,
+  TableRowColumn
 } from 'material-ui/Table'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -47,17 +48,27 @@ class SlatesTable extends React.Component {
   }
   
   renderSlateRows () {
-    return (
-      this.props.slates.map((slate, index) => (
-        <SlatesRow
-          key={ index }
-          slate={ slate }
-          toggleRowDropdown={ this.toggleRowDropdown }
-          isToggled={ this.state.dropdownToggleId == slate.id }
-          openDeleteModal={ this.openConfirmation(slate.id) }
-        />
-      ))
-    )
+    if (this.props.slates.length) {
+      return (
+        this.props.slates.map((slate, index) => (
+          <SlatesRow
+            key={ index }
+            slate={ slate }
+            toggleRowDropdown={ this.toggleRowDropdown }
+            isToggled={ this.state.dropdownToggleId == slate.id }
+            openDeleteModal={ this.openConfirmation(slate.id) }
+          />
+        ))
+      )
+    } else {
+      return (
+        <TableRow>
+          <TableRowColumn>
+            There are no slates available for this time range
+          </TableRowColumn>
+        </TableRow>
+      )
+    }
   }
   
   openConfirmation (slateId) {
@@ -118,7 +129,7 @@ class SlatesTable extends React.Component {
             <TableBody
               displayRowCheckbox={ false }
               adjustForCheckbox={ false }
-              showRowHover={ true }>
+              showRowHover={ this.props.slates.length ? true : false }>
               { this.renderSlateRows() }>
             </TableBody>
           </Table>
