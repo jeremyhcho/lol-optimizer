@@ -160,7 +160,7 @@ class CreateSlateModal extends React.Component {
         open={ this.props.isOpen }
         onRequestClose={ this.closeModal }
         autoScrollBodyContent={ true }
-        bodyStyle={{ padding: '60px 0' }}
+        bodyStyle={{ padding: '60px 0', minHeight: '270px' }}
         className='create-slate-modal'
         contentStyle={{ minWidth: '725px', overflowX: 'hidden' }}
       >
