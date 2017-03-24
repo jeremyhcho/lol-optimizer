@@ -48,8 +48,10 @@ class StatsIndex extends React.Component {
   }
   
   changeStatType (e, key, statType) {
-    this.props.resetStats()
-    this.props.changeParams('statType', statType)
+    if (this.props.statType != statType) {
+      this.props.resetStats()
+      this.props.changeParams('statType', statType)
+    }
   }
   
   triggerSearch (searchText) {
@@ -88,7 +90,7 @@ class StatsIndex extends React.Component {
           <Paper style={{ height: '100%', minHeight: 'calc(100vh - 200px)', position: 'relative' }}>
             { this.renderStatsToolbar() }
             
-            <Row style={{ position: 'relative' }}>
+            <Row style={{ position: 'relative', height: this.props.isFetching ? '100%' : '' }}>
                { this.renderTable() }
             </Row>
           </Paper>
