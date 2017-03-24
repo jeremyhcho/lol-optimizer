@@ -1,16 +1,16 @@
 export const ActualPlayerHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true },
-  { name: 'Position', fixedPos: true },
-  { name: 'Team', fixedPos: true, width: 50 },
-  { name: 'Kills', padding: true },
-  { name: 'Deaths' },
-  { name: 'Assists' },
-  { name: 'Creep Score' },
-  { name: '10+ K/A' },
-  { name: '3K' },
-  { name: '4K' },
-  { name: '5K' }
+  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Name', key: 'name', numeric: 0, fixedPos: true },
+  { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
+  { name: 'Team', key: 'team', numeric: 0, fixedPos: true, width: 50 },
+  { name: 'Kills', key: 'stats.kills', numeric: 1, padding: true },
+  { name: 'Deaths', key: 'stats.deaths', numeric: 1 },
+  { name: 'Assists', key: 'stats.assists', numeric: 1 },
+  { name: 'Creep Score', key: 'stats.cs', numeric: 1 },
+  { name: '10+ K/A', key: 'stats.ten_ka', numeric: 1 },
+  { name: '3K', key: 'stats.triple_kills', numeric: 1 },
+  { name: '4K', key: 'stats.quad_kills', numeric: 1 },
+  { name: '5K', key: 'stats.penta_kills', numeric: 1 }
 ]
 
 export const ActualPlayerCols = [
@@ -29,18 +29,18 @@ export const ActualPlayerCols = [
 ]
 
 export const PredictedPlayerHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true },
-  { name: 'Position', fixedPos: true },
-  { name: 'Team', fixedPos: true, width: 50 },
-  { name: 'Kills', padding: true },
-  { name: 'Deaths' },
-  { name: 'Assists' },
-  { name: 'Creep Score' },
-  { name: '10+ K/A' },
-  { name: '3K' },
-  { name: '4K' },
-  { name: '5K' }
+  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Name', key: 'name', numeric: 0, fixedPos: true },
+  { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
+  { name: 'Team', key: 'team', numeric: 0, fixedPos: true, width: 50 },
+  { name: 'Kills', key: 'prediction.kills', numeric: 1, padding: true },
+  { name: 'Deaths', key: 'prediction.deaths', numeric: 1 },
+  { name: 'Assists', key: 'prediction.assists', numeric: 1 },
+  { name: 'Creep Score', key: 'prediction.cs', numeric: 1 },
+  { name: '10+ K/A', key: 'prediction.ten_ka', numeric: 1 },
+  { name: '3K', key: 'prediction.triple_kills', numeric: 1 },
+  { name: '4K', key: 'prediction.quad_kills', numeric: 1 },
+  { name: '5K', key: 'prediction.penta_kills', numeric: 1 }
 ]
 
 export const PredictedPlayerCols = [
@@ -59,18 +59,18 @@ export const PredictedPlayerCols = [
 ]
 
 export const ComparePlayerHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true },
-  { name: 'Position', fixedPos: true },
-  { name: 'Team', fixedPos: true, width: 50 },
-  { name: 'Kills', padding: true },
-  { name: 'Deaths' },
-  { name: 'Assists' },
-  { name: 'Creep Score' },
-  { name: '10+ K/A' },
-  { name: '3K' },
-  { name: '4K' },
-  { name: '5K' },
+  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Name', key: 'name', numeric: 0, fixedPos: true },
+  { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
+  { name: 'Team', key: 'team', numeric: 0, fixedPos: true, width: 50 },
+  { name: 'Kills', key: 'stats.kills', numeric: 1, padding: true },
+  { name: 'Deaths', key: 'stats.deaths', numeric: 1 },
+  { name: 'Assists', key: 'stats.assists', numeric: 1 },
+  { name: 'Creep Score', key: 'stats.cs', numeric: 1 },
+  { name: '10+ K/A', key: 'stats.ten_ka', numeric: 1 },
+  { name: '3K', key: 'stats.triple_kills', numeric: 1 },
+  { name: '4K', key: 'stats.quad_kills', numeric: 1 },
+  { name: '5K', key: 'stats.penta_kills', numeric: 1 }
 ]
 
 export const ComparePlayerCols = [
@@ -122,16 +122,16 @@ export const ComparePlayerCols = [
 ]
 
 export const ActualTeamHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true, width: 115 },
-  { name: 'Position', fixedPos: true },
-  { name: 'Wins', padding: true },
-  { name: 'Losses' },
-  { name: 'First Bloods', width: 100 },
-  { name: 'Dragons' },
-  { name: 'Barons' },
-  { name: 'Towers' },
-  { name: '< 30 Min' }
+  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Name', key: 'name', numeric: 0, fixedPos: true, width: 115 },
+  { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
+  { name: 'Wins', key: 'stats.wins', numeric: 1, padding: true },
+  { name: 'Losses', key: 'stats.losses', numeric: 1 },
+  { name: 'First Bloods', key: 'stats.first_bloods', numeric: 1, width: 100 },
+  { name: 'Dragons', key: 'stats.dragon_kills', numeric: 1 },
+  { name: 'Barons', key: 'stats.baron_kills', numeric: 1 },
+  { name: 'Towers', key: 'stats.towers_destroyed', numeric: 1 },
+  { name: '< 30 Min', key: 'stats.win_in_30_mins', numeric: 1 }
 ]
 
 export const ActualTeamCols = [
@@ -148,16 +148,16 @@ export const ActualTeamCols = [
 ]
 
 export const PredictedTeamHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true, width: 115 },
-  { name: 'Position', fixedPos: true },
-  { name: 'Wins', padding: true },
-  { name: 'Losses' },
-  { name: 'First Bloods', width: 100 },
-  { name: 'Dragons' },
-  { name: 'Barons' },
-  { name: 'Towers' },
-  { name: '< 30 Min' }
+  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Name', key: 'name', numeric: 0, fixedPos: true, width: 115 },
+  { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
+  { name: 'Wins', key: 'prediction.wins', numeric: 1, padding: true },
+  { name: 'Losses', key: 'prediction.losses', numeric: 1 },
+  { name: 'First Bloods', key: 'prediction.first_bloods', numeric: 1, width: 100 },
+  { name: 'Dragons', key: 'prediction.dragon_kills', numeric: 1 },
+  { name: 'Barons', key: 'prediction.baron_kills', numeric: 1 },
+  { name: 'Towers', key: 'prediction.towers_destroyed', numeric: 1 },
+  { name: '< 30 Min', key: 'prediction.win_in_30_mins', numeric: 1 }
 ]
 
 export const PredictedTeamCols = [
@@ -174,16 +174,16 @@ export const PredictedTeamCols = [
 ]
 
 export const CompareTeamHeaders = [
-  { name: 'ID', fixedPos: true, width: 50 },
-  { name: 'Name', fixedPos: true, width: 115 },
-  { name: 'Position', fixedPos: true },
-  { name: 'Wins', padding: true },
-  { name: 'Losses' },
-  { name: 'First Bloods', width: 100 },
-  { name: 'Dragons' },
-  { name: 'Barons' },
-  { name: 'Towers' },
-  { name: '< 30 Min' }
+  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Name', key: 'name', numeric: 0, fixedPos: true, width: 115 },
+  { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
+  { name: 'Wins', key: 'stats.wins', numeric: 1, padding: true },
+  { name: 'Losses', key: 'stats.losses', numeric: 1 },
+  { name: 'First Bloods', key: 'stats.first_bloods', numeric: 1, width: 100 },
+  { name: 'Dragons', key: 'stats.dragon_kills', numeric: 1 },
+  { name: 'Barons', key: 'stats.baron_kills', numeric: 1 },
+  { name: 'Towers', key: 'stats.towers_destroyed', numeric: 1 },
+  { name: '< 30 Min', key: 'stats.win_in_30_mins', numeric: 1 }
 ]
 
 export const CompareTeamCols = [
