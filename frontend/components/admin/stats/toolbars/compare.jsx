@@ -16,6 +16,9 @@ import FontIcon from 'material-ui/FontIcon'
 import { fetchSlates, resetSlates } from 'actions/admin/slate_actions'
 import { fetchStats, changeParams } from 'actions/admin/stat_actions'
 
+// Plugins
+import isEqual from 'lodash/isEqual'
+
 const statTypeOptions = [
   { value: 'actual', label: 'Actual' },
   { value: 'predicted', label: 'Predicted' },
