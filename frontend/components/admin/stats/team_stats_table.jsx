@@ -32,8 +32,13 @@ class TeamStatsTable extends React.Component {
      super(props)
      
      this.state = {
-       teams: []
+       teams: [],
+       sortBy: 'name',
+       order: 'asc',
+       numeric: 0
      }
+     
+     this.sortTable = this.sortTable.bind(this)
    }
 
    componentWillReceiveProps (newProps) {
@@ -69,11 +74,58 @@ class TeamStatsTable extends React.Component {
        )
      })
    }
+
+   sortedPlayers () {
+     return (
+       this.state.teams.sort((current, next) => {
+         let currentKeyVal = current
+         let nextKeyVal = next
+         
+         for (const key of this.state.sortBy.split('.')) {
+           currentKeyVal = currentKeyVal[key]
+           nextKeyVal = nextKeyVal[key]
+         }
+
+         if (this.state.numeric) {
+           currentKeyVal = currentKeyVal || 0
+           nextKeyVal = nextKeyVal || 0
+
+           if (this.state.order == 'asc') {
+             return currentKeyVal - nextKeyVal
+           } else {
+             return nextKeyVal - currentKeyVal
+           }
+         } else {
+           if (this.state.order == 'asc') {
+             if (currentKeyVal.toLowerCase() < nextKeyVal.toLowerCase()) {
+               return -1
+             }
+
+             if (currentKeyVal.toLowerCase() > nextKeyVal.toLowerCase()) {
+               return 1
+             }
+             
+             return 0
+           } else {
+             if (currentKeyVal.toLowerCase() > nextKeyVal.toLowerCase()) {
+               return -1
+             }
+
+             if (currentKeyVal.toLowerCase() < nextKeyVal.toLowerCase()) {
+               return 1
+             }
+
+             return 0
+           }
+         }
+       })
+     )
+   }
    
    renderTable () {
      if (this.props.teams.length) {
        return (
-         this.state.teams.map(team => {
+         this.sortedPlayers().map(team => {
            let visible = team.name.toLowerCase().includes(this.props.searchText.toLowerCase())
 
            return (
@@ -123,7 +175,26 @@ class TeamStatsTable extends React.Component {
          return CompareTeamCols
      }
    }
-   
+
+   sortTable (e) {
+     const key = e.currentTarget.dataset.headerkey
+     const numeric = e.currentTarget.dataset.numeric
+
+     if (this.state.sortBy == key) {
+       let order = this.state.order
+     
+       if (order == 'asc') {
+         order = 'desc'
+       } else if (order == 'desc') {
+         order = 'asc'
+       }
+
+       this.setState({ order, numeric: parseInt(numeric) })
+     } else {
+       this.setState({ sortBy: key, order: 'asc', numeric: parseInt(numeric) })
+     }
+   }
+
    render () {
      return (
        <Table
@@ -134,7 +205,13 @@ class TeamStatsTable extends React.Component {
          <TableHeader
            displaySelectAll={ false }
            adjustForCheckbox={ false }>
-           <ScrollableHeader cols={ this.parseHeader() } defaultColWidth={ 75 } />
+           <ScrollableHeader
+             cols={ this.parseHeader() }
+             defaultColWidth={ 75 }
+             sortBy={ this.state.sortBy }
+             order={ this.state.order }
+             sortTable={ this.sortTable }
+           />
          </TableHeader>
    
          <TableBody

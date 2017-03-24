@@ -11,11 +11,27 @@ class ScrollableHeader extends React.Component {
   renderHeaders () {
     return (
       this.props.cols.map((col, index) => (
-        <TableHeaderColumn style={ this.buildColStyles(col, index) } key={ index }>
+        <TableHeaderColumn
+          className='stat-header'
+          style={ this.buildColStyles(col, index) }
+          key={ index }
+          data-headerkey={ col.key }
+          data-numeric={ col.numeric }>
           { col.name }
-        </TableHeaderColumn>  
+          { this.renderCaret(col) }
+        </TableHeaderColumn>
       ))
     )
+  }
+  
+  renderCaret (col) {
+    if (col.key == this.props.sortBy) {
+      return (
+        <span className='caret-wrapper'>
+          <span className={ `sort-caret ${this.props.order}` }></span>
+        </span>
+      )
+    }
   }
   
   buildColStyles (col, index) {
@@ -42,7 +58,7 @@ class ScrollableHeader extends React.Component {
   
   render () {
     return (
-      <TableRow style={{ position: 'relative' }}>
+      <TableRow style={{ position: 'relative' }} onCellClick={ this.props.sortTable }>
         { this.renderHeaders() }
       </TableRow>
     )
