@@ -88,7 +88,7 @@ class StatsIndex extends React.Component {
           <Paper style={{ height: '100%', minHeight: 'calc(100vh - 200px)', position: 'relative' }}>
             { this.renderStatsToolbar() }
             
-            <Row style={{ position: 'relative', height: 'calc(100% - 73px)' }}>
+            <Row style={{ position: 'relative' }}>
                { this.renderTable() }
             </Row>
           </Paper>
