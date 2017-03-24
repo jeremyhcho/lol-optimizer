@@ -16,6 +16,9 @@ import FontIcon from 'material-ui/FontIcon'
 import { fetchSlates, resetSlates } from 'actions/admin/slate_actions'
 import { fetchStats, changeParams } from 'actions/admin/stat_actions'
 
+// Plugins
+import isEqual from 'lodash/isEqual'
+
 const statTypeOptions = [
   { value: 'actual', label: 'Actual' },
   { value: 'predicted', label: 'Predicted' },
@@ -41,21 +44,27 @@ class PredictedToolbar extends React.Component {
     this.props.date.setHours(0, 0, 0, 0)
 
     if (newProps.date != this.props.date) {
-      this.props.fetchSlates({
-        to: newProps.date.toString(),
-        from: newProps.date.toString()
-      })
+      return (
+        this.props.fetchSlates({
+          to: newProps.date.toString(),
+          from: newProps.date.toString()
+        })
+      )
     }
 
     if (newProps.slateId != this.props.slateId) {
-      this.props.fetchStats({
-        stat_type: 'predicted',
-        slate_id: newProps.slateId
-      })
+      return (
+        this.props.fetchStats({
+          stat_type: 'compare',
+          slate_id: newProps.slateId
+        })
+      )
     }
 
     if (newProps.slates.length) {
-      this.changeSlateId(null, null, newProps.slates[0].id)
+      if (!isEqual(this.props.slates, newProps.slates)) {
+        this.changeSlateId(null, null, newProps.slates[0].id)
+      }
     } else {
       this.changeSlateId(null, null, 0)
     }
