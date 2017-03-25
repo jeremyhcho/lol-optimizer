@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Dimensions from 'react-dimensions'
 
 // Material UI
 import {
@@ -35,23 +36,31 @@ class TeamStatsTable extends React.Component {
        teams: [],
        sortBy: 'name',
        order: 'asc',
-       numeric: 0
+       numeric: 0,
+       scrollLock: false
      }
      
      this.sortTable = this.sortTable.bind(this)
    }
-
+   
    componentWillReceiveProps (newProps) {
-     if (isEqual(this.props.teams, newProps.teams)) {
-       return
+     let newState = {}
+
+     if (this.parseScrollLock(newProps) != this.state.scrollLock) {
+       newState.scrollLock = !this.state.scrollLock
      }
 
-     this.setState({ teams: [] })
+     if (!isEqual(this.props.teams, newProps.teams)) {
+       newState.players = []
+     }
+
+     this.setState(newState)
      this.interval = setInterval(this.addItems.bind(this), 700)
    }
    
    componentDidMount () {
      this.interval = setInterval(this.addItems.bind(this), 700)
+     this.setState({ scrollLock: this.parseScrollLock() })
    }
    
    componentWillUnmount () {
@@ -60,7 +69,7 @@ class TeamStatsTable extends React.Component {
    }
 
    addItems () {
-     if ((this.state.teams.length + 10) > this.props.teams.length) {
+     if ((this.state.teams.length + 20) > this.props.teams.length) {
        clearInterval(this.interval)
        this.interval = null
      }
@@ -69,7 +78,7 @@ class TeamStatsTable extends React.Component {
        teams: this.state.teams.concat(
          this.props.teams.slice(
            this.state.teams.length,
-           this.state.teams.length + 10
+           this.state.teams.length + 20
          )
        )
      })
@@ -91,9 +100,25 @@ class TeamStatsTable extends React.Component {
            nextKeyVal = nextKeyVal || 0
 
            if (this.state.order == 'asc') {
-             return currentKeyVal - nextKeyVal
+             if (currentKeyVal < nextKeyVal) {
+               return -1
+             }
+
+             if (currentKeyVal > nextKeyVal) {
+               return 1
+             }
+             
+             return 0
            } else {
-             return nextKeyVal - currentKeyVal
+             if (currentKeyVal > nextKeyVal) {
+               return -1
+             }
+             
+             if (currentKeyVal < nextKeyVal) {
+               return 1
+             }
+             
+             return 0
            }
          } else {
            if (this.state.order == 'asc') {
@@ -135,6 +160,7 @@ class TeamStatsTable extends React.Component {
                object={ team }
                key={ team.remote_id }
                style={{ display: visible ? 'table-row' : 'none' }}
+               scrollLock={ this.state.scrollLock }
              />
            )
          })
@@ -195,12 +221,24 @@ class TeamStatsTable extends React.Component {
      }
    }
 
+   parseScrollLock (props = null) {
+     props = props ? props : this.props
+     let headers = this.parseHeader()
+
+     let headersLength = headers.reduce((sum, header) => (
+       sum + (header.width || 75) + 48
+     ), 0)
+
+     return headersLength > props.containerWidth
+   }
+
    render () {
      return (
        <Table
          selectable={ false }
          className='team-stats-table'
-         style={{ width: '100.1%', display: this.state.teams.length ? 'block' : '' }}
+         style={{ width: '100%' }}
+         wrapperStyle={{ width: '100%' }}
          bodyStyle={{ overflow: 'visible' }}>
          <TableHeader
            displaySelectAll={ false }
@@ -211,6 +249,7 @@ class TeamStatsTable extends React.Component {
              sortBy={ this.state.sortBy }
              order={ this.state.order }
              sortTable={ this.sortTable }
+             scrollLock={ this.state.scrollLock}
            />
          </TableHeader>
    
@@ -229,4 +268,6 @@ const mapStateToProps = (state) => ({
   teams: state.admin.stats.teams
 })
 
-export default connect(mapStateToProps)(TeamStatsTable)
+export default Dimensions()(
+  connect(mapStateToProps)(TeamStatsTable)
+)
