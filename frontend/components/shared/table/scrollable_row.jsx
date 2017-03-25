@@ -56,20 +56,22 @@ class ScrollableRow extends React.Component {
   buildColStyles (col, index) {
     const styles = {}
     
-    if (col.fixedPos) {
-      styles.position = 'absolute'
-      styles.left = `${this.props.cols.slice(0, index).reduce((total, colObj) => (
-        total + 48 + (colObj.width || this.props.defaultColWidth)
-      ), 0)}px`
-      styles.lineHeight = '50px'
-    } else if (col.padding) {
-      styles.paddingLeft = `${this.props.cols.slice(0, index).reduce((total, colObj) => (
-        total + 55 + (colObj.width || this.props.defaultColWidth)
-      ), 0)}px`
-    }
+    if (this.props.scrollLock) {
+      if (col.fixedPos) {
+        styles.position = 'absolute'
+        styles.left = `${this.props.cols.slice(0, index).reduce((total, colObj) => (
+          total + 48 + (colObj.width || this.props.defaultColWidth)
+        ), 0)}px`
+        styles.lineHeight = '50px'
+      } else if (col.padding) {
+        styles.paddingLeft = `${this.props.cols.slice(0, index).reduce((total, colObj) => (
+          total + 55 + (colObj.width || this.props.defaultColWidth)
+        ), 0)}px`
+      }
 
-    styles.width = `${col.width || this.props.defaultColWidth}px`
-    styles.backgroundColor = this.state.hovered ? '#505464' : '#2F3243'
+      styles.width = `${col.width || this.props.defaultColWidth}px`
+      styles.backgroundColor = this.state.hovered ? '#505464' : '#2F3243'
+    }
     
     return styles
   }
