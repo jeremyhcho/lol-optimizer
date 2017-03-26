@@ -23,7 +23,7 @@ module PlayersSlates
     end
 
     def team
-      object.player.team.short_name
+      ::Teams::ShowSerializer.new(object.player.team).serializable_hash
     end
 
     def team_abbreviation

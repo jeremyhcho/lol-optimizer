@@ -36,7 +36,7 @@ module Admin
 
       def slate
         @slate = Slate.includes(
-          players_slates: [{ player: [:red_team_matches, :blue_team_matches, :stats] }],
+          players_slates: [{ player: [:matches, :stats] }],
           slates_teams: [{ team: [:red_team_matches, :blue_team_matches, :stats] }]
         ).find(slate_id)
       end

@@ -22,10 +22,11 @@ class Team < ActiveRecord::Base
   has_many :red_team_matches, class_name: 'Match', foreign_key: :red_team_id, primary_key: :remote_id
   has_many :blue_team_matches, class_name: 'Match', foreign_key: :blue_team_id, primary_key: :remote_id
   has_many :stats, class_name: 'TeamStat', primary_key: :remote_id
+  has_many :matches, through: :stats
 
   scope :active, -> { where(active: true) }
 
-  def matches
-    red_team_matches | blue_team_matches
+  def unique_matches
+    matches.uniq
   end
 end

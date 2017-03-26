@@ -41,13 +41,19 @@ class ActualToolbar extends React.Component {
   }
   
   componentDidMount () {
-    this.props.fetchStats({
-      stat_type: 'actual',
-      games_back: this.props.gamesBack
-    })
+    if (this.props.shouldFetch) {
+      this.props.fetchStats({
+        stat_type: 'actual',
+        games_back: this.props.gamesBack
+      })
+    }
   }
   
   componentWillReceiveProps (newProps) {
+    if (!this.props.shouldFetch) {
+      return
+    }
+
     if (newProps.gamesBack != this.props.gamesBack) {
       this.props.fetchStats({ stat_type: 'actual', games_back: newProps.gamesBack })  
     }

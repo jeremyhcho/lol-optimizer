@@ -3,7 +3,7 @@ module Slates
     attributes :id, :name, :start_time, :status, :players, :teams
 
     def players
-      PlayersSlate.includes({ player: [:team, :red_team_matches, :blue_team_matches] }, :prediction)
+      PlayersSlate.includes({ player: [:team, :matches] }, :prediction)
                   .where(slate_id: object.id)
                   .map do |players_slate|
         ::PlayersSlates::ShowSerializer.new(players_slate, options.merge(slate: object)).serializable_hash

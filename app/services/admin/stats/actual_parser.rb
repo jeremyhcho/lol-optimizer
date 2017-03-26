@@ -29,7 +29,7 @@ module Admin
       end
 
       def scoped_players
-        Player.includes(:team, :red_team_matches, :blue_team_matches, :stats).active
+        Player.includes(:team, :matches, :stats).active
       end
 
       def teams

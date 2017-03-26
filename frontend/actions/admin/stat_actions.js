@@ -2,7 +2,8 @@ export const StatConstants = {
   CHANGE_PARAMS: 'CHANGE_PARAMS',
   FETCH_STATS: 'FETCH_STATS',
   STATS_RECEIVED: 'STATS_RECEIVED',
-  RESET_STATS: 'RESET_STATS'
+  RESET_STATS: 'RESET_STATS',
+  FETCH_PLAYER_STATS: 'FETCH_PLAYER_STATS'
 }
 
 export const changeParams = (key, value) => ({
@@ -23,4 +24,9 @@ export const statsReceived = (stats) => ({
 
 export const resetStats = () => ({
   type: StatConstants.RESET_STATS
+})
+
+export const fetchPlayerStats = (playerId) => ({
+  type: StatConstants.FETCH_PLAYER_STATS,
+  playerId
 })

@@ -28,7 +28,7 @@ class ScrollableHeader extends React.Component {
     if (col.key == this.props.sortBy) {
       return (
         <span className='caret-wrapper'>
-          <span className={ `sort-caret ${this.props.order}` }></span>
+          <span className={ `fa fa-angle-up sort-caret ${this.props.order}` }></span>
         </span>
       )
     }
