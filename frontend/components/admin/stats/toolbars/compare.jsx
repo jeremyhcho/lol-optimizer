@@ -79,12 +79,13 @@ class CompareToolbar extends React.Component {
       this.changeSlateId(null, null, this.props.slates[0].id)
     } else {
       if (this.props.shouldFetch) {
-        this.props.fetchSlates({
-          to: this.props.date.toString(),
-          from: this.props.date.toString()
-        })
+        this.props.changeParams('date', new Date())
       }
     }
+  }
+  
+  componentWillUnmount () {
+    this.props.resetSlates()
   }
   
   handleDateChange (e, date) {
