@@ -235,7 +235,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  closeModal: () => dispatch(closeModal('createSlate')),
+  closeModal: () => dispatch(closeModal()),
   createSlate: (params) => dispatch(createSlate(params)),
   receiveSlate: (slate) => dispatch(receiveSlate(slate))
 })

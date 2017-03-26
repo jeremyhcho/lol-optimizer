@@ -1,8 +1,8 @@
 export const ActualPlayerHeaders = [
-  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Details', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
   { name: 'Name', key: 'name', numeric: 0, fixedPos: true },
   { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
-  { name: 'Team', key: 'team', numeric: 0, fixedPos: true, width: 50 },
+  { name: 'Team', key: 'team.short_name', numeric: 0, fixedPos: true, width: 50 },
   { name: 'Kills', key: 'stats.kills', numeric: 1, padding: true },
   { name: 'Deaths', key: 'stats.deaths', numeric: 1 },
   { name: 'Assists', key: 'stats.assists', numeric: 1 },
@@ -14,10 +14,10 @@ export const ActualPlayerHeaders = [
 ]
 
 export const ActualPlayerCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
+  { key: 'remote_id', iconClass: 'fa fa-drivers-license-o', onClick: 'viewDetails', fixedPos: true, width: 50 },
   { key: 'name', fixedPos: true },
   { key: 'position', fixedPos: true, defaultVal: 'N/A' },
-  { key: 'team', fixedPos: true, width: 50 },
+  { key: 'team.short_name', fixedPos: true, width: 50 },
   { key: 'stats.kills', defaultVal: 0, padding: true },
   { key: 'stats.deaths', defaultVal: 0 },
   { key: 'stats.assists', defaultVal: 0 },
@@ -29,10 +29,10 @@ export const ActualPlayerCols = [
 ]
 
 export const PredictedPlayerHeaders = [
-  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Details', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
   { name: 'Name', key: 'name', numeric: 0, fixedPos: true },
   { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
-  { name: 'Team', key: 'team', numeric: 0, fixedPos: true, width: 50 },
+  { name: 'Team', key: 'team.short_name', numeric: 0, fixedPos: true, width: 50 },
   { name: 'Kills', key: 'prediction.kills', numeric: 1, padding: true },
   { name: 'Deaths', key: 'prediction.deaths', numeric: 1 },
   { name: 'Assists', key: 'prediction.assists', numeric: 1 },
@@ -44,10 +44,10 @@ export const PredictedPlayerHeaders = [
 ]
 
 export const PredictedPlayerCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
+  { key: 'remote_id', iconClass: 'fa fa-drivers-license-o', onClick: 'viewDetails', fixedPos: true, width: 50 },
   { key: 'name', fixedPos: true },
   { key: 'position', fixedPos: true, defaultVal: 'N/A' },
-  { key: 'team', fixedPos: true, width: 50 },
+  { key: 'team.short_name', fixedPos: true, width: 50 },
   { key: 'prediction.kills', defaultVal: 0, padding: true },
   { key: 'prediction.deaths', defaultVal: 0 },
   { key: 'prediction.assists', defaultVal: 0 },
@@ -59,10 +59,10 @@ export const PredictedPlayerCols = [
 ]
 
 export const ComparePlayerHeaders = [
-  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Details', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
   { name: 'Name', key: 'name', numeric: 0, fixedPos: true },
   { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
-  { name: 'Team', key: 'team', numeric: 0, fixedPos: true, width: 50 },
+  { name: 'Team', key: 'team.short_name', numeric: 0, fixedPos: true, width: 50 },
   { name: 'Kills', key: 'stats.kills', numeric: 1, padding: true },
   { name: 'Deaths', key: 'stats.deaths', numeric: 1 },
   { name: 'Assists', key: 'stats.assists', numeric: 1 },
@@ -74,10 +74,10 @@ export const ComparePlayerHeaders = [
 ]
 
 export const ComparePlayerCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
+  { key: 'remote_id', iconClass: 'fa fa-drivers-license-o', onClick: 'viewDetails', fixedPos: true, width: 50 },
   { key: 'name', fixedPos: true },
   { key: 'position', fixedPos: true, defaultVal: 'N/A' },
-  { key: 'team', fixedPos: true, width: 50 },
+  { key: 'team.short_name', fixedPos: true, width: 50 },
   {
     key: 'stats.kills|prediction.kills',
     defaultVal: 0,
@@ -122,7 +122,7 @@ export const ComparePlayerCols = [
 ]
 
 export const ActualTeamHeaders = [
-  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Details', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
   { name: 'Name', key: 'name', numeric: 0, fixedPos: true, width: 115 },
   { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
   { name: 'Wins', key: 'stats.wins', numeric: 1, padding: true },
@@ -135,7 +135,7 @@ export const ActualTeamHeaders = [
 ]
 
 export const ActualTeamCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
+  { key: 'remote_id', iconClass: 'fa fa-drivers-license-o', onClick: 'viewDetails', fixedPos: true, width: 50 },
   { key: 'name', fixedPos: true, width: 115 },
   { key: 'position', fixedPos: true, defaultVal: 'N/A' },
   { key: 'stats.wins', defaultVal: 0, padding: true },
@@ -148,7 +148,7 @@ export const ActualTeamCols = [
 ]
 
 export const PredictedTeamHeaders = [
-  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Details', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
   { name: 'Name', key: 'name', numeric: 0, fixedPos: true, width: 115 },
   { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
   { name: 'Wins', key: 'prediction.wins', numeric: 1, padding: true },
@@ -161,7 +161,7 @@ export const PredictedTeamHeaders = [
 ]
 
 export const PredictedTeamCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
+  { key: 'remote_id', iconClass: 'fa fa-drivers-license-o', onClick: 'viewDetails', fixedPos: true, width: 50 },
   { key: 'name', fixedPos: true, width: 115 },
   { key: 'position', fixedPos: true, defaultVal: 'N/A' },
   { key: 'prediction.wins', defaultVal: 0, padding: true },
@@ -174,7 +174,7 @@ export const PredictedTeamCols = [
 ]
 
 export const CompareTeamHeaders = [
-  { name: 'ID', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
+  { name: 'Details', key: 'remote_id', numeric: 1, fixedPos: true, width: 50 },
   { name: 'Name', key: 'name', numeric: 0, fixedPos: true, width: 115 },
   { name: 'Position', key: 'position', numeric: 0, fixedPos: true },
   { name: 'Wins', key: 'stats.wins', numeric: 1, padding: true },
@@ -187,7 +187,7 @@ export const CompareTeamHeaders = [
 ]
 
 export const CompareTeamCols = [
-  { key: 'remote_id', fixedPos: true, width: 50 },
+  { key: 'remote_id', iconClass: 'fa fa-drivers-license-o', onClick: 'viewDetails', fixedPos: true, width: 50 },
   { key: 'name', fixedPos: true, width: 115 },
   { key: 'position', fixedPos: true, defaultVal: 'N/A' },
   {

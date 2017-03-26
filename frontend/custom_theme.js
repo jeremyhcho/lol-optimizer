@@ -74,5 +74,8 @@ export const CustomTheme = {
   },
   menuItem: {
     selectedTextColor: '#EEEEEE'
+  },
+  dialog: {
+    bodyColor: '#2f3243'
   }
 }

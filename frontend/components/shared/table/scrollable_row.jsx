@@ -22,22 +22,26 @@ class ScrollableRow extends React.Component {
         currentKeyVal = this.props.object
         vals = {}
         
-        for (const key of col.key.split('|')) {
-          for (const key2 of key.split('.')) {
-            currentKeyVal = currentKeyVal[key2]
+        if (col.iconClass) {
+          formattedVal = `<span data-${col.key}=${currentKeyVal[col.key]} class='cell-icon ${col.iconClass}'></span>`
+        } else {
+          for (const key of col.key.split('|')) {
+            for (const key2 of key.split('.')) {
+              currentKeyVal = currentKeyVal[key2]
+            }
+            
+            vals[key] = currentKeyVal || col.defaultVal
+            currentKeyVal = this.props.object
           }
-          
-          vals[key] = currentKeyVal || col.defaultVal
-          currentKeyVal = this.props.object
-        }
 
-        formattedVal = col.innerHTML
+          formattedVal = col.innerHTML
 
-        for (let [key, val] of Object.entries(vals)) {
-          if (formattedVal) {
-            formattedVal = formattedVal.replace(key, val)
-          } else {
-            formattedVal = val.toString()
+          for (let [key, val] of Object.entries(vals)) {
+            if (formattedVal) {
+              formattedVal = formattedVal.replace(key, val)
+            } else {
+              formattedVal = val.toString()
+            }
           }
         }
 
@@ -45,12 +49,19 @@ class ScrollableRow extends React.Component {
           <TableRowColumn
             style={ this.buildColStyles(col, index) }
             key={ index }>
-            <div dangerouslySetInnerHTML={{ __html: formattedVal }}>
+            <div
+              onClick={col.onClick ? this.props[col.onClick] : this.onClick }
+              dangerouslySetInnerHTML={{ __html: formattedVal }}>
             </div>
           </TableRowColumn>
         )
       })
     )
+  }
+  
+  onClick () {
+    // Should be sent from props
+    console.log('Event handler needs to be sent from props! (ScrollableRow)')
   }
   
   buildColStyles (col, index) {

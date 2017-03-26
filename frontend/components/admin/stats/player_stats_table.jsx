@@ -25,6 +25,9 @@ import {
   ComparePlayerCols
 } from 'constants/admin_constants'
 
+// Actions
+import { openModal } from 'actions/modal_actions'
+
 // Plugins
 import isEqual from 'lodash/isEqual'
 
@@ -41,6 +44,7 @@ class PlayerStatsTable extends React.Component {
     }
 
     this.sortTable = this.sortTable.bind(this)
+    this.viewDetails = this.viewDetails.bind(this)
   }
 
   componentWillReceiveProps (newProps) {
@@ -110,6 +114,7 @@ class PlayerStatsTable extends React.Component {
             
             return 0
           } else {
+
             if (currentKeyVal > nextKeyVal) {
               return -1
             }
@@ -121,6 +126,9 @@ class PlayerStatsTable extends React.Component {
             return 0
           }
         } else {
+          currentKeyVal = currentKeyVal || 'N/A'
+          nextKeyVal = nextKeyVal || 'N/A'
+
           if (this.state.order == 'asc') {
             if (currentKeyVal.toLowerCase() < nextKeyVal.toLowerCase()) {
               return -1
@@ -146,6 +154,12 @@ class PlayerStatsTable extends React.Component {
       })
     )
   }
+  
+  viewDetails (e) {
+    if (e.target.className.includes('cell-icon')) {
+      this.props.viewPlayerStatDetails(parseInt(e.target.dataset.remote_id))
+    }
+  }
  
   renderTable () {
     if (this.props.players.length) {
@@ -161,6 +175,7 @@ class PlayerStatsTable extends React.Component {
               key={ player.remote_id }
               style={{ display: visible ? 'table-row' : 'none' }}
               scrollLock={ this.state.scrollLock }
+              viewDetails={ this.viewDetails }
             />
           )
         })
@@ -223,9 +238,9 @@ class PlayerStatsTable extends React.Component {
   
   parseScrollLock (props = null) {
     props = props ? props : this.props
-    let headers = this.parseHeader()
+    const headers = this.parseHeader()
 
-    let headersLength = headers.reduce((sum, header) => (
+    const headersLength = headers.reduce((sum, header) => (
       sum + (header.width || 75) + 48
     ), 0)
 
@@ -269,6 +284,15 @@ const mapStateToProps = (state) => ({
   players: state.admin.stats.players
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  viewPlayerStatDetails: (playerId) => (
+    dispatch(openModal('viewPlayerStatDetails', { playerId }))
+  )
+})
+
 export default Dimensions()(
-  connect(mapStateToProps)(PlayerStatsTable)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PlayerStatsTable)
 )

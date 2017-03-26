@@ -25,6 +25,9 @@ import {
   CompareTeamCols
 } from 'constants/admin_constants'
 
+// Actions
+import { openModal } from 'actions/modal_actions'
+
 // Plugins
 import isEqual from 'lodash/isEqual'
 
@@ -41,6 +44,7 @@ class TeamStatsTable extends React.Component {
      }
      
      this.sortTable = this.sortTable.bind(this)
+     this.viewDetails = this.viewDetails.bind(this)
    }
    
    componentWillReceiveProps (newProps) {
@@ -84,7 +88,7 @@ class TeamStatsTable extends React.Component {
      })
    }
 
-   sortedPlayers () {
+   sortedTeams () {
      return (
        this.state.teams.sort((current, next) => {
          let currentKeyVal = current
@@ -147,10 +151,16 @@ class TeamStatsTable extends React.Component {
      )
    }
    
+   viewDetails (e) {
+     if (e.target.className.includes('cell-icon')) {
+       this.props.viewTeamStatDetails(parseInt(e.target.dataset.remote_id))
+     }
+   }
+   
    renderTable () {
      if (this.props.teams.length) {
        return (
-         this.sortedPlayers().map(team => {
+         this.sortedTeams().map(team => {
            let visible = team.name.toLowerCase().includes(this.props.searchText.toLowerCase())
 
            return (
@@ -161,6 +171,7 @@ class TeamStatsTable extends React.Component {
                key={ team.remote_id }
                style={{ display: visible ? 'table-row' : 'none' }}
                scrollLock={ this.state.scrollLock }
+               viewDetails={ this.viewDetails }
              />
            )
          })
@@ -268,6 +279,15 @@ const mapStateToProps = (state) => ({
   teams: state.admin.stats.teams
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  viewTeamStatDetails: (teamId) => (
+    dispatch(openModal('viewTeamStatDetails', { teamId }))
+  )
+})
+
 export default Dimensions()(
-  connect(mapStateToProps)(TeamStatsTable)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TeamStatsTable)
 )

@@ -43,6 +43,10 @@ class PredictedToolbar extends React.Component {
     newProps.date.setHours(0, 0, 0, 0)
     this.props.date.setHours(0, 0, 0, 0)
 
+    if (!this.props.shouldFetch) {
+      return
+    }
+    
     if (newProps.date != this.props.date) {
       return (
         this.props.fetchSlates({
@@ -74,10 +78,12 @@ class PredictedToolbar extends React.Component {
     if (this.props.slates.length) {
       this.changeSlateId(null, null, this.props.slates[0].id)
     } else {
-      this.props.fetchSlates({
-        to: this.props.date.toString(),
-        from: this.props.date.toString()
-      })
+      if (this.props.shouldFetch) {
+        this.props.fetchSlates({
+          to: this.props.date.toString(),
+          from: this.props.date.toString()
+        })
+      }
     }
   }
   

@@ -63,7 +63,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  closeModal: () => dispatch(closeModal('snackbarMore'))
+  closeModal: () => dispatch(closeModal())
 })
 
 export default connect(

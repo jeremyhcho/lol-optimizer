@@ -26,7 +26,7 @@ class SlatesTeam < ActiveRecord::Base
   def averages
     @averages ||= ::Admin::Stats::AverageParser.new(
       team.stats.map(&:stats),
-      team.matches.length
+      team.unique_matches.length
     ).perform
   end
 end

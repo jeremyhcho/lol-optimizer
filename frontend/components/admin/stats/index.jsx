@@ -15,6 +15,8 @@ import TeamStatsTable from 'components/admin/stats/team_stats_table'
 import ActualToolbar from 'components/admin/stats/toolbars/actual'
 import PredictedToolbar from 'components/admin/stats/toolbars/predicted'
 import CompareToolbar from 'components/admin/stats/toolbars/compare'
+import ViewPlayerStatDetailsModal from 'components/modals/admin/player_stat_details'
+import ViewTeamStatDetailsModal from 'components/modals/admin/team_stat_details'
 
 // Actions
 import { resetStats, changeParams } from 'actions/admin/stat_actions'
@@ -58,12 +60,13 @@ class StatsIndex extends React.Component {
     this.setState({ searchText })
   }
   
-  renderStatsToolbar () {
+  renderStatsToolbar (shouldFetch) {
     if (this.props.statType == 'actual') {
       return (
         <ActualToolbar
           changeStatType={ this.changeStatType }
           triggerSearch={ this.triggerSearch }
+          shouldFetch={ shouldFetch }
         />
       )
     } else if (this.props.statType == 'predicted') {
@@ -71,6 +74,7 @@ class StatsIndex extends React.Component {
         <PredictedToolbar
           changeStatType={ this.changeStatType }
           triggerSearch={ this.triggerSearch }
+          shouldFetch={ shouldFetch }
         />
       )
     } else {
@@ -78,17 +82,18 @@ class StatsIndex extends React.Component {
         <CompareToolbar
           changeStatType={ this.changeStatType }
           triggerSearch={ this.triggerSearch }
+          shouldFetch={ shouldFetch }
         />
       )
     }
   }
 
-  renderTab () {
+  renderTab (shouldFetch) {
     return (
       <Row>
         <Col xs={ 12 }>
           <Paper style={{ height: '100%', minHeight: 'calc(100vh - 200px)', position: 'relative' }}>
-            { this.renderStatsToolbar() }
+            { this.renderStatsToolbar(shouldFetch) }
             
             <Row style={{ position: 'relative', height: this.props.isFetching ? '100%' : '' }}>
                { this.renderTable() }
@@ -130,14 +135,17 @@ class StatsIndex extends React.Component {
             onChange={ this.changeTab }
             tabTemplateStyle={{ textAlign: 'center' }}>
             <Tab label='Players' value='players'>
-              { this.state.show == 'players' && this.renderTab() }
+              { this.renderTab(true) }
             </Tab>
     
             <Tab label='Teams' value='teams'>
-              { this.state.show == 'teams' && this.renderTab() }
+              { this.renderTab(false) }
             </Tab>
           </Tabs>
         </Col>
+
+        <ViewPlayerStatDetailsModal />
+        <ViewTeamStatDetailsModal />
       </Row>
     )
   }
