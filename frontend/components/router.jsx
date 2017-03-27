@@ -81,7 +81,8 @@ class AppRouter extends React.Component {
   }
 
   _redirectIfLoggedIn (nextState, replace) {
-    if (this.props.store.getState().session.currentUser) {
+    if (this.props.store.getState().session.currentUser &&
+        this.props.store.getState().session.currentUser.is_admin) {
       replace('/admin/slates')
     }
   }
