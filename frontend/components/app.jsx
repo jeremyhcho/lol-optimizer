@@ -33,7 +33,7 @@ class App extends React.Component {
     if (this.props.snackbar.opts.more) {
       return 'MORE'
     } else {
-      return 'GOTCHA'
+      return 'GOT IT'
     }
   }
 

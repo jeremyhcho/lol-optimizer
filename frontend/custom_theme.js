@@ -77,5 +77,10 @@ export const CustomTheme = {
   },
   dialog: {
     bodyColor: '#2f3243'
+  },
+  checkbox: {
+    boxColor: '#EEEEEE',
+    labelColor: '#EEEEEE',
+    checkedColor: '#2196F3'
   }
 }

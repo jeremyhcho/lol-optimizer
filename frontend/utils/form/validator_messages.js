@@ -18,5 +18,5 @@ export const csvUrlFormat = () => {
 }
 
 export const confirmPassword = (test) => {
-  return 'Please make sure your password and confirmpassword are identical'
+  return 'The specified passwords do not match'
 }

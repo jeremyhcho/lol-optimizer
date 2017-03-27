@@ -6,8 +6,8 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 // Components
 import App from 'components/app'
 import Hero from 'components/hero/hero'
-import LoginContainer from 'components/session/login_container'
-import SignupContainer from 'components/session/signup_container'
+import LoginForm from 'components/session/login_form'
+import SignupForm from 'components/session/signup_form'
 
 // Admin Components
 import AdminLayout from 'components/admin/admin_layout'
@@ -34,8 +34,8 @@ class AppRouter extends React.Component {
         onEnter: this._redirectIfLoggedIn
       },
       childRoutes: [
-        { path: 'login', component: LoginContainer, onEnter: this._redirectIfLoggedIn },
-        { path: 'signup', component: SignupContainer, onEnter: this._redirectIfLoggedIn },
+        { path: 'login', component: LoginForm, onEnter: this._redirectIfLoggedIn },
+        { path: 'signup', component: SignupForm, onEnter: this._redirectIfLoggedIn },
         {
           component: AdminLayout,
           onEnter: this._ensureUserIsAdmin,

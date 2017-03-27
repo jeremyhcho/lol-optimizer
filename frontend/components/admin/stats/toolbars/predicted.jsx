@@ -158,7 +158,7 @@ class PredictedToolbar extends React.Component {
           onChange={ this.handleDateChange }
           autoOk={ true }
           floatingLabelText="Date"
-          defaultDate={ this.props.date }
+          defaultDate={ new Date() }
           container="inline"
           style={{ height: '65px', margin: '5px 0 0 25px' }}
         />
