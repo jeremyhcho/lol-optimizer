@@ -14,15 +14,31 @@
 @import 'variables';
 @import 'admin';
 @import 'modals/admin';
-@import 'login';
-@import 'signup';
+@import 'session';
 
 body {
   margin: 0;
   background-color: #282A37;
   font-family: MontSerrat, sans-serif;
-}
+  width: 100vw;
+  height: 100vh;
+  
+  #root {
+    width: 100%;
+    height: 100%;
+    > div {
+      width: 100%;
+      height: 100%;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: #EEEEEE;
+    }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #EEEEEE;
+    a {
+      text-decoration: none;
+      color: #7881A9;
+      cursor: pointer;
+    }
+  }
 }

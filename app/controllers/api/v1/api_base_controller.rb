@@ -13,16 +13,12 @@ module Api
       end
 
       def current_user
-        # @todo Revert this change when log in / signup flow is finished
-        # return if session[:session_token].nil?
-        @current_user = User.first
-        # @current_user ||= User.find_by_session_token(session[:session_token])
+        return if session[:session_token].nil?
+        @current_user ||= User.find_by_session_token(session[:session_token])
       end
 
       def logged_in?
-        # @todo Revert this change when log in / signup flow is finished
-        true
-        # current_user.present?
+        current_user.present?
       end
 
       def logout!

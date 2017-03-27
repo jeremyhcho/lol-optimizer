@@ -79,7 +79,8 @@ class CompareToolbar extends React.Component {
       this.changeSlateId(null, null, this.props.slates[0].id)
     } else {
       if (this.props.shouldFetch) {
-        this.props.changeParams('date', new Date())
+        let date = new Date()
+        this.props.changeParams('date', new Date(date.setDate(date.getDate() - 1)))
       }
     }
   }
@@ -105,6 +106,20 @@ class CompareToolbar extends React.Component {
     if (e.keyCode == 13) {
       e.preventDefault()
       this.props.triggerSearch(this.state.searchText)
+    }
+  }
+  
+  disableDatesInFuture (day) {
+    return day.setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0)
+  }
+  
+  parseDefaultDate () {
+    let date = this.props.date
+
+    if (date.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0)) {
+      return new Date(date.setDate(date.getDate() - 1))
+    } else {
+      return this.props.date
     }
   }
 
@@ -159,9 +174,10 @@ class CompareToolbar extends React.Component {
               onChange={ this.handleDateChange }
               autoOk={ true }
               floatingLabelText="Date"
-              defaultDate={ this.props.date }
+              defaultDate={ this.parseDefaultDate() }
               container="inline"
               style={{ height: '65px', margin: '5px 0 0 25px' }}
+              shouldDisableDate={ this.disableDatesInFuture }
             />
           
             <DropDownMenu

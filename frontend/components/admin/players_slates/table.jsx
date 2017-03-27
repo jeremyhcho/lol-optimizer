@@ -1,5 +1,4 @@
 import React from 'react'
-import withRouter from 'react-router'
 
 // Grid
 import { Row, Col } from 'react-styled-flexboxgrid'

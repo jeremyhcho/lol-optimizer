@@ -1,6 +1,9 @@
 // Saga
 import { call, put, takeLatest } from 'redux-saga/effects'
 
+// Api
+import Api from 'api/root_api'
+
 // Actions
 import {
   SessionConstants,
@@ -9,32 +12,37 @@ import {
   signup,
   receiveCurrentUser
 } from 'actions/session/session_actions'
+import { openSnackbar } from 'actions/snackbar_actions'
 
-// Api
-import Api from 'api/root_api'
+export default function* sessionSaga () {
+  yield [
+    watchLoginAsync(),
+    watchSignupAsync()
+  ]
+}
 
-export function* watchLoginAsync () {
+function* watchLoginAsync () {
   yield takeLatest(SessionConstants.LOGIN, loginAsync)
 }
 
-export function* loginAsync (action) {
+function* loginAsync (action) {
   try {
     let response = yield call(Api.Sessions.post(action.user))
     yield put(receiveCurrentUser(response.data.response))
   } catch (error) {
-    yield put({ type: SessionConstants.LOGIN_FAILED, response: error.response.data })
+    yield put(openSnackbar('Invalid email/password combination'))
   }
 }
 
-export function* watchSignupAsync () {
+function* watchSignupAsync () {
   yield takeLatest(SessionConstants.SIGNUP, signupAsync)
 }
 
-export function* signupAsync (action) {
+function* signupAsync (action) {
   try {
     let response = yield call(Api.Users.post(action.user))
     yield put(receiveCurrentUser(response.data.response))
   } catch (error) {
-    yield put({ type: SessionConstants.SIGNUP_FAILED, response: error.response.data })
+    yield put(openSnackbar('The specified email already exists'))
   }
 }

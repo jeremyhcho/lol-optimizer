@@ -1,0 +1,36 @@
+.paper-login-form, .paper-signup-form {
+  width: 400px;
+  padding: 50px 0;
+  
+  h2 {
+    margin: 0;
+    text-align: center;
+  }
+  
+  i {
+    font-size: 10px;
+    color: #9EA3B4;
+    text-align: center;
+    margin-top: 20px;
+    display: inline-block;
+  }
+
+  .login-forgot {
+    font-size: 12px;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .footer {
+    margin-top: 20px;
+
+    span {
+      font-size: 12px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 10px;
+    }
+  }
+}
